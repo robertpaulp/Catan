@@ -1,0 +1,7 @@
+# Screen Constants
+SCREEN_WIDTH = 1000
+SCREEN_HEIGHT = 1000
+
+# Color Constants
+WHITE = (255, 255, 255)
+LIGHT_CYAN_BLUE = (100, 181, 246)
