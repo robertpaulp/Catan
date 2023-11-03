@@ -1,6 +1,7 @@
 # Importing modules
 import pygame
 import constants as c
+import base_game_cls as base
 
 class Game:
 
@@ -12,6 +13,7 @@ class Game:
         window = pygame.display.set_mode((c.SCREEN_WIDTH, c.SCREEN_HEIGHT))
 
         # Game loop
+        dice_set = True
         running = True
         while running:
             # --- Event loop ---
@@ -22,7 +24,13 @@ class Game:
             # Fill the window with white
             window.fill(c.LIGHT_CYAN_BLUE)
 
-            pygame.display.update()
+            # Draw the dice
+            base.Dice.dice(window)
+            base.Dice.dice(window,c.DICE_X_AXIS + 90)
+
+            if dice_set:
+                pygame.display.update()
+                dice_set = False
 
 
         pygame.quit()
