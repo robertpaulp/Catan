@@ -24,9 +24,14 @@ class Game:
             # Fill the window with white
             window.fill(c.LIGHT_CYAN_BLUE)
 
+            # Draw the hexagon grid
+            base.HexagonTile.create_hexagon_grid(window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS)
+
+
             # Draw the dice
             base.Dice.dice(window)
             base.Dice.dice(window,c.DICE_X_AXIS + 90)
+
 
             if dice_set:
                 pygame.display.update()

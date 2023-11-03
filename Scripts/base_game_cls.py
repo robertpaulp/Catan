@@ -9,10 +9,90 @@ import constants as c
 # --- Hexagon class ---
 class HexagonTile:
 
-    # TODO: Create a class called HexagonTile
-    # Create the tiles
-    # !! Add the sprites to the tiles !!
-    pass
+    def create_hexagon(window, x = c.HEXAGON_X_CENTER, y = c.HEXAGON_Y_CENTER, image = None):
+        vertices = [
+
+            # (x - c.HEXAGON_SIDE, y),
+            # (x, y - (0.866 * c.HEXAGON_SIDE)),
+            # (x + c.HEXAGON_SIDE, y),
+            # (x + c.HEXAGON_SIDE, y + c.HEXAGON_SIDE),
+            # (x, y + (0.866 * c.HEXAGON_SIDE) + c.HEXAGON_SIDE),
+            # (x - c.HEXAGON_SIDE, y + c.HEXAGON_SIDE)
+
+            (x - c.HEXAGON_SIDE, y),
+            (x, y - c.HEXAGON_SIDE),
+            (x + c.HEXAGON_SIDE, y),
+            (x + c.HEXAGON_SIDE, y + c.HEXAGON_SIDE),
+            (x, y + 2 * c.HEXAGON_SIDE),
+            (x - c.HEXAGON_SIDE, y + c.HEXAGON_SIDE)
+            
+        ]
+
+        if image is not None:
+            image = pygame.transform.scale(image, (c.HEXAGON_WIDTH, c.HEXAGON_HEIGHT * 1.5))
+
+            cropped = pygame.Surface((c.HEXAGON_WIDTH, c.HEXAGON_HEIGHT * 1.5))
+            cropped.blit(image, (0, 0), (0, 0, c.HEXAGON_WIDTH, c.HEXAGON_HEIGHT * 1.5))
+
+
+
+            window.blit(image, (x - c.HEXAGON_SIDE, y - c.HEXAGON_SIDE))
+        # else:
+        #     pygame.draw.polygon(window, c.WHITE, vertices, 0)
+
+        pygame.draw.polygon(window, c.BLACK, vertices, 4)
+
+
+    def create_hexagon_grid(window, x, y):
+        
+        # Create the first row
+        for i in range(0, 3):
+            HexagonTile.create_hexagon(window, x, y, pygame.image.load(c.HEX_SPRITE_WOOD))
+            HexagonTile.add_hexagon_number(window, x, y, math.floor(np.random.randint(2, 13)))
+            x += c.HEXAGON_WIDTH
+
+        # Create the second row
+        x = c.HEXAGON_X_AXIS - c.HEXAGON_WIDTH / 2
+        y += c.HEXAGON_HEIGHT 
+        for i in range(0, 4):
+            HexagonTile.create_hexagon(window, x, y)
+            HexagonTile.add_hexagon_number(window, x, y, math.floor(np.random.randint(2, 13)))
+            x += c.HEXAGON_WIDTH
+
+        # Create the third row
+        x = c.HEXAGON_X_AXIS - c.HEXAGON_WIDTH
+        y += c.HEXAGON_HEIGHT
+        for i in range(0, 5):
+            HexagonTile.create_hexagon(window, x, y)
+            HexagonTile.add_hexagon_number(window, x, y, math.floor(np.random.randint(2, 13)))
+            x += c.HEXAGON_WIDTH
+
+        # Create the fourth row
+        x = c.HEXAGON_X_AXIS - c.HEXAGON_WIDTH / 2 
+        y += c.HEXAGON_HEIGHT
+        for i in range(0, 4):
+            HexagonTile.create_hexagon(window, x, y)
+            HexagonTile.add_hexagon_number(window, x, y, math.floor(np.random.randint(2, 13)))
+            x += c.HEXAGON_WIDTH
+
+        # Create the fifth row
+        x = c.HEXAGON_X_AXIS
+        y += c.HEXAGON_HEIGHT
+        for i in range(0, 3):
+            HexagonTile.create_hexagon(window, x, y)
+            HexagonTile.add_hexagon_number(window, x, y, math.floor(np.random.randint(2, 13)))
+            x += c.HEXAGON_WIDTH
+        
+    def add_hexagon_number(window, x, y, number):
+        font = pygame.font.SysFont('Arial', 30)
+        text = font.render(str(number), True, c.BLACK)
+        text_rect = text.get_rect(center=(x, y + c.HEXAGON_SIDE / 2 - 5))
+        pygame.draw.circle(window, c.BEIGE, (x, y + c.HEXAGON_SIDE / 2), c.HEXAGON_SIDE / 3, 0)
+        pygame.draw.circle(window, c.BLACK, (x, y + c.HEXAGON_SIDE / 2), c.HEXAGON_SIDE / 3, 1)
+        window.blit(text, text_rect)
+
+
+
 
 # --- Settlement class ---
 class Settlement:
