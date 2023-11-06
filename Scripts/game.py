@@ -2,9 +2,10 @@
 import pygame
 import constants as c
 import base_game_cls as base
+import random
+
 
 class Game:
-
     def main():
         # --- Main loop ---
         pygame.init()
@@ -13,34 +14,47 @@ class Game:
         window = pygame.display.set_mode((c.SCREEN_WIDTH, c.SCREEN_HEIGHT))
 
         # Game loop
-        dice_set = True
+        dice_first_dsp = True
         running = True
+        roll = [0, 0]
+
+        # --- Background ---
+        window.fill(c.LIGHT_CYAN_BLUE)
+
+        # --- Hexagon grid ---
+        hexagon_numbers = [2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12, -1]
+        hexagon_numbers.sort(key=lambda x: random.random())
+        base.HexagonTile.create_hexagon_grid(
+            window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS, hexagon_numbers
+        )
+
         while running:
             # --- Event loop ---
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
 
-            # Fill the window with white
-            window.fill(c.LIGHT_CYAN_BLUE)
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    mouse_pos = pygame.mouse.get_pos()
+                    if dice_btn.collidepoint(mouse_pos):
+                        roll = [base.Dice.dice_roll(), base.Dice.dice_roll()]
 
-            # Draw the hexagon grid
-            base.HexagonTile.create_hexagon_grid(window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS)
+                        if sum(roll) == 7:
+                            print("Robber")
+                            # TODO: Move robber
 
+            # --- Dice ---
+            dice_btn = base.Board.roll_dice_btn(window)
 
-            # Draw the dice
-            base.Dice.dice(window)
-            base.Dice.dice(window,c.DICE_X_AXIS + 90)
+            if dice_first_dsp:
+                base.Dice.dices(window, [1, 1])
+                dice_first_dsp = False
 
+            base.Dice.dices(window, roll)
 
-            if dice_set:
-                pygame.display.update()
-                dice_set = False
-
+            pygame.display.update()
 
         pygame.quit()
-
-
 
     if __name__ == "__main__":
         main()

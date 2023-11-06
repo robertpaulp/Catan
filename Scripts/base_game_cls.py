@@ -31,57 +31,40 @@ class HexagonTile:
         if image is not None:
             image = pygame.transform.scale(image, (c.HEXAGON_WIDTH, c.HEXAGON_HEIGHT * 1.5))
 
-            cropped = pygame.Surface((c.HEXAGON_WIDTH, c.HEXAGON_HEIGHT * 1.5))
+            cropped = pygame.sprite.Sprite(image)
+
             cropped.blit(image, (0, 0), (0, 0, c.HEXAGON_WIDTH, c.HEXAGON_HEIGHT * 1.5))
-
-
-
             window.blit(image, (x - c.HEXAGON_SIDE, y - c.HEXAGON_SIDE))
-        # else:
-        #     pygame.draw.polygon(window, c.WHITE, vertices, 0)
+        else:
+            pygame.draw.polygon(window, c.WHITE, vertices, 0)
 
         pygame.draw.polygon(window, c.BLACK, vertices, 4)
 
 
-    def create_hexagon_grid(window, x, y):
-        
+    def create_hexagon_grid(window, x, y, hexagon_numbers):
+
         # Create the first row
-        for i in range(0, 3):
-            HexagonTile.create_hexagon(window, x, y, pygame.image.load(c.HEX_SPRITE_WOOD))
-            HexagonTile.add_hexagon_number(window, x, y, math.floor(np.random.randint(2, 13)))
-            x += c.HEXAGON_WIDTH
+        HexagonTile.create_row(window, x, y, hexagon_numbers, 3)
 
         # Create the second row
         x = c.HEXAGON_X_AXIS - c.HEXAGON_WIDTH / 2
         y += c.HEXAGON_HEIGHT 
-        for i in range(0, 4):
-            HexagonTile.create_hexagon(window, x, y)
-            HexagonTile.add_hexagon_number(window, x, y, math.floor(np.random.randint(2, 13)))
-            x += c.HEXAGON_WIDTH
+        HexagonTile.create_row(window, x, y, hexagon_numbers, 4)
 
         # Create the third row
         x = c.HEXAGON_X_AXIS - c.HEXAGON_WIDTH
         y += c.HEXAGON_HEIGHT
-        for i in range(0, 5):
-            HexagonTile.create_hexagon(window, x, y)
-            HexagonTile.add_hexagon_number(window, x, y, math.floor(np.random.randint(2, 13)))
-            x += c.HEXAGON_WIDTH
-
+        HexagonTile.create_row(window, x, y, hexagon_numbers, 5)
+        
         # Create the fourth row
         x = c.HEXAGON_X_AXIS - c.HEXAGON_WIDTH / 2 
         y += c.HEXAGON_HEIGHT
-        for i in range(0, 4):
-            HexagonTile.create_hexagon(window, x, y)
-            HexagonTile.add_hexagon_number(window, x, y, math.floor(np.random.randint(2, 13)))
-            x += c.HEXAGON_WIDTH
+        HexagonTile.create_row(window, x, y, hexagon_numbers, 4)
 
         # Create the fifth row
         x = c.HEXAGON_X_AXIS
         y += c.HEXAGON_HEIGHT
-        for i in range(0, 3):
-            HexagonTile.create_hexagon(window, x, y)
-            HexagonTile.add_hexagon_number(window, x, y, math.floor(np.random.randint(2, 13)))
-            x += c.HEXAGON_WIDTH
+        HexagonTile.create_row(window, x, y, hexagon_numbers, 3)
         
     def add_hexagon_number(window, x, y, number):
         font = pygame.font.SysFont('Arial', 30)
@@ -91,6 +74,20 @@ class HexagonTile:
         pygame.draw.circle(window, c.BLACK, (x, y + c.HEXAGON_SIDE / 2), c.HEXAGON_SIDE / 3, 1)
         window.blit(text, text_rect)
 
+    def create_row(window, x, y, hexagon_numbers, rows):
+        for row in range(0,rows):
+            HexagonTile.create_hexagon(window, x, y)
+            number = hexagon_numbers.pop(0)
+            if HexagonTile.check_for_desert(number):
+                HexagonTile.add_hexagon_number(window, x, y, number)
+            x += c.HEXAGON_WIDTH
+
+
+    def check_for_desert(number):
+        if number == -1:
+            return False
+        else:
+            return True
 
 
 
@@ -156,7 +153,7 @@ class Dice:
         dice = np.random.randint(1, 7)
         return dice
     
-    def dice_display(face, window, x=c.DICE_X_AXIS, y=c.DICE_Y_AXIS):
+    def dice_display_face(face, window, x=c.DICE_X_AXIS, y=c.DICE_Y_AXIS):
         if face == 1:
             Dice.dice_one(window, x, y)
         elif face == 2:
@@ -172,10 +169,14 @@ class Dice:
         else:
             print("Error")
 
-    def dice(window, x=c.DICE_X_AXIS, y=c.DICE_Y_AXIS):
-        dice = Dice.dice_roll()
-        Dice.create_dice(window, x, y)
-        Dice.dice_display(dice, window, x, y)
+    def dices(window, roll, x= c.DICE_X_AXIS, y= c.DICE_Y_AXIS):
+        if roll[0] != 0:
+            Dice.create_dice(window, x, y)
+            Dice.dice_display_face(roll[0], window, x, y)
+
+        if roll[1] != 0:
+            Dice.create_dice(window, x + 90, y)
+            Dice.dice_display_face(roll[1], window, x + 90, y)
 
 
 # --- Card class ---
@@ -194,4 +195,12 @@ class Player:
 class Board:
     # TODO: Create a class called Board
     # Incorporate all the classes and create the board
-    pass
+
+    def roll_dice_btn(window, x=c.DICE_BTN_X_AXIS, y=c.DICE_BTN_Y_AXIS):
+        button = pygame.draw.rect(window, c.BEIGE, (x, y, c.DICE_BTN_WIDTH, c.DICE_BTN_HEIGHT))
+        pygame.draw.rect(window, c.BLACK, (x, y, c.DICE_BTN_WIDTH, c.DICE_BTN_HEIGHT), 4)
+        font = pygame.font.SysFont('Arial', 30)
+        text = font.render(str("Roll Dice!"), True, c.BLACK)
+        text_rect = text.get_rect(center=(x + 100, y + 25))
+        window.blit(text, text_rect)
+        return button
