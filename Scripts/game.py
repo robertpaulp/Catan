@@ -6,14 +6,23 @@ import random
 
 
 class Game:
-    def main():
-        # --- Main loop ---
+    def window_setup(self):
         pygame.init()
 
         # Window
         window = pygame.display.set_mode((c.SCREEN_WIDTH, c.SCREEN_HEIGHT))
+        pygame.display.set_caption("Catan")
+        icon = pygame.image.load("../Assets/icon.png")
+        icon = pygame.transform.scale(icon, (32, 32))
+        pygame.display.set_icon(icon)
 
-        # Game loop
+        return window
+    
+    # --- Main loop ---
+    def main(self):
+        window = self.window_setup()
+
+        # Game loop variables
         dice_first_dsp = True
         running = True
         roll = [0, 0]
@@ -56,5 +65,6 @@ class Game:
 
         pygame.quit()
 
-    if __name__ == "__main__":
-        main()
+if __name__ == "__main__":
+    game_instance = Game()
+    game_instance.main()
