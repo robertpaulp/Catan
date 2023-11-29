@@ -4,7 +4,6 @@ import constants as c
 import base_game_cls as base
 import random
 
-
 class Game:
     @staticmethod
     def window_setup():
@@ -32,9 +31,7 @@ class Game:
         # --- Hexagon grid ---
         hexagon_numbers = [2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12, -1]
         hexagon_numbers.sort(key=lambda x: random.random())
-        base.HexagonTile.create_hexagon_grid(
-            window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS, hexagon_numbers
-        )
+        base.HexagonTile.create_hexagon_grid(window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS, hexagon_numbers)
 
         print(base.HexagonTile.resourcesArray)
 
