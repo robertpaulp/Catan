@@ -9,6 +9,8 @@ import constants as c
 # --- Hexagon class ---
 class HexagonTile:
 
+    resourcesArray = []    
+
     def create_hexagon(window, x = c.HEXAGON_X_CENTER, y = c.HEXAGON_Y_CENTER, image = None):
         vertices = [
 
@@ -29,12 +31,11 @@ class HexagonTile:
         ]
 
         if image is not None:
-            image = pygame.transform.scale(image, (c.HEXAGON_WIDTH, c.HEXAGON_HEIGHT * 1.5))
+            image = pygame.image.load(image)
+            image = pygame.transform.scale(image, (c.HEXAGON_WIDTH * 1.1, c.HEXAGON_HEIGHT * 1.35))
+            image = pygame.transform.rotate(image, 1)
+            window.blit(image, (x - c.HEXAGON_SIDE, y - c.HEXAGON_SIDE / 2 - 15))
 
-            cropped = pygame.sprite.Sprite(image)
-
-            cropped.blit(image, (0, 0), (0, 0, c.HEXAGON_WIDTH, c.HEXAGON_HEIGHT * 1.5))
-            window.blit(image, (x - c.HEXAGON_SIDE, y - c.HEXAGON_SIDE))
         else:
             pygame.draw.polygon(window, c.WHITE, vertices, 0)
 
@@ -76,10 +77,15 @@ class HexagonTile:
 
     def create_row(window, x, y, hexagon_numbers, rows):
         for row in range(0,rows):
-            HexagonTile.create_hexagon(window, x, y)
             number = hexagon_numbers.pop(0)
             if HexagonTile.check_for_desert(number):
+                resource = HexagonTile.get_resource()
+                HexagonTile.resourcesArray.append(resource[0])
+                HexagonTile.create_hexagon(window, x, y, resource[1])
                 HexagonTile.add_hexagon_number(window, x, y, number)
+            else:
+                HexagonTile.resourcesArray.append("Desert")
+                HexagonTile.create_hexagon(window, x, y, c.DESERT_SPRITE)
             x += c.HEXAGON_WIDTH * 1.1
 
 
@@ -88,6 +94,16 @@ class HexagonTile:
             return False
         else:
             return True
+    
+    def get_resource():
+        resources = [
+            ["Wood", c.WOOD_SPRITE],
+            ["Wheat", c.WHEAT_SPRITE],
+            ["Sheep", c.SHEEP_SPRITE],
+            ["Brick", c.BRICK_SPRITE],
+            ["Ore", c.STONE_SPRITE]
+        ]
+        return resources[np.random.randint(0, 5)]
 
 
 

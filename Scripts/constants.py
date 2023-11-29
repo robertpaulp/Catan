@@ -23,7 +23,12 @@ HEXAGON_X_AXIS = SCREEN_WIDTH / 2 - HEXAGON_WIDTH / 2 - HEXAGON_WIDTH
 HEXAGON_Y_AXIS = 75
 
 # Sprite Constants
-HEX_SPRITE_WOOD = "../Assets/wood.jpg"
+WOOD_SPRITE = "../Assets/Sprites/forest.png"
+WHEAT_SPRITE = "../Assets/Sprites/field.png"
+SHEEP_SPRITE = "../Assets/Sprites/pasture.png"
+BRICK_SPRITE = "../Assets/Sprites/hill.png"
+STONE_SPRITE = "../Assets/Sprites/mountain.png"
+DESERT_SPRITE = "../Assets/Sprites/desert.png"
 
 # Dice Constants
 DICE_WIDTH = 80

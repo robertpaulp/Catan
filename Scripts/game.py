@@ -36,6 +36,8 @@ class Game:
             window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS, hexagon_numbers
         )
 
+        print(base.HexagonTile.resourcesArray)
+
         while running:
             # --- Event loop ---
             for event in pygame.event.get():
