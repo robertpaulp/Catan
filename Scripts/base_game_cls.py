@@ -19,12 +19,12 @@ class HexagonTile:
             # (x, y + (0.866 * c.HEXAGON_SIDE) + c.HEXAGON_SIDE),
             # (x - c.HEXAGON_SIDE, y + c.HEXAGON_SIDE)
 
-            (x - c.HEXAGON_SIDE, y),
-            (x, y - c.HEXAGON_SIDE),
-            (x + c.HEXAGON_SIDE, y),
-            (x + c.HEXAGON_SIDE, y + c.HEXAGON_SIDE),
-            (x, y + 2 * c.HEXAGON_SIDE),
-            (x - c.HEXAGON_SIDE, y + c.HEXAGON_SIDE)
+            (x - c.HEXAGON_SIDE, y),                                  # Top left
+            (x + c.HEXAGON_SIDE * 0.1, y - c.HEXAGON_SIDE * 0.8),     # Top middle
+            (x + c.HEXAGON_SIDE * 1.2, y),                            # Top right
+            (x + c.HEXAGON_SIDE * 1.2, y + c.HEXAGON_SIDE * 1.2),     # Bottom right
+            (x + c.HEXAGON_SIDE * 0.1, y + 2 * c.HEXAGON_SIDE),     # Bottom middle
+            (x - c.HEXAGON_SIDE, y + c.HEXAGON_SIDE * 1.2)            # Bottom left
             
         ]
 
@@ -47,17 +47,17 @@ class HexagonTile:
         HexagonTile.create_row(window, x, y, hexagon_numbers, 3)
 
         # Create the second row
-        x = c.HEXAGON_X_AXIS - c.HEXAGON_WIDTH / 2
+        x = c.HEXAGON_X_AXIS - c.HEXAGON_WIDTH / 2 - c.HEXAGON_SIDE * 0.1
         y += c.HEXAGON_HEIGHT 
         HexagonTile.create_row(window, x, y, hexagon_numbers, 4)
 
         # Create the third row
-        x = c.HEXAGON_X_AXIS - c.HEXAGON_WIDTH
+        x = c.HEXAGON_X_AXIS - c.HEXAGON_WIDTH - c.HEXAGON_SIDE * 0.2
         y += c.HEXAGON_HEIGHT
         HexagonTile.create_row(window, x, y, hexagon_numbers, 5)
         
         # Create the fourth row
-        x = c.HEXAGON_X_AXIS - c.HEXAGON_WIDTH / 2 
+        x = c.HEXAGON_X_AXIS - c.HEXAGON_WIDTH / 2 - c.HEXAGON_SIDE * 0.1
         y += c.HEXAGON_HEIGHT
         HexagonTile.create_row(window, x, y, hexagon_numbers, 4)
 
@@ -69,9 +69,9 @@ class HexagonTile:
     def add_hexagon_number(window, x, y, number):
         font = pygame.font.SysFont('Arial', 30)
         text = font.render(str(number), True, c.BLACK)
-        text_rect = text.get_rect(center=(x, y + c.HEXAGON_SIDE / 2 - 5))
-        pygame.draw.circle(window, c.BEIGE, (x, y + c.HEXAGON_SIDE / 2), c.HEXAGON_SIDE / 3, 0)
-        pygame.draw.circle(window, c.BLACK, (x, y + c.HEXAGON_SIDE / 2), c.HEXAGON_SIDE / 3, 1)
+        text_rect = text.get_rect(center=(x + c.HEXAGON_SIDE * 0.1, y + c.HEXAGON_SIDE / 2 - 5))
+        pygame.draw.circle(window, c.BEIGE, (x + c.HEXAGON_SIDE * 0.1, y + c.HEXAGON_SIDE / 2), c.HEXAGON_SIDE / 3, 0)
+        pygame.draw.circle(window, c.BLACK, (x + c.HEXAGON_SIDE * 0.1, y + c.HEXAGON_SIDE / 2), c.HEXAGON_SIDE / 3, 1)
         window.blit(text, text_rect)
 
     def create_row(window, x, y, hexagon_numbers, rows):
@@ -80,7 +80,7 @@ class HexagonTile:
             number = hexagon_numbers.pop(0)
             if HexagonTile.check_for_desert(number):
                 HexagonTile.add_hexagon_number(window, x, y, number)
-            x += c.HEXAGON_WIDTH
+            x += c.HEXAGON_WIDTH * 1.1
 
 
     def check_for_desert(number):
