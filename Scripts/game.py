@@ -29,11 +29,10 @@ class Game:
         window.fill(c.LIGHT_CYAN_BLUE)
 
         # --- Hexagon grid ---
-        hexagon_numbers = [2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12, -1]
-        hexagon_numbers.sort(key=lambda x: random.random())
-        base.HexagonTile.create_hexagon_grid(window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS, hexagon_numbers)
+        base.HexagonTile.create_hexagon_grid(window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS)
 
         print(base.HexagonTile.resourcesArray)
+        print(base.HexagonTile.center_points)
 
         while running:
             # --- Event loop ---
@@ -48,12 +47,15 @@ class Game:
 
                         if sum(roll) == 7:
                             print("Robber")
+                            # Remove robber
+                            base.HexagonTile.create_hexagon_grid(window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS, False)
                             # TODO: Move robber
 
             # --- Dice ---
             dice_btn = base.Board.roll_dice_btn(window)
 
             if dice_first_dsp:
+                base.Robber.create_robber(window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS)
                 base.Dice.dices(window, [1, 1])
                 dice_first_dsp = False
 
