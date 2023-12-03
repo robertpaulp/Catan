@@ -3,11 +3,24 @@ import pandas as pd
 import math
 import numpy as np
 import pygame
+import random
 import game
 import constants as c
 
 # --- Hexagon class ---
 class HexagonTile:
+
+    center_points = []
+    resourcesArray = []
+    resources = [
+            ["Wood", c.WOOD_SPRITE],
+            ["Wheat", c.WHEAT_SPRITE],
+            ["Sheep", c.SHEEP_SPRITE],
+            ["Brick", c.BRICK_SPRITE],
+            ["Ore", c.STONE_SPRITE]
+        ]
+    hexagon_numbers = [2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12, -1]
+    hexagon_points = []
 
     def create_hexagon(window, x = c.HEXAGON_X_CENTER, y = c.HEXAGON_Y_CENTER, image = None):
         vertices = [
@@ -19,88 +32,132 @@ class HexagonTile:
             # (x, y + (0.866 * c.HEXAGON_SIDE) + c.HEXAGON_SIDE),
             # (x - c.HEXAGON_SIDE, y + c.HEXAGON_SIDE)
 
-            (x - c.HEXAGON_SIDE, y),
-            (x, y - c.HEXAGON_SIDE),
-            (x + c.HEXAGON_SIDE, y),
-            (x + c.HEXAGON_SIDE, y + c.HEXAGON_SIDE),
-            (x, y + 2 * c.HEXAGON_SIDE),
-            (x - c.HEXAGON_SIDE, y + c.HEXAGON_SIDE)
+            (x - c.HEXAGON_SIDE, y),                                  # Top left
+            (x + c.HEXAGON_SIDE * 0.1, y - c.HEXAGON_SIDE * 0.8),     # Top middle
+            (x + c.HEXAGON_SIDE * 1.2, y),                            # Top right
+            (x + c.HEXAGON_SIDE * 1.2, y + c.HEXAGON_SIDE * 1.2),     # Bottom right
+            (x + c.HEXAGON_SIDE * 0.1, y + 2 * c.HEXAGON_SIDE),     # Bottom middle
+            (x - c.HEXAGON_SIDE, y + c.HEXAGON_SIDE * 1.2)            # Bottom left
             
         ]
-
+        HexagonTile.hexagon_points.append(vertices)
         if image is not None:
-            image = pygame.transform.scale(image, (c.HEXAGON_WIDTH, c.HEXAGON_HEIGHT * 1.5))
+            image = pygame.image.load(image)
+            image = pygame.transform.scale(image, (c.HEXAGON_WIDTH * 1.1, c.HEXAGON_HEIGHT * 1.35))
+            image = pygame.transform.rotate(image, 1)
+            window.blit(image, (x - c.HEXAGON_SIDE, y - c.HEXAGON_SIDE / 2 - 15))
 
-            cropped = pygame.sprite.Sprite(image)
-
-            cropped.blit(image, (0, 0), (0, 0, c.HEXAGON_WIDTH, c.HEXAGON_HEIGHT * 1.5))
-            window.blit(image, (x - c.HEXAGON_SIDE, y - c.HEXAGON_SIDE))
         else:
             pygame.draw.polygon(window, c.WHITE, vertices, 0)
 
         pygame.draw.polygon(window, c.BLACK, vertices, 4)
 
-
-    def create_hexagon_grid(window, x, y, hexagon_numbers):
-
-        # Create the first row
-        HexagonTile.create_row(window, x, y, hexagon_numbers, 3)
-
-        # Create the second row
-        x = c.HEXAGON_X_AXIS - c.HEXAGON_WIDTH / 2
-        y += c.HEXAGON_HEIGHT 
-        HexagonTile.create_row(window, x, y, hexagon_numbers, 4)
-
-        # Create the third row
-        x = c.HEXAGON_X_AXIS - c.HEXAGON_WIDTH
-        y += c.HEXAGON_HEIGHT
-        HexagonTile.create_row(window, x, y, hexagon_numbers, 5)
-        
-        # Create the fourth row
-        x = c.HEXAGON_X_AXIS - c.HEXAGON_WIDTH / 2 
-        y += c.HEXAGON_HEIGHT
-        HexagonTile.create_row(window, x, y, hexagon_numbers, 4)
-
-        # Create the fifth row
-        x = c.HEXAGON_X_AXIS
-        y += c.HEXAGON_HEIGHT
-        HexagonTile.create_row(window, x, y, hexagon_numbers, 3)
-        
     def add_hexagon_number(window, x, y, number):
         font = pygame.font.SysFont('Arial', 30)
         text = font.render(str(number), True, c.BLACK)
-        text_rect = text.get_rect(center=(x, y + c.HEXAGON_SIDE / 2 - 5))
-        pygame.draw.circle(window, c.BEIGE, (x, y + c.HEXAGON_SIDE / 2), c.HEXAGON_SIDE / 3, 0)
-        pygame.draw.circle(window, c.BLACK, (x, y + c.HEXAGON_SIDE / 2), c.HEXAGON_SIDE / 3, 1)
+        text_rect = text.get_rect(center=(x + c.HEXAGON_SIDE * 0.1, y + c.HEXAGON_SIDE / 2 - 5))
+        HexagonTile.center_points.append(text_rect.center)
+        pygame.draw.circle(window, c.BEIGE, (x + c.HEXAGON_SIDE * 0.1, y + c.HEXAGON_SIDE / 2), c.HEXAGON_SIDE / 3, 0)
+        pygame.draw.circle(window, c.BLACK, (x + c.HEXAGON_SIDE * 0.1, y + c.HEXAGON_SIDE / 2), c.HEXAGON_SIDE / 3, 1)
         window.blit(text, text_rect)
-
-    def create_row(window, x, y, hexagon_numbers, rows):
-        for row in range(0, rows):
-            HexagonTile.create_hexagon(window, x, y)
-            number = hexagon_numbers.pop(0)
-            if HexagonTile.check_for_desert(number):
-                HexagonTile.add_hexagon_number(window, x, y, number)
-            x += c.HEXAGON_WIDTH
-
 
     def check_for_desert(number):
         if number == -1:
             return False
         else:
             return True
+    
+    def get_resource():
+        return HexagonTile.resources[np.random.randint(0, 5)]
+    
+    def shuffle_numbers(resource_array):
+        if len(resource_array) != len(HexagonTile.hexagon_numbers):
+            raise ValueError("len(resource_array) != len(HexagonTile.hexagon_numbers)")
+        
+        sublist = HexagonTile.hexagon_numbers[0:len(HexagonTile.hexagon_numbers) - 1]
+        random.shuffle(sublist)
+        HexagonTile.hexagon_numbers[0:len(HexagonTile.hexagon_numbers) - 1] = sublist
 
+        desert_index = 0
+
+        for i in range(0, len(resource_array)):
+            if resource_array[i] == "Desert":
+                HexagonTile.hexagon_numbers[i], HexagonTile.hexagon_numbers[-1] = HexagonTile.hexagon_numbers[-1], HexagonTile.hexagon_numbers[i]
+                desert_index = i
+                break 
+
+    def create_resource_array(length):
+        # Ensure that there one of each resource
+        for i in range(0, 5):
+            HexagonTile.resourcesArray.append(HexagonTile.resources[i][0])
+        HexagonTile.resourcesArray.append("Desert")
+        # Add the rest of the resources
+        for i in range(0, length - 6):
+            resource = HexagonTile.get_resource()
+            HexagonTile.resourcesArray.append(resource[0]) 
+        # Shuffle the array
+        HexagonTile.resourcesArray.sort(key=lambda x: random.random())
+
+
+    def create_row(window, x, y, hexagon_numbers, rows):
+        for row in range(0,rows):
+            number = hexagon_numbers.pop(0)
+            if HexagonTile.check_for_desert(number):
+                resource = HexagonTile.resourcesArray.pop(0)
+                for i in range(0, len(HexagonTile.resources)):
+                    if resource == HexagonTile.resources[i][0]:
+                        image = HexagonTile.resources[i][1]
+                        break
+
+                HexagonTile.create_hexagon(window, x, y, image)
+                HexagonTile.add_hexagon_number(window, x, y, number)
+            else:
+                HexagonTile.resourcesArray.append("Desert")
+                HexagonTile.create_hexagon(window, x, y, c.DESERT_SPRITE)
+            x += c.HEXAGON_WIDTH * 1.1
+
+    def create_hexagon_grid(window, x, y, first_time = True):
+        if first_time:
+            HexagonTile.create_resource_array(len(HexagonTile.hexagon_numbers))
+            HexagonTile.shuffle_numbers(HexagonTile.resourcesArray)
+        resources_copy = HexagonTile.resourcesArray.copy()
+        hexagon_numbers_copy = HexagonTile.hexagon_numbers.copy()
+
+        # Create the first row
+        HexagonTile.create_row(window, x, y, HexagonTile.hexagon_numbers, 3)
+
+        # Create the second row
+        x = c.HEXAGON_X_AXIS - c.HEXAGON_WIDTH / 2 - c.HEXAGON_SIDE * 0.1
+        y += c.HEXAGON_HEIGHT 
+        HexagonTile.create_row(window, x, y, HexagonTile.hexagon_numbers, 4)
+
+        # Create the third row
+        x = c.HEXAGON_X_AXIS - c.HEXAGON_WIDTH - c.HEXAGON_SIDE * 0.2
+        y += c.HEXAGON_HEIGHT
+        HexagonTile.create_row(window, x, y, HexagonTile.hexagon_numbers, 5)
+        
+        # Create the fourth row
+        x = c.HEXAGON_X_AXIS - c.HEXAGON_WIDTH / 2 - c.HEXAGON_SIDE * 0.1
+        y += c.HEXAGON_HEIGHT
+        HexagonTile.create_row(window, x, y, HexagonTile.hexagon_numbers, 4)
+
+        # Create the fifth row
+        x = c.HEXAGON_X_AXIS
+        y += c.HEXAGON_HEIGHT
+        HexagonTile.create_row(window, x, y, HexagonTile.hexagon_numbers, 3)
+
+        HexagonTile.resourcesArray = resources_copy.copy()
+        HexagonTile.hexagon_numbers = hexagon_numbers_copy.copy()
 
 # --- Settlement class ---
 class Settlement:
     # TODO: Create a class called Settlement
     pass
 
-
 # --- Road class ---
 class Road:
     # TODO: Create a class called Road 
     pass
-
 
 # --- Robber class ---
 class Robber:
@@ -109,35 +166,30 @@ class Robber:
     # Create the robber movement
     # Create the robber stealing
     # ADD card elimination if > 7 cards
-    pass
-
+    def create_robber(window, x, y):
+        pygame.draw.circle(window, c.BLACK, (x + c.HEXAGON_SIDE * 0.1, y + c.HEXAGON_SIDE / 2), c.HEXAGON_SIDE / 3, 0)
 
 # --- Dice class ---
 class Dice:
 
-    @staticmethod
     def dice_one(window, x, y):
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_CENTER, y + c.DOT_OFFSET_CENTER), c.DOT_RADIUS, 0)
 
-    @staticmethod
     def dice_two(window, x, y):
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_DOWN, y + c.DOT_OFFSET_UP), c.DOT_RADIUS, 0)
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_UP, y + c.DOT_OFFSET_DOWN), c.DOT_RADIUS, 0)
 
-    @staticmethod
     def dice_three(window, x, y):
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_UP, y + c.DOT_OFFSET_DOWN), c.DOT_RADIUS, 0)
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_CENTER, y + c.DOT_OFFSET_CENTER), c.DOT_RADIUS, 0)
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_DOWN, y + c.DOT_OFFSET_UP), c.DOT_RADIUS, 0)
 
-    @staticmethod
     def dice_four(window, x, y):
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_UP, y + c.DOT_OFFSET_UP), c.DOT_RADIUS, 0)
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_UP, y + c.DOT_OFFSET_DOWN), c.DOT_RADIUS, 0)
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_DOWN, y + c.DOT_OFFSET_UP), c.DOT_RADIUS, 0)
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_DOWN, y + c.DOT_OFFSET_DOWN), c.DOT_RADIUS, 0)
 
-    @staticmethod
     def dice_five(window, x, y):
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_UP, y + c.DOT_OFFSET_UP), c.DOT_RADIUS, 0)
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_UP, y + c.DOT_OFFSET_DOWN), c.DOT_RADIUS, 0)
@@ -145,7 +197,6 @@ class Dice:
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_DOWN, y + c.DOT_OFFSET_DOWN), c.DOT_RADIUS, 0)
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_CENTER, y + c.DOT_OFFSET_CENTER), c.DOT_RADIUS, 0)
 
-    @staticmethod
     def dice_six(window, x, y):
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_UP, y + c.DOT_OFFSET_UP), c.DOT_RADIUS, 0)
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_UP, y + c.DOT_OFFSET_CENTER), c.DOT_RADIUS, 0)
@@ -154,17 +205,14 @@ class Dice:
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_DOWN, y + c.DOT_OFFSET_CENTER), c.DOT_RADIUS, 0)
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_DOWN, y + c.DOT_OFFSET_DOWN), c.DOT_RADIUS, 0)
 
-    @staticmethod
     def create_dice(window, x, y):
         pygame.draw.rect(window, c.WHITE,(x, y, c.DICE_WIDTH, c.DICE_HEIGHT), 0, -1, c.DICE_CORNER_RADIUS, c.DICE_CORNER_RADIUS, c.DICE_CORNER_RADIUS, c.DICE_CORNER_RADIUS)
 
-    @staticmethod
     def dice_roll():
         dice = np.random.randint(1, 7)
         return dice
-
-    @classmethod
-    def dice_display_face(cls, face, window, x=c.DICE_X_AXIS, y=c.DICE_Y_AXIS):
+    
+    def dice_display_face(face, window, x=c.DICE_X_AXIS, y=c.DICE_Y_AXIS):
         if face == 1:
             Dice.dice_one(window, x, y)
         elif face == 2:
@@ -180,8 +228,7 @@ class Dice:
         else:
             print("Error")
 
-    @classmethod
-    def dices(cls, window, roll, x= c.DICE_X_AXIS, y= c.DICE_Y_AXIS):
+    def dices(window, roll, x= c.DICE_X_AXIS, y= c.DICE_Y_AXIS):
         if roll[0] != 0:
             Dice.create_dice(window, x, y)
             Dice.dice_display_face(roll[0], window, x, y)
@@ -198,12 +245,10 @@ class Card:
 
     pass
 
-
 # --- Player class ---
 class Player:
     # TODO: Create a class called Player
     pass
-
 
 # --- Board class ---
 class Board:

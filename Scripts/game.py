@@ -4,12 +4,11 @@ import constants as c
 import base_game_cls as base
 import random
 
-
 class Game:
-    def window_setup(self):
+    @staticmethod
+    def window_setup():
         pygame.init()
 
-        # Window
         window = pygame.display.set_mode((c.SCREEN_WIDTH, c.SCREEN_HEIGHT))
         pygame.display.set_caption("Catan")
         icon = pygame.image.load("../Assets/icon.png")
@@ -19,8 +18,7 @@ class Game:
         return window
     
     # --- Main loop ---
-    def main(self):
-        window = self.window_setup()
+    def main(window):
 
         # Game loop variables
         dice_first_dsp = True
@@ -31,11 +29,10 @@ class Game:
         window.fill(c.LIGHT_CYAN_BLUE)
 
         # --- Hexagon grid ---
-        hexagon_numbers = [2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12, -1]
-        hexagon_numbers.sort(key=lambda x: random.random())
-        base.HexagonTile.create_hexagon_grid(
-            window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS, hexagon_numbers
-        )
+        base.HexagonTile.create_hexagon_grid(window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS)
+
+        print(base.HexagonTile.resourcesArray)
+        print(base.HexagonTile.center_points)
 
         while running:
             # --- Event loop ---
@@ -50,12 +47,15 @@ class Game:
 
                         if sum(roll) == 7:
                             print("Robber")
+                            # Remove robber
+                            base.HexagonTile.create_hexagon_grid(window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS, False)
                             # TODO: Move robber
 
             # --- Dice ---
             dice_btn = base.Board.roll_dice_btn(window)
 
             if dice_first_dsp:
+                base.Robber.create_robber(window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS)
                 base.Dice.dices(window, [1, 1])
                 dice_first_dsp = False
 
@@ -65,6 +65,8 @@ class Game:
 
         pygame.quit()
 
-if __name__ == "__main__":
-    game_instance = Game()
-    game_instance.main()
+    # TODO: remove this after testing
+    if __name__ == "__main__":
+        window = window_setup()
+        main(window)
+        exit()
