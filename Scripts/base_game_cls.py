@@ -157,24 +157,6 @@ class HexagonTile:
 
 
 # --- Settlement class ---
-class Settlement:
-    def __init__(self, placement_node: tuple, window):
-        """ Places settlement on the map
-
-        :param placement_node: Position of the desired settlement
-        """
-
-        self.center = placement_node
-
-        self.__draw_settlement(window)
-
-    def __draw_settlement(self, window):
-        """ Draws settlement icon on the map
-
-        :param window:
-        :return:
-        """
-        pygame.draw.circle(window, (255, 50, 255), self.center, c.SETTLEMENT_SPRITE, 0)
 
 
 # --- Road class ---
