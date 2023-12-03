@@ -11,7 +11,9 @@ class SettlementHover:
 		pass
 
 	def trigger(self, hover_areas, window):
-		for area in hover_areas:
-			if area.collidepoint(pygame.mouse.get_pos()):
-				print(time.time())
+		for surface, position in hover_areas.items():
+			settlement_area = surface.get_rect(topleft=position)
+
+			if settlement_area.collidepoint(pygame.mouse.get_pos()):
+				print("ceva")
 				# pygame.transform.scale(area, (0, 0))

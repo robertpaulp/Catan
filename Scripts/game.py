@@ -60,10 +60,9 @@ class Game:
                             base.HexagonTile.create_hexagon_grid(window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS, False)
                             # TODO: Move robber
 
-                # elif event.type == pygame.MOUSEMOTION:
-            for area, position in settlement_locations.items():
-                if area.get_rect(topleft=position).collidepoint(pygame.mouse.get_pos()):
-                    print("ceva")
+                elif event.type == pygame.MOUSEMOTION:
+                    settlement_hover_event = SettlementHover()
+                    settlement_hover_event.trigger(settlement_locations, window)
 
             # --- Dice ---
 
