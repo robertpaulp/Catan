@@ -1,6 +1,7 @@
 import pygame.draw
 
-from board_elements import settlement
+from board_elements.settlement import *
+from game import redraw_board
 from base_game_cls import HexagonTile
 from constants import *
 import time
@@ -11,10 +12,11 @@ class SettlementHover:
 		pass
 
 	@staticmethod
-	def trigger(hover_areas, window):
-		for surface, position in hover_areas.items():
-			settlement_area = surface.get_rect(topleft=position)
-
-			if settlement_area.collidepoint(pygame.mouse.get_pos()):
+	def trigger(window):
+		for settlement in Settlement.settlements:
+			if settlement.rect.collidepoint(pygame.mouse.get_pos()) and settlement.is_hovered is False:
 				print("ceva")
-				# pygame.transform.scale(area, (0, 0))
+				settlement.hover_state(window)
+
+			# else:
+			# 	redraw_board(window)
