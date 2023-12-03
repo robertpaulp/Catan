@@ -2,7 +2,12 @@
 import pygame
 import constants as c
 import base_game_cls as base
+from base_game_cls import *
 import random
+from events import *
+
+window = None
+
 
 class Game:
     @staticmethod
@@ -51,7 +56,11 @@ class Game:
                             base.HexagonTile.create_hexagon_grid(window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS, False)
                             # TODO: Move robber
 
+                settlement_hover_event = SettlementHover()
+                settlement_hover_event.trigger(window)
+
             # --- Dice ---
+
             dice_btn = base.Board.roll_dice_btn(window)
 
             if dice_first_dsp:
@@ -60,6 +69,10 @@ class Game:
                 dice_first_dsp = False
 
             base.Dice.dices(window, roll)
+
+            # --- Settlement Events ---
+
+            # settlement = Settlement(HexagonTile.center_points[0], window)
 
             pygame.display.update()
 
