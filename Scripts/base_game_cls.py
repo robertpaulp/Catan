@@ -75,7 +75,7 @@ class HexagonTile:
         window.blit(text, text_rect)
 
     def create_row(window, x, y, hexagon_numbers, rows):
-        for row in range(0,rows):
+        for row in range(0, rows):
             HexagonTile.create_hexagon(window, x, y)
             number = hexagon_numbers.pop(0)
             if HexagonTile.check_for_desert(number):
@@ -90,16 +90,17 @@ class HexagonTile:
             return True
 
 
-
 # --- Settlement class ---
 class Settlement:
     # TODO: Create a class called Settlement
     pass
 
+
 # --- Road class ---
 class Road:
     # TODO: Create a class called Road 
     pass
+
 
 # --- Robber class ---
 class Robber:
@@ -110,27 +111,33 @@ class Robber:
     # ADD card elimination if > 7 cards
     pass
 
+
 # --- Dice class ---
 class Dice:
 
+    @staticmethod
     def dice_one(window, x, y):
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_CENTER, y + c.DOT_OFFSET_CENTER), c.DOT_RADIUS, 0)
 
+    @staticmethod
     def dice_two(window, x, y):
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_DOWN, y + c.DOT_OFFSET_UP), c.DOT_RADIUS, 0)
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_UP, y + c.DOT_OFFSET_DOWN), c.DOT_RADIUS, 0)
 
+    @staticmethod
     def dice_three(window, x, y):
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_UP, y + c.DOT_OFFSET_DOWN), c.DOT_RADIUS, 0)
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_CENTER, y + c.DOT_OFFSET_CENTER), c.DOT_RADIUS, 0)
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_DOWN, y + c.DOT_OFFSET_UP), c.DOT_RADIUS, 0)
 
+    @staticmethod
     def dice_four(window, x, y):
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_UP, y + c.DOT_OFFSET_UP), c.DOT_RADIUS, 0)
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_UP, y + c.DOT_OFFSET_DOWN), c.DOT_RADIUS, 0)
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_DOWN, y + c.DOT_OFFSET_UP), c.DOT_RADIUS, 0)
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_DOWN, y + c.DOT_OFFSET_DOWN), c.DOT_RADIUS, 0)
 
+    @staticmethod
     def dice_five(window, x, y):
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_UP, y + c.DOT_OFFSET_UP), c.DOT_RADIUS, 0)
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_UP, y + c.DOT_OFFSET_DOWN), c.DOT_RADIUS, 0)
@@ -138,6 +145,7 @@ class Dice:
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_DOWN, y + c.DOT_OFFSET_DOWN), c.DOT_RADIUS, 0)
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_CENTER, y + c.DOT_OFFSET_CENTER), c.DOT_RADIUS, 0)
 
+    @staticmethod
     def dice_six(window, x, y):
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_UP, y + c.DOT_OFFSET_UP), c.DOT_RADIUS, 0)
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_UP, y + c.DOT_OFFSET_CENTER), c.DOT_RADIUS, 0)
@@ -146,14 +154,17 @@ class Dice:
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_DOWN, y + c.DOT_OFFSET_CENTER), c.DOT_RADIUS, 0)
         pygame.draw.circle(window, c.BLACK, (x + c.DOT_OFFSET_DOWN, y + c.DOT_OFFSET_DOWN), c.DOT_RADIUS, 0)
 
+    @staticmethod
     def create_dice(window, x, y):
         pygame.draw.rect(window, c.WHITE,(x, y, c.DICE_WIDTH, c.DICE_HEIGHT), 0, -1, c.DICE_CORNER_RADIUS, c.DICE_CORNER_RADIUS, c.DICE_CORNER_RADIUS, c.DICE_CORNER_RADIUS)
 
+    @staticmethod
     def dice_roll():
         dice = np.random.randint(1, 7)
         return dice
-    
-    def dice_display_face(face, window, x=c.DICE_X_AXIS, y=c.DICE_Y_AXIS):
+
+    @classmethod
+    def dice_display_face(cls, face, window, x=c.DICE_X_AXIS, y=c.DICE_Y_AXIS):
         if face == 1:
             Dice.dice_one(window, x, y)
         elif face == 2:
@@ -169,7 +180,8 @@ class Dice:
         else:
             print("Error")
 
-    def dices(window, roll, x= c.DICE_X_AXIS, y= c.DICE_Y_AXIS):
+    @classmethod
+    def dices(cls, window, roll, x= c.DICE_X_AXIS, y= c.DICE_Y_AXIS):
         if roll[0] != 0:
             Dice.create_dice(window, x, y)
             Dice.dice_display_face(roll[0], window, x, y)
@@ -186,10 +198,12 @@ class Card:
 
     pass
 
+
 # --- Player class ---
 class Player:
     # TODO: Create a class called Player
     pass
+
 
 # --- Board class ---
 class Board:
