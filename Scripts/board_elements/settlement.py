@@ -4,14 +4,20 @@ from Scripts.base_game_cls import HexagonTile
 
 
 def prepare_board_surfaces(window, nodes):
+	""" Places possible settlement position surfaces on the map
+
+	:param window:
+	:param nodes: Hexagon nodes
+	:return: Dictionary containing (surface, position) elements
+	"""
+
 	settlement_locations = {}
 
 	for node in nodes:
-		surface = pygame.Surface((SETTLEMENT_SPRITE + 10, SETTLEMENT_SPRITE + 10), pygame.SRCALPHA)
+		surface = pygame.Surface((SETTLEMENT_SPRITE * 2, SETTLEMENT_SPRITE * 2), pygame.SRCALPHA)
 		hover_area = pygame.draw.circle(surface, (255, 0, 0, 50), (SETTLEMENT_SPRITE, SETTLEMENT_SPRITE), 10, 0)
-		position = tuple(map(lambda x: x - 10, list(node)))
+		position = tuple(map(lambda x: x - SETTLEMENT_SPRITE, list(node)))
 
-		# settlement_locations.append(hover_area)
 		settlement_locations[surface] = position
 
 		window.blit(surface, position)

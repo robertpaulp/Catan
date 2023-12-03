@@ -10,7 +10,8 @@ class SettlementHover:
 	def __init__(self):
 		pass
 
-	def trigger(self, hover_areas, window):
+	@staticmethod
+	def trigger(hover_areas, window):
 		for surface, position in hover_areas.items():
 			settlement_area = surface.get_rect(topleft=position)
 

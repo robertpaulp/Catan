@@ -61,8 +61,7 @@ class Game:
                             # TODO: Move robber
 
                 elif event.type == pygame.MOUSEMOTION:
-                    settlement_hover_event = SettlementHover()
-                    settlement_hover_event.trigger(settlement_locations, window)
+                    SettlementHover.trigger(settlement_locations, window)
 
             # --- Dice ---
 
