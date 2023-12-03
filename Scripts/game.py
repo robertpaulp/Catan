@@ -63,8 +63,6 @@ class Game:
         print(base.HexagonTile.resourcesArray)
         print(base.HexagonTile.center_points)
 
-        settlement_hover_event = SettlementHover()
-
         while running:
             # --- Settlement ---
             settlement_locations = Settlement.prepare_board_surfaces(window, HexagonTile.hexagon_points, 0)
@@ -78,8 +76,6 @@ class Game:
                     running = False
 
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-
-
                     if dice_btn.collidepoint(mouse_pos):
                         roll = [base.Dice.dice_roll(), base.Dice.dice_roll()]
 
@@ -88,10 +84,7 @@ class Game:
                             redraw_board(window)
 
                     # Place settlement event
-                    for settlement in Settlement.settlements:  # TODO: move to event handler
-                        if settlement.rect.collidepoint(mouse_pos) and settlement.is_placed is False:
-                            settlement.draw_settlement(window)
-                            settlement.is_placed = True
+                    SettlementEventHandler.handle_settlement_placement(window)
 
                 # elif event.type == pygame.MOUSEMOTION: # TODO: rethink hover mode / work with sprites!
                 # SettlementHover.trigger(window)

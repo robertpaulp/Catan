@@ -7,7 +7,7 @@ from constants import *
 import time
 
 
-class SettlementHover:
+class SettlementEventHandler:
 	def __init__(self):
 		pass
 
@@ -18,5 +18,11 @@ class SettlementHover:
 				print("ceva")
 				settlement.hover_state(window)
 
-			# else:
-			# 	redraw_board(window)
+	@staticmethod
+	def handle_settlement_placement(window):
+		mouse_pos = pygame.mouse.get_pos()
+
+		for settlement in Settlement.settlements:  # TODO: move to event handler
+			if settlement.rect.collidepoint(mouse_pos) and settlement.is_placed is False:
+				settlement.draw_settlement(window)
+				settlement.is_placed = True
