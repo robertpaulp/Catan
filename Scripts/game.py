@@ -3,6 +3,7 @@ import pygame
 import constants as c
 import base_game_cls as base
 from base_game_cls import *
+from board_elements.settlement import *
 import random
 from events import *
 
@@ -39,6 +40,9 @@ class Game:
         print(base.HexagonTile.resourcesArray)
         print(base.HexagonTile.center_points)
 
+        settlement_locations = prepare_board_surfaces(window, HexagonTile.hexagon_points)
+        settlement_hover_event = SettlementHover()
+
         while running:
             # --- Event loop ---
             for event in pygame.event.get():
@@ -56,8 +60,10 @@ class Game:
                             base.HexagonTile.create_hexagon_grid(window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS, False)
                             # TODO: Move robber
 
-                settlement_hover_event = SettlementHover()
-                settlement_hover_event.trigger(window)
+                # elif event.type == pygame.MOUSEMOTION:
+            for area, position in settlement_locations.items():
+                if area.get_rect(topleft=position).collidepoint(pygame.mouse.get_pos()):
+                    print("ceva")
 
             # --- Dice ---
 
