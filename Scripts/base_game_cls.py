@@ -4,8 +4,9 @@ import math
 import numpy as np
 import pygame
 import random
-import game
+# from game import window
 import constants as c
+
 
 # --- Hexagon class ---
 class HexagonTile:
@@ -40,7 +41,11 @@ class HexagonTile:
             (x - c.HEXAGON_SIDE, y + c.HEXAGON_SIDE * 1.2)            # Bottom left
             
         ]
-        HexagonTile.hexagon_points.append(vertices)
+
+        for node in vertices:
+            HexagonTile.hexagon_points.append(node)
+        HexagonTile.hexagon_points = list(set(HexagonTile.hexagon_points))
+
         if image is not None:
             image = pygame.image.load(image)
             image = pygame.transform.scale(image, (c.HEXAGON_WIDTH * 1.1, c.HEXAGON_HEIGHT * 1.35))
@@ -104,6 +109,7 @@ class HexagonTile:
             number = hexagon_numbers.pop(0)
             if HexagonTile.check_for_desert(number):
                 resource = HexagonTile.resourcesArray.pop(0)
+                image = None;
                 for i in range(0, len(HexagonTile.resources)):
                     if resource == HexagonTile.resources[i][0]:
                         image = HexagonTile.resources[i][1]
@@ -149,15 +155,33 @@ class HexagonTile:
         HexagonTile.resourcesArray = resources_copy.copy()
         HexagonTile.hexagon_numbers = hexagon_numbers_copy.copy()
 
+
 # --- Settlement class ---
 class Settlement:
-    # TODO: Create a class called Settlement
-    pass
+    def __init__(self, placement_node: tuple, window):
+        """ Places settlement on the map
+
+        :param placement_node: Position of the desired settlement
+        """
+
+        self.center = placement_node
+
+        self.__draw_settlement(window)
+
+    def __draw_settlement(self, window):
+        """ Draws settlement icon on the map
+
+        :param window:
+        :return:
+        """
+        pygame.draw.circle(window, (255, 50, 255), self.center, c.SETTLEMENT_SPRITE, 0)
+
 
 # --- Road class ---
 class Road:
     # TODO: Create a class called Road 
     pass
+
 
 # --- Robber class ---
 class Robber:
@@ -168,6 +192,7 @@ class Robber:
     # ADD card elimination if > 7 cards
     def create_robber(window, x, y):
         pygame.draw.circle(window, c.BLACK, (x + c.HEXAGON_SIDE * 0.1, y + c.HEXAGON_SIDE / 2), c.HEXAGON_SIDE / 3, 0)
+
 
 # --- Dice class ---
 class Dice:
@@ -245,10 +270,12 @@ class Card:
 
     pass
 
+
 # --- Player class ---
 class Player:
     # TODO: Create a class called Player
     pass
+
 
 # --- Board class ---
 class Board:
