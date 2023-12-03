@@ -47,8 +47,8 @@ class Settlement:
 		window.blit(self.image, (self.position[0] - SETTLEMENT_SPRITE, self.position[1] - SETTLEMENT_SPRITE))
 		pygame.display.update()
 
-	@classmethod
-	def prepare_board_surfaces(cls, window, nodes: tuple, opacity: int):
+	@staticmethod
+	def prepare_board_surfaces(window, nodes: tuple, opacity: int):
 		""" Places possible settlement position surfaces on the map
 
 		:param window: Window surface display
