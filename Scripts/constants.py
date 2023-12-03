@@ -22,6 +22,10 @@ HEXAGON_CENTER = HEXAGON_HEIGHT / 2
 HEXAGON_X_AXIS = SCREEN_WIDTH / 2 - HEXAGON_WIDTH / 2 - HEXAGON_WIDTH
 HEXAGON_Y_AXIS = 75
 
+# Settlement
+
+SETTLEMENT_SPRITE = 15
+
 # Sprite Constants
 WOOD_SPRITE = "../Assets/Sprites/forest.png"
 WHEAT_SPRITE = "../Assets/Sprites/field.png"
