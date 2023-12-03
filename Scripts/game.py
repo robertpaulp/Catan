@@ -9,7 +9,6 @@ from events import *
 
 window = None
 
-
 class Game:
     @staticmethod
     def window_setup():
@@ -31,6 +30,8 @@ class Game:
         running = True
         roll = [0, 0]
 
+        opacity = 255
+
         # --- Background ---
         window.fill(c.LIGHT_CYAN_BLUE)
 
@@ -40,10 +41,12 @@ class Game:
         print(base.HexagonTile.resourcesArray)
         print(base.HexagonTile.center_points)
 
-        settlement_locations = prepare_board_surfaces(window, HexagonTile.hexagon_points)
         settlement_hover_event = SettlementHover()
 
         while running:
+            # --- Settlement ---
+            settlement_locations = Settlement.prepare_board_surfaces(window, HexagonTile.hexagon_points, 0)
+
             # --- Event loop ---
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -51,6 +54,7 @@ class Game:
 
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     mouse_pos = pygame.mouse.get_pos()
+
                     if dice_btn.collidepoint(mouse_pos):
                         roll = [base.Dice.dice_roll(), base.Dice.dice_roll()]
 
@@ -60,8 +64,24 @@ class Game:
                             base.HexagonTile.create_hexagon_grid(window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS, False)
                             # TODO: Move robber
 
-                elif event.type == pygame.MOUSEMOTION:
-                    SettlementHover.trigger(settlement_locations, window)
+                            for settlement in Settlement.settlements:
+                                if settlement.placed is True:
+                                    settlement.draw_settlement(window)
+
+                                    window.blit(settlement.image, (settlement.position[0] - SETTLEMENT_SPRITE, settlement.position[1] - SETTLEMENT_SPRITE))
+                                    pygame.display.update()
+
+                    # Place settlement event
+                    for settlement in Settlement.settlements:  # TODO: move to event handler
+                        if settlement.rect.collidepoint(mouse_pos) and settlement.placed is False:
+                            settlement.draw_settlement(window)
+                            settlement.placed = True
+
+                            window.blit(settlement.image, (settlement.position[0] - SETTLEMENT_SPRITE, settlement.position[1] - SETTLEMENT_SPRITE))
+                            pygame.display.update()
+
+                # elif event.type == pygame.MOUSEMOTION: # TODO: rethink hover mode / work with sprites!
+                #     SettlementHover.trigger(settlement_locations, opacity, window)
 
             # --- Dice ---
 
@@ -73,10 +93,6 @@ class Game:
                 dice_first_dsp = False
 
             base.Dice.dices(window, roll)
-
-            # --- Settlement Events ---
-
-            # settlement = Settlement(HexagonTile.center_points[0], window)
 
             pygame.display.update()
 

@@ -3,12 +3,12 @@ from Scripts.constants import *
 from Scripts.base_game_cls import HexagonTile
 
 settlement_img = pygame.Surface((SETTLEMENT_SPRITE * 3, SETTLEMENT_SPRITE * 3), pygame.SRCALPHA)
-
+color = (200, 100, 23, 255)
 
 class Settlement:
 	settlements = []
 
-	def __init__(self, window, position):
+	def __init__(self, window, position, color):
 		""" Places settlement on the map
 
 		"""
@@ -16,17 +16,17 @@ class Settlement:
 		self.image = pygame.Surface((SETTLEMENT_SPRITE * 3, SETTLEMENT_SPRITE * 3), pygame.SRCALPHA)
 		self.rect = self.image.get_rect(center=position)
 		self.position = position
+		self.placed = False
+		self.color = color
 
-		self.__draw_settlement(window)
-
-	def __draw_settlement(self, window):
+	def draw_settlement(self, window):
 		""" Draws settlement icon on the map
 
 		:param window:
 		:return:
 		"""
 
-		# pygame.draw.circle(window, (255, 50, 255), self.center, SETTLEMENT_SPRITE, 0)
+		pygame.draw.circle(self.image, color, (SETTLEMENT_SPRITE, SETTLEMENT_SPRITE), SETTLEMENT_SPRITE, 0)
 
 	@classmethod
 	def prepare_board_surfaces(cls, window, nodes: tuple, opacity: int):
@@ -40,13 +40,13 @@ class Settlement:
 		settlement_locations = {}
 
 		for node in nodes:
-			settlement = Settlement(window, node)
+			settlement = Settlement(window, node, color)
 			# settlement.image = pygame.Surface((SETTLEMENT_SPRITE * 3, SETTLEMENT_SPRITE * 3), pygame.SRCALPHA)
 
 			cls.settlements.append(settlement)
 
-			settlement.image.set_alpha(0)
-			hover_area = pygame.draw.circle(settlement.image, (255, 0, 0, 255),
+			settlement.image.set_alpha(255)
+			hover_area = pygame.draw.circle(settlement.image, (0, 0, 0, 0),
 			                                (SETTLEMENT_SPRITE, SETTLEMENT_SPRITE), SETTLEMENT_SPRITE, 0)
 			position = tuple(map(lambda x: x - SETTLEMENT_SPRITE, list(node)))
 
