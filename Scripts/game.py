@@ -64,8 +64,8 @@ class Game:
         print(base.HexagonTile.center_points)
 
         while running:
-            # --- Settlement ---
-            settlement_locations = Settlement.prepare_board_surfaces(window, HexagonTile.hexagon_points, 0)
+            # --- Settlement Surfaces---
+            Settlement.prepare_board_surfaces(window, HexagonTile.hexagon_points, 0)
 
             # --- Event loop ---
 

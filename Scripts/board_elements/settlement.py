@@ -56,12 +56,8 @@ class Settlement:
 		:return: Dictionary containing (surface, position) elements
 		"""
 
-		settlement_locations = {}
-
 		for node in nodes:
 			settlement = Settlement(window, node, color)
-			# settlement.image = pygame.Surface((SETTLEMENT_SPRITE * 3, SETTLEMENT_SPRITE * 3), pygame.SRCALPHA)
-
 			cls.settlements.append(settlement)
 
 			settlement.image.set_alpha(255)
@@ -69,9 +65,5 @@ class Settlement:
 			                                (SETTLEMENT_SPRITE, SETTLEMENT_SPRITE), SETTLEMENT_SPRITE, 0)
 			position = tuple(map(lambda x: x - SETTLEMENT_SPRITE, list(node)))
 
-			settlement_locations[settlement.image] = position
-
 			window.blit(settlement.image, position)
 			pygame.display.update()
-
-		return settlement_locations
