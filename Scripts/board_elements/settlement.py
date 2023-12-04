@@ -55,9 +55,10 @@ class Settlement:
 		pygame.display.update()
 
 	@classmethod
-	def prepare_board_surfaces(cls, window, nodes: tuple):
+	def prepare_board_surfaces(cls, window, nodes: tuple, hexagons: list):
 		""" Places possible settlement position surfaces on the map
 
+		:param hexagons: Hexagon tiles
 		:param window: Window surface display
 		:param nodes: Hexagon nodes
 		:return: Dictionary containing (surface, position) elements
@@ -65,6 +66,12 @@ class Settlement:
 
 		for node in nodes:
 			settlement = Settlement(window, node, color)
+
+			# Get adjacent resources
+			for hexagon in hexagons:
+				if node in hexagon.vertices:
+					settlement.resources.append(hexagon.resource)
+
 			cls.settlements.append(settlement)
 
 			settlement.image.set_alpha(255)
