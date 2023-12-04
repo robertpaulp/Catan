@@ -3,7 +3,7 @@ from constants import *
 import base_game_cls as base
 from base_game_cls import *
 from board_elements.settlement import Settlement
-from board_elements.road import Road
+from Scripts.board_elements.road import Road, roads
 
 # Importing player
 from Scripts.player.player import Player
@@ -11,7 +11,6 @@ from Scripts.player.player import Player
 # Importing events
 from Scripts.events.settlement_events import SettlementEventHandler
 from Scripts.events.road_events import RoadEventHandler
-
 
 
 def redraw_board(window):  # TODO: maybe turn static
@@ -76,14 +75,14 @@ class Game:
 
         while running:
             # --- Roads ---
-            if len(Road.roads) != 0:
-                current_road = Road.roads[-1]
+            if len(roads) != 0:
+                current_road = roads[-1]
             else:
                 current_road = Road()
-                Road.roads.append(current_road)
+                roads.append(current_road)
 
             if current_road.is_placed is True:  # If we successfully placed a road, prepare a new one
-                Road.roads.append(Road())
+                roads.append(Road())
 
             # --- Event loop ---
             mouse_pos = pygame.mouse.get_pos()
@@ -115,20 +114,24 @@ class Game:
                     # Prepare settlement event
                     SettlementEventHandler.place_settlement(window, Settlement.settlements, player, "prepared")
 
-                    # Place road event TODO
+                    # Place road event
                     RoadEventHandler.place_road(window, event, Settlement.settlements, current_road, player, "press")
 
                 elif event.type == pygame.MOUSEBUTTONUP:
-                    # Release road event TODO
+                    # Release road event
                     print("entered")
-                    RoadEventHandler.place_road(window, event, Settlement.settlements, current_road, player, "release")
-                    print(current_road.is_dragged)
+
+                    # If placing the road was unsuccessful, remove it from the list
+                    if RoadEventHandler.place_road(window, event, Settlement.settlements, current_road, player, "release") == -1:
+                        roads.pop()
+                    else:
+                        print(current_road.is_dragged)
 
                     # Place settlement event
                     SettlementEventHandler.place_settlement(window, Settlement.settlements, player, "placing")
 
                 elif event.type == pygame.MOUSEMOTION:
-                    # Dragging road event TODO
+                    # Dragging road event
                     RoadEventHandler.place_road(window, event, Settlement.settlements, current_road, player, "dragging")
 
                     # Hover settlement event TODO
