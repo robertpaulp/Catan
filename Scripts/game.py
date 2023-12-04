@@ -25,6 +25,12 @@ def redraw_board(window):  # TODO: maybe turn static
     base.HexagonTile.create_hexagon_grid(window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS, False)
     # TODO: Move robber
 
+    # Replace roads
+    for road in roads:
+        if road.is_placed is True:
+            road.draw_road(window)
+
+    # Replace settlements
     for settlement in Settlement.settlements:
         if settlement.is_placed is True:
             settlement.draw_settlement(window)
@@ -75,14 +81,14 @@ class Game:
 
         while running:
             # --- Roads ---
-            if len(roads) != 0:
-                current_road = roads[-1]
+            if len(player.roads) != 0:
+                current_road = player.roads[-1]
             else:
                 current_road = Road()
-                roads.append(current_road)
+                player.roads.append(current_road)
 
             if current_road.is_placed is True:  # If we successfully placed a road, prepare a new one
-                roads.append(Road())
+                player.roads.append(Road())
 
             # --- Event loop ---
             mouse_pos = pygame.mouse.get_pos()
@@ -123,9 +129,10 @@ class Game:
 
                     # If placing the road was unsuccessful, remove it from the list
                     if RoadEventHandler.place_road(window, event, Settlement.settlements, current_road, player, "release") == -1:
-                        roads.pop()
+                        player.roads.pop()
                     else:
-                        print(current_road.is_dragged)
+                        # If placing the road was successful, append it to the main list of roads as well
+                        roads.append(current_road)
 
                     # Place settlement event
                     SettlementEventHandler.place_settlement(window, Settlement.settlements, player, "placing")

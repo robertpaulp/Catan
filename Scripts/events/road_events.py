@@ -51,7 +51,7 @@ class RoadEventHandler:
 								return -1
 
 							# Check if there is not already a road between the two settlements
-							for existing_road in roads:
+							for existing_road in player.roads:
 								if existing_road.start == road.start and existing_road.end == settlement.position:
 									road.is_dragged = False
 									return -1
