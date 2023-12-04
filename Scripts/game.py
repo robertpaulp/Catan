@@ -1,9 +1,17 @@
 # Importing modules
+from constants import *
 import base_game_cls as base
-from Scripts.events.road_events import RoadEventHandler
 from base_game_cls import *
-from board_elements.settlement import *
+from board_elements.settlement import Settlement
+from board_elements.road import Road
+
+# Importing player
+from Scripts.player.player import Player
+
+# Importing events
 from Scripts.events.settlement_events import SettlementEventHandler
+from Scripts.events.road_events import RoadEventHandler
+
 
 
 def redraw_board(window):  # TODO: maybe turn static
@@ -58,12 +66,24 @@ class Game:
         print(base.HexagonTile.resourcesArray)
         print(base.HexagonTile.center_points)
 
-        while running:
-            # --- Player ---
-            player = Player()
+        # --- Settlement Surfaces ---
+        Settlement.prepare_board_surfaces(window, base.HexagonTile.distinct_vertices, base.HexagonTile.hexagons)
 
-            # --- Settlement Surfaces---
-            Settlement.prepare_board_surfaces(window, base.HexagonTile.distinct_vertices, base.HexagonTile.hexagons)
+        # --- Roads ---
+
+        # --- Player ---
+        player = Player()
+
+        while running:
+            # --- Roads ---
+            if len(Road.roads) != 0:
+                current_road = Road.roads[-1]
+            else:
+                current_road = Road()
+                Road.roads.append(current_road)
+
+            if current_road.is_placed is True:  # If we successfully placed a road, prepare a new one
+                Road.roads.append(Road())
 
             # --- Event loop ---
             mouse_pos = pygame.mouse.get_pos()
@@ -92,24 +112,27 @@ class Game:
                             # base.HexagonTile.create_hexagon_grid(window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS, False)
                             # TODO: Move robber
 
-                    # Place settlement event
-                    SettlementEventHandler.place_settlement(window)
+                    # Prepare settlement event
+                    SettlementEventHandler.place_settlement(window, Settlement.settlements, player, "prepared")
 
                     # Place road event TODO
-                    RoadEventHandler.place_road(window, event, player, "press")
+                    RoadEventHandler.place_road(window, event, Settlement.settlements, current_road, player, "press")
 
                 elif event.type == pygame.MOUSEBUTTONUP:
                     # Release road event TODO
-                    RoadEventHandler.place_road(window, event, player, "release")
+                    print("entered")
+                    RoadEventHandler.place_road(window, event, Settlement.settlements, current_road, player, "release")
+                    print(current_road.is_dragged)
+
+                    # Place settlement event
+                    SettlementEventHandler.place_settlement(window, Settlement.settlements, player, "placing")
 
                 elif event.type == pygame.MOUSEMOTION:
                     # Dragging road event TODO
-                    RoadEventHandler.place_road(window, event, player, "dragging")
+                    RoadEventHandler.place_road(window, event, Settlement.settlements, current_road, player, "dragging")
 
                     # Hover settlement event TODO
                     # SettlementEventHandler.hover_settlement(window)
-
-
 
             # --- Dice ---
 
