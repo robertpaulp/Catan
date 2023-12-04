@@ -17,7 +17,7 @@ class SettlementEventHandler:
 				settlement.hover_state(window)
 
 	@staticmethod
-	def settlement_placement(window):
+	def place_settlement(window):
 		mouse_pos = pygame.mouse.get_pos()
 
 		for settlement in Settlement.settlements:
