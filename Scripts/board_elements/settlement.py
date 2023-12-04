@@ -6,9 +6,11 @@ settlement_img = pygame.Surface((SETTLEMENT_SPRITE * 3, SETTLEMENT_SPRITE * 3), 
 color = (200, 100, 23)
 lowered_opacity_color = (200, 100, 23, 50)
 
+settlements = []
+
 
 class Settlement:
-	settlements = []
+	# settlements = []
 
 	def __init__(self, window, position, color):
 		""" Instantiates settlement object
@@ -56,8 +58,8 @@ class Settlement:
 		window.blit(self.image, (self.position[0] - SETTLEMENT_SPRITE, self.position[1] - SETTLEMENT_SPRITE))
 		pygame.display.update()
 
-	@classmethod
-	def prepare_board_surfaces(cls, window, nodes: tuple, hexagons: list):
+	@staticmethod
+	def prepare_board_surfaces(window, nodes: tuple, hexagons: list):
 		""" Places possible settlement position surfaces on the map
 
 		:param hexagons: Hexagon tiles
@@ -75,7 +77,7 @@ class Settlement:
 					settlement.resources.append(hexagon.resource)
 					settlement.dice_rolls.append(hexagon.number)
 
-			cls.settlements.append(settlement)
+			settlements.append(settlement)
 
 			settlement.image.set_alpha(255)
 			hover_area = pygame.draw.circle(settlement.image, (0, 0, 0, 0),

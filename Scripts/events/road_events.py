@@ -1,6 +1,6 @@
 import pygame
 
-from Scripts.board_elements.settlement import *
+from Scripts.board_elements.settlement import Settlement, settlements
 from Scripts.constants import *
 from Scripts.player.player import Player
 from Scripts.board_elements.road import Road, roads
@@ -10,70 +10,85 @@ import time
 
 class RoadEventHandler:
 	@staticmethod
-	def place_road(window, event: pygame.event, settlements: list, road: Road, player: Player, action: str):
-		""" Handles road placement events
+	def press(window, event: pygame.event, road, player: Player):
+		""" Handles road press events
 
-		:param settlements:
 		:param window: Display window
 		:param event: Event to handle
 		:param road: Road to place
 		:param player: Current player
-		:param action: Action to perform
 		:return: None
 		"""
 		mouse_pos = pygame.mouse.get_pos()
 
-		match action:
-			case "press":
-				if event.button == 1:
-					for settlement in player.settlements:
-						if settlement.rect.collidepoint(mouse_pos):
-							print("pressed")
-							# Set road mouse-dragging state to True
-							road.is_dragged = True
-							road.borders.append(settlement)
+		if event.button == 1:
+			for settlement in player.settlements:
+				if settlement.rect.collidepoint(mouse_pos):
+					print("pressed")
+					# Set road mouse-dragging state to True
+					road.is_dragged = True
+					road.borders.append(settlement)
 
-							# Set road start point
-							mouse_x, mouse_y = event.pos
+					# Set road start point
+					mouse_x, mouse_y = event.pos
 
-							if road.start == [0, 0]:  # If road has not been placed yet
-								road.start = settlement.position
+					if road.start == [0, 0]:  # If road has not been placed yet
+						road.start = settlement.position
 
-			case "release":
-				if event.button == 1:
-					for settlement in settlements:
-						# If mouse was released on a valid settlement, draw the road
-						# Check if road has valid start point (settlement exists)
-						if settlement.rect.collidepoint(event.pos) and road.start != [0, 0]:
-							# Check if the end settlement is not the same as the start settlement
-							if settlement.position == road.start:
-								road.is_dragged = False
-								return -1
+	@staticmethod
+	def place(window, event: pygame.event, road: Road, player: Player):
+		""" Handles road placement events
 
-							# Check if there is not already a road between the two settlements
-							for existing_road in player.roads:
-								if existing_road.start == road.start and existing_road.end == settlement.position:
-									road.is_dragged = False
-									return -1
+		:param window: Display window
+		:param event: Event to handle
+		:param road: Road to place
+		:param player: Current player
+		:return: None
+		"""
 
-							print("placed")
-							road.borders.append(settlement)  # Append end settlement to road borders
+		if event.button == 1:
+			for settlement in settlements:
+				# If mouse was released on a valid settlement, draw the road
+				# Check if road has valid start point (settlement exists)
+				if settlement.rect.collidepoint(event.pos) and road.start != [0, 0]:
+					# Check if the end settlement is not the same as the start settlement
+					if settlement.position == road.start:
+						road.is_dragged = False
+						return -1
 
-							road.is_placed = True
+					# Check if there is not already a road between the two settlements
+					for existing_road in player.roads:
+						if existing_road.start == road.start and existing_road.end == settlement.position:
 							road.is_dragged = False
+							return -1
 
-							road.end = settlement.position
+					print("placed")
+					road.borders.append(settlement)  # Append end settlement to road borders
 
-							print(road.start, road.end)
-							road.draw_road(window)
-							return 0
-
-					# If mouse was not released on a valid settlement, reset road state
+					road.is_placed = True
 					road.is_dragged = False
-					return -1
 
-			case "dragging":
-				if road.is_dragged:
-					print("dragging")
-					road.end[0] = event.pos[0]
-					road.end[1] = event.pos[1]
+					road.end = settlement.position
+
+					print(road.start, road.end)
+					road.draw_road(window)
+					return 0
+
+			# If mouse was not released on a valid settlement, reset road state
+			road.is_dragged = False
+			return -1
+
+	@staticmethod
+	def drag(window, event: pygame.event, road: Road):
+		""" Drag road to mouse position
+
+		:param window: Display window
+		:param event: Event to handle
+		:param road: Road to place
+		:return: None
+		"""
+
+		if road.is_dragged:
+			print("dragging")
+			road.end[0] = event.pos[0]
+			road.end[1] = event.pos[1]
