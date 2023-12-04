@@ -1,11 +1,8 @@
 # Importing modules
-import pygame
-import constants as c
 import base_game_cls as base
 from base_game_cls import *
 from board_elements.settlement import *
-import random
-from events import SettlementEventHandler
+from Scripts.events.settlement_events import SettlementEventHandler
 
 
 def redraw_board(window):  # TODO: maybe turn static
@@ -94,8 +91,12 @@ class Game:
                     # Place settlement event
                     SettlementEventHandler.settlement_placement(window)
 
-                # elif event.type == pygame.MOUSEMOTION: # TODO: rethink hover mode / work with sprites!
-                # SettlementHover.trigger(window)
+                    # Place road event TODO
+
+                # Hover settlement event TODO
+                # SettlementEventHandler.hover_settlement(window)
+
+
 
             # --- Dice ---
 
