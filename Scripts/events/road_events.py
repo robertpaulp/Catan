@@ -45,6 +45,11 @@ class RoadEventHandler:
 						# If mouse was released on a valid settlement, draw the road
 						# Check if road has valid start point (settlement exists)
 						if settlement.rect.collidepoint(event.pos) and road.start != [0, 0]:
+							# Check if the end settlement is not the same as the start settlement
+							if settlement.position == road.start:
+								road.is_dragged = False
+								return -1
+
 							# Check if there is not already a road between the two settlements
 							for existing_road in roads:
 								if existing_road.start == road.start and existing_road.end == settlement.position:

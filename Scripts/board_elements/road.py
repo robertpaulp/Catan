@@ -21,4 +21,4 @@ class Road:
 		:return: None
 		"""
 
-		pygame.draw.line(window, (0, 0, 0), self.start, self.end, 5)
+		pygame.draw.line(window, (200, 50, 0), self.start, self.end, 7)
