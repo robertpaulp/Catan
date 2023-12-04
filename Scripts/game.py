@@ -1,5 +1,6 @@
 # Importing modules
 import base_game_cls as base
+from Scripts.events.road_events import RoadEventHandler
 from base_game_cls import *
 from board_elements.settlement import *
 from Scripts.events.settlement_events import SettlementEventHandler
@@ -58,6 +59,9 @@ class Game:
         print(base.HexagonTile.center_points)
 
         while running:
+            # --- Player ---
+            player = Player()
+
             # --- Settlement Surfaces---
             Settlement.prepare_board_surfaces(window, base.HexagonTile.distinct_vertices, base.HexagonTile.hexagons)
 
@@ -89,12 +93,21 @@ class Game:
                             # TODO: Move robber
 
                     # Place settlement event
-                    SettlementEventHandler.settlement_placement(window)
+                    SettlementEventHandler.place_settlement(window)
 
                     # Place road event TODO
+                    RoadEventHandler.place_road(window, event, player, "press")
 
-                # Hover settlement event TODO
-                # SettlementEventHandler.hover_settlement(window)
+                elif event.type == pygame.MOUSEBUTTONUP:
+                    # Release road event TODO
+                    RoadEventHandler.place_road(window, event, player, "release")
+
+                elif event.type == pygame.MOUSEMOTION:
+                    # Dragging road event TODO
+                    RoadEventHandler.place_road(window, event, player, "dragging")
+
+                    # Hover settlement event TODO
+                    # SettlementEventHandler.hover_settlement(window)
 
 
 
