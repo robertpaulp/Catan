@@ -11,7 +11,7 @@ class Settlement:
 	settlements = []
 
 	def __init__(self, window, position, color):
-		""" Places settlement on the map
+		""" Instantiates settlement object
 
 		"""
 
@@ -40,7 +40,7 @@ class Settlement:
 		window.blit(self.image, (self.position[0] - SETTLEMENT_SPRITE, self.position[1] - SETTLEMENT_SPRITE))
 		pygame.display.update()
 
-	def hover_state(self, window):
+	def hover_state(self, window):  # TODO
 		""" Draw lowered-opacity version of settlement during mouse hover
 
 		:param window:
