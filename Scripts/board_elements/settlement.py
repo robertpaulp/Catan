@@ -21,6 +21,7 @@ class Settlement:
 		self.position = position
 
 		# State attributes
+		self.prepared_for_placement = False
 		self.is_placed = False
 		self.is_hovered = False
 		self.color = color
