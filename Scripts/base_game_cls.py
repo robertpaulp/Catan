@@ -151,10 +151,6 @@ class HexagonTile:
         # Shuffle the array
         HexagonTile.resourcesArray.sort(key=lambda x: random.random())
 
-        # Assign resources to hexagons
-        for (resource, hexagon) in zip(HexagonTile.resourcesArray, HexagonTile.hexagons):
-            hexagon.resource = resource
-
     def create_row(window, x, y, hexagon_numbers, rows):
         for row in range(0,rows):
             number = hexagon_numbers.pop(0)
@@ -207,6 +203,10 @@ class HexagonTile:
         HexagonTile.resourcesArray = resources_copy.copy()
         HexagonTile.hexagon_numbers = hexagon_numbers_copy.copy()
         HexagonTile.append_center_points(HexagonTile.get_index("Desert"))
+
+        # Assign resources to hexagons
+        for (resource, hexagon) in zip(HexagonTile.resourcesArray, HexagonTile.hexagons):
+            hexagon.resource = resource
 
 # --- Settlement class ---
 class Settlement:
