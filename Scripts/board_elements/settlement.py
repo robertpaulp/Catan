@@ -6,6 +6,7 @@ settlement_img = pygame.Surface((SETTLEMENT_SPRITE * 3, SETTLEMENT_SPRITE * 3), 
 color = (200, 100, 23)
 lowered_opacity_color = (200, 100, 23, 50)
 
+
 class Settlement:
 	settlements = []
 
@@ -14,12 +15,18 @@ class Settlement:
 
 		"""
 
+		# Structural attributes
 		self.image = pygame.Surface((SETTLEMENT_SPRITE * 3, SETTLEMENT_SPRITE * 3), pygame.SRCALPHA)
 		self.rect = self.image.get_rect(center=position)
 		self.position = position
+
+		# State attributes
 		self.is_placed = False
 		self.is_hovered = False
 		self.color = color
+
+		# Gameplay attributes
+		self.resources = []
 
 	def draw_settlement(self, window):
 		""" Draws settlement icon on the map
@@ -48,7 +55,7 @@ class Settlement:
 		pygame.display.update()
 
 	@classmethod
-	def prepare_board_surfaces(cls, window, nodes: tuple, opacity: int):
+	def prepare_board_surfaces(cls, window, nodes: tuple):
 		""" Places possible settlement position surfaces on the map
 
 		:param window: Window surface display

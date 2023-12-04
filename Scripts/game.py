@@ -7,8 +7,6 @@ from board_elements.settlement import *
 import random
 from events import *
 
-window = None
-
 
 def redraw_board(window):  # TODO: maybe turn static
     """ Redraw assets in case of necessary board changes
@@ -45,14 +43,13 @@ class Game:
         return window
 
     # --- Main loop ---
+    @staticmethod
     def main(window):
 
         # Game loop variables
         dice_first_dsp = True
         running = True
         roll = [0, 0]
-
-        opacity = 255
 
         # --- Background ---
         window.fill(c.LIGHT_CYAN_BLUE)
@@ -65,10 +62,9 @@ class Game:
 
         while running:
             # --- Settlement Surfaces---
-            Settlement.prepare_board_surfaces(window, HexagonTile.hexagon_points, 0)
+            Settlement.prepare_board_surfaces(window, HexagonTile.hexagon_points)
 
             # --- Event loop ---
-
             mouse_pos = pygame.mouse.get_pos()
 
             for event in pygame.event.get():
@@ -88,8 +84,6 @@ class Game:
 
                 # elif event.type == pygame.MOUSEMOTION: # TODO: rethink hover mode / work with sprites!
                 # SettlementHover.trigger(window)
-
-
 
             # --- Dice ---
 
