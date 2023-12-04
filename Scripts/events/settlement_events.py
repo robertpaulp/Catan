@@ -22,5 +22,6 @@ class SettlementEventHandler:
 
 		for settlement in Settlement.settlements:
 			if settlement.rect.collidepoint(mouse_pos) and settlement.is_placed is False:
+				# Draw settlement sprite and change state
 				settlement.draw_settlement(window)
 				settlement.is_placed = True
