@@ -27,6 +27,7 @@ class Settlement:
 
 		# Gameplay attributes
 		self.resources = []
+		self.dice_rolls = []
 
 	def draw_settlement(self, window):
 		""" Draws settlement icon on the map
@@ -67,10 +68,11 @@ class Settlement:
 		for node in nodes:
 			settlement = Settlement(window, node, color)
 
-			# Get adjacent resources
+			# Get adjacent resources and dice roll values
 			for hexagon in hexagons:
 				if node in hexagon.vertices:
 					settlement.resources.append(hexagon.resource)
+					settlement.dice_rolls.append(hexagon.number)
 
 			cls.settlements.append(settlement)
 

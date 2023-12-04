@@ -208,6 +208,10 @@ class HexagonTile:
         for (resource, hexagon) in zip(HexagonTile.resourcesArray, HexagonTile.hexagons):
             hexagon.resource = resource
 
+        # Assign numbers to hexagons
+        for (number, hexagon) in zip(HexagonTile.hexagon_numbers, HexagonTile.hexagons):
+            hexagon.number = number
+
 # --- Settlement class ---
 class Settlement:
     # TODO: Create a class called Settlement
