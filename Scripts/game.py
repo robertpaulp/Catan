@@ -92,7 +92,7 @@ class Game:
                             # TODO: Move robber
 
                     # Place settlement event
-                    SettlementEventHandler.handle_settlement_placement(window)
+                    SettlementEventHandler.settlement_placement(window)
 
                 # elif event.type == pygame.MOUSEMOTION: # TODO: rethink hover mode / work with sprites!
                 # SettlementHover.trigger(window)

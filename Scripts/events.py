@@ -1,8 +1,6 @@
 import pygame.draw
 
 from board_elements.settlement import *
-from game import redraw_board
-from base_game_cls import HexagonTile
 from constants import *
 import time
 
@@ -12,14 +10,14 @@ class SettlementEventHandler:
 		pass
 
 	@staticmethod
-	def trigger(window):
+	def hover_settlement(window):
 		for settlement in Settlement.settlements:
 			if settlement.rect.collidepoint(pygame.mouse.get_pos()) and settlement.is_hovered is False:
 				print("ceva")
 				settlement.hover_state(window)
 
 	@staticmethod
-	def handle_settlement_placement(window):
+	def settlement_placement(window):
 		mouse_pos = pygame.mouse.get_pos()
 
 		for settlement in Settlement.settlements:  # TODO: move to event handler
