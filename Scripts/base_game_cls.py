@@ -21,6 +21,7 @@ class HexagonTile:
         ]
     hexagon_numbers = [2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12, -1]
     hexagon_points = []
+    desert_index = -1
 
     def create_hexagon(window, x = c.HEXAGON_X_CENTER, y = c.HEXAGON_Y_CENTER, image = None):
         vertices = [
@@ -66,6 +67,39 @@ class HexagonTile:
             return False
         else:
             return True
+        
+    def get_index(tile):
+        return HexagonTile.resourcesArray.index(tile)
+    
+    def check_for_corner_case(index):
+        # 0 : no problem
+        # 1 : there is no tile on the left
+        # 2 : there is no tile on the right
+        left_problem = [0, 3, 7, 12, 16]
+        right_problem = [2, 6, 11, 15, 18]
+        for i in left_problem:
+            if index == i:
+                return 1
+        for i in right_problem:
+            if index == i:
+                return 2
+        return 0
+
+    
+    def append_center_points(desert_idx):
+        check = HexagonTile.check_for_corner_case(desert_idx)
+        align_x = 0
+
+        if check == 1:
+            right_tile_center = HexagonTile.center_points[desert_idx + 1]
+            # Align
+            align_x = right_tile_center[0] - (c.HEXAGON_WIDTH * 1.1) * 2
+            HexagonTile.center_points.insert(desert_idx, (align_x, right_tile_center[1]))
+        else:
+            left_tile_center = HexagonTile.center_points[desert_idx - 1]
+            # Align
+            align_x = left_tile_center[0] + (c.HEXAGON_WIDTH * 1.1)
+            HexagonTile.center_points.insert(desert_idx, (align_x, left_tile_center[1]))
     
     def get_resource():
         return HexagonTile.resources[np.random.randint(0, 5)]
@@ -78,12 +112,10 @@ class HexagonTile:
         random.shuffle(sublist)
         HexagonTile.hexagon_numbers[0:len(HexagonTile.hexagon_numbers) - 1] = sublist
 
-        desert_index = 0
-
         for i in range(0, len(resource_array)):
             if resource_array[i] == "Desert":
                 HexagonTile.hexagon_numbers[i], HexagonTile.hexagon_numbers[-1] = HexagonTile.hexagon_numbers[-1], HexagonTile.hexagon_numbers[i]
-                desert_index = i
+                HexagonTile.desert_index = i
                 break 
 
     def create_resource_array(length):
@@ -104,6 +136,9 @@ class HexagonTile:
             number = hexagon_numbers.pop(0)
             if HexagonTile.check_for_desert(number):
                 resource = HexagonTile.resourcesArray.pop(0)
+                if resource == "Desert":
+                    resource = HexagonTile.resourcesArray.pop(0)
+                image = None
                 for i in range(0, len(HexagonTile.resources)):
                     if resource == HexagonTile.resources[i][0]:
                         image = HexagonTile.resources[i][1]
@@ -112,7 +147,6 @@ class HexagonTile:
                 HexagonTile.create_hexagon(window, x, y, image)
                 HexagonTile.add_hexagon_number(window, x, y, number)
             else:
-                HexagonTile.resourcesArray.append("Desert")
                 HexagonTile.create_hexagon(window, x, y, c.DESERT_SPRITE)
             x += c.HEXAGON_WIDTH * 1.1
 
@@ -148,6 +182,7 @@ class HexagonTile:
 
         HexagonTile.resourcesArray = resources_copy.copy()
         HexagonTile.hexagon_numbers = hexagon_numbers_copy.copy()
+        HexagonTile.append_center_points(HexagonTile.get_index("Desert"))
 
 # --- Settlement class ---
 class Settlement:
@@ -166,8 +201,30 @@ class Robber:
     # Create the robber movement
     # Create the robber stealing
     # ADD card elimination if > 7 cards
-    def create_robber(window, x, y):
-        pygame.draw.circle(window, c.BLACK, (x + c.HEXAGON_SIDE * 0.1, y + c.HEXAGON_SIDE / 2), c.HEXAGON_SIDE / 3, 0)
+    current_pos = (0,0)
+
+    def delete_cards():
+        pass
+
+    # You can't move the robber in the same tile
+    def check_move(mouse_pos):
+        if mouse_pos[0] >= Robber.current_pos[0] - c.HEXAGON_SIDE/3 and mouse_pos[0] <= Robber.current_pos[0] + c.HEXAGON_SIDE/3 :
+            if mouse_pos[1] >= Robber.current_pos[1] - c.HEXAGON_SIDE/3 and mouse_pos[1] <= Robber.current_pos[1] + c.HEXAGON_SIDE/3 :
+                return False
+        return True
+
+        # if mouse_pos == robber_pos:
+        #     return False
+        # return True
+
+    def create_robber(window):
+        index = HexagonTile.get_index("Desert")
+        Robber.current_pos = HexagonTile.center_points[index]
+        pygame.draw.circle(window, c.BLACK, HexagonTile.center_points[index], c.HEXAGON_SIDE / 3, 0)
+
+    def move_robber(window, x, y):
+        Robber.current_pos = (x, y)
+        pygame.draw.circle(window, c.BLACK, (x, y + 5), c.HEXAGON_SIDE / 3, 0)
 
 # --- Dice class ---
 class Dice:
