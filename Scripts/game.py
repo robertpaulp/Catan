@@ -5,7 +5,7 @@ import base_game_cls as base
 from base_game_cls import *
 from board_elements.settlement import *
 import random
-from events import *
+from events import SettlementEventHandler
 
 
 def redraw_board(window):  # TODO: maybe turn static
@@ -62,7 +62,7 @@ class Game:
 
         while running:
             # --- Settlement Surfaces---
-            Settlement.prepare_board_surfaces(window, HexagonTile.hexagon_points)
+            Settlement.prepare_board_surfaces(window, base.HexagonTile.distinct_vertices, base.HexagonTile.hexagons)
 
             # --- Event loop ---
             mouse_pos = pygame.mouse.get_pos()
@@ -79,6 +79,18 @@ class Game:
                             print("Robber")
                             redraw_board(window)
 
+                    # TODO: after first click
+                    for center_point in base.HexagonTile.center_points:
+                        if center_point[0] - c.HEXAGON_SIDE / 3 <= mouse_pos[0] <= center_point[0] + c.HEXAGON_SIDE / 3:
+                            if center_point[1] - c.HEXAGON_SIDE / 3 <= mouse_pos[1] <= \
+                                    center_point[1] + c.HEXAGON_SIDE / 3:
+                                print("Trying")
+                                if base.Robber.check_move(mouse_pos):
+                                    print("Moving")
+                                    base.Robber.move_robber(window, center_point[0], center_point[1])
+                            # base.HexagonTile.create_hexagon_grid(window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS, False)
+                            # TODO: Move robber
+
                     # Place settlement event
                     SettlementEventHandler.handle_settlement_placement(window)
 
@@ -90,7 +102,6 @@ class Game:
             dice_btn = base.Board.roll_dice_btn(window)
 
             if dice_first_dsp:
-                base.Robber.create_robber(window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS)
                 base.Dice.dices(window, [1, 1])
                 dice_first_dsp = False
 
