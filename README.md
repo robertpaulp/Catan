@@ -13,4 +13,7 @@
 
 -> Anca
 
--> Trifu
+-> 🐝 Trifu
+- [ ] Implemented Settlement class & Event Handler
+- [ ] Implemented Road class & Event Handler
+- [ ] Implemented Card system
