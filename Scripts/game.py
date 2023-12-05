@@ -1,9 +1,13 @@
 # Importing modules
-from constants import *
-import base_game_cls as base
-from base_game_cls import *
+import pygame
+
+import Scripts.constants as c
+import Scripts.base_game_cls as base
+
+# Importing board elements
 from Scripts.board_elements.settlement import Settlement, settlements
 from Scripts.board_elements.road import Road, roads
+from Scripts.board_elements.board import redraw_board
 
 # Importing player
 from Scripts.player.player import Player
@@ -13,31 +17,31 @@ from Scripts.events.settlement_events import SettlementEventHandler
 from Scripts.events.road_events import RoadEventHandler
 
 
-def redraw_board(window):  # TODO: maybe turn static
-    """ Redraw assets in case of necessary board changes
-
-    :return:
-    """
-
-    window.fill(c.LIGHT_CYAN_BLUE)
-
-    # Remove robber
-    base.HexagonTile.create_hexagon_grid(window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS, False)
-    # TODO: Move robber
-
-    # Replace roads
-    for road in roads:
-        if road.is_placed is True:
-            road.draw_road(window)
-
-    # Replace settlements
-    for settlement in settlements:
-        if settlement.is_placed is True:
-            settlement.draw_settlement(window)
-
-            window.blit(settlement.image,
-                        (settlement.position[0] - SETTLEMENT_SPRITE, settlement.position[1] - SETTLEMENT_SPRITE))
-            pygame.display.update()
+# def redraw_board(window):  # TODO: maybe turn static
+#     """ Redraw assets in case of necessary board changes
+#
+#     :return:
+#     """
+#
+#     window.fill(c.LIGHT_CYAN_BLUE)
+#
+#     # Remove robber
+#     base.HexagonTile.create_hexagon_grid(window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS, False)
+#     # TODO: Move robber
+#
+#     # Replace roads
+#     for road in roads:
+#         if road.is_placed is True:
+#             road.draw_road(window)
+#
+#     # Replace settlements
+#     for settlement in settlements:
+#         if settlement.is_placed is True:
+#             settlement.draw_settlement(window)
+#
+#             window.blit(settlement.image,
+#                         (settlement.position[0] - SETTLEMENT_SPRITE, settlement.position[1] - SETTLEMENT_SPRITE))
+#             pygame.display.update()
 
 
 class Game:
@@ -103,7 +107,7 @@ class Game:
 
                         if sum(roll) == 7:
                             print("Robber")
-                            redraw_board(window)
+                            redraw_board(window, roll)
 
                     # TODO: after first click
                     for center_point in base.HexagonTile.center_points:
@@ -142,7 +146,7 @@ class Game:
                     RoadEventHandler.drag(window, event, current_road)
 
                     # Hover settlement event TODO
-                    # SettlementEventHandler.hover_settlement(window)
+                    # SettlementEventHandler.hover_settlement(window, roll)
 
             # --- Dice ---
 

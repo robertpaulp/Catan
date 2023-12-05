@@ -24,7 +24,7 @@ HEXAGON_Y_AXIS = 75
 
 # Settlement
 
-SETTLEMENT_SPRITE = 15
+SETTLEMENT_SPRITE = 17
 
 # Sprite Constants
 WOOD_SPRITE = "../Assets/Sprites/forest.png"
