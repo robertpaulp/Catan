@@ -22,6 +22,7 @@ class RoadEventHandler:
 		mouse_pos = pygame.mouse.get_pos()
 
 		if event.button == 1:
+			# Start point is a settlement
 			for settlement in player.settlements:
 				if settlement.rect.collidepoint(mouse_pos):
 					print("pressed")
@@ -29,11 +30,20 @@ class RoadEventHandler:
 					road.is_dragged = True
 					road.borders.append(settlement)
 
-					# Set road start point
-					mouse_x, mouse_y = event.pos
-
 					if road.start == [0, 0]:  # If road has not been placed yet
 						road.start = settlement.position
+						
+			# Start point is a road
+			if len(road.borders) == 0:
+				for existing_road in player.roads:
+					if existing_road.is_placed is True and existing_road.borders[1].rect.collidepoint(mouse_pos):
+						print("pressed")
+						# Set road mouse-dragging state to True
+						road.is_dragged = True
+						road.borders.append(existing_road.borders[1])
+
+						if road.start == [0, 0]:
+							road.start = existing_road.borders[1].position
 
 	@staticmethod
 	def place(window, event: pygame.event, road: Road, player: Player):

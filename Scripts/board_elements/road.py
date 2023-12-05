@@ -29,4 +29,5 @@ class Road:
 			self.borders[1].draw_settlement(window)
 
 		settlement = self.borders[0]
-		settlement.draw_settlement(window)
+		if settlement.is_placed is True:
+			settlement.draw_settlement(window)
