@@ -1,9 +1,10 @@
 import pygame.draw
 
-from Scripts.board_elements.settlement import Settlement, settlements
+from Scripts.board_elements.settlement import Settlement, settlements, sprites
 from Scripts.player.player import Player
 from Scripts.constants import *
-import time
+
+from Scripts.board_elements.board import redraw_board
 
 
 class SettlementEventHandler:
@@ -11,11 +12,16 @@ class SettlementEventHandler:
 		pass
 
 	@staticmethod
-	def hover_settlement(window):
+	def hover_settlement(window, roll):
+		mouse_pos = pygame.mouse.get_pos()
+
 		for settlement in settlements:
-			if settlement.rect.collidepoint(pygame.mouse.get_pos()) and settlement.is_hovered is False:
-				print("ceva")
-				settlement.hover_state(window)
+			if settlement.is_placed is False:
+				if settlement.rect.collidepoint(mouse_pos) and settlement.is_hovered is False:
+					settlement.hover_state(window)
+				elif not settlement.rect.collidepoint(mouse_pos) and settlement.is_hovered is True:
+					settlement.is_hovered = False
+					redraw_board(window, roll)
 
 	@staticmethod
 	def press(window):
@@ -39,6 +45,7 @@ class SettlementEventHandler:
 
 				# Add settlement to player's settlements
 				player.settlements.append(settlement)
+				sprites.add(settlement)
 
 			# If mouse was not released on the settlement we prepared, reset its state
 			elif settlement.prepared_for_placement is True:

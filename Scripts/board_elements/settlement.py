@@ -1,21 +1,23 @@
 import pygame
 from Scripts.constants import *
-from Scripts.base_game_cls import HexagonTile
 
 settlement_img = pygame.Surface((SETTLEMENT_SPRITE * 3, SETTLEMENT_SPRITE * 3), pygame.SRCALPHA)
 color = (200, 100, 23)
 lowered_opacity_color = (200, 100, 23, 50)
 
 settlements = []
+sprites = pygame.sprite.Group()
 
 
-class Settlement:
+class Settlement(pygame.sprite.Sprite):
 	# settlements = []
 
 	def __init__(self, window, position, color):
 		""" Instantiates settlement object
 
 		"""
+
+		super().__init__()  # TODO group settlements into sprites
 
 		# Structural attributes
 		self.image = pygame.Surface((SETTLEMENT_SPRITE * 3, SETTLEMENT_SPRITE * 3), pygame.SRCALPHA)
@@ -51,9 +53,8 @@ class Settlement:
 		:return:
 		"""
 
-		pygame.draw.circle(self.image, (255, 0, 0, 20), (SETTLEMENT_SPRITE, SETTLEMENT_SPRITE), SETTLEMENT_SPRITE, 0)
+		pygame.draw.circle(self.image, (255, 0, 0, 100), (SETTLEMENT_SPRITE, SETTLEMENT_SPRITE), SETTLEMENT_SPRITE, 5)
 		self.is_hovered = True
-		self.image.set_alpha(50)
 
 		window.blit(self.image, (self.position[0] - SETTLEMENT_SPRITE, self.position[1] - SETTLEMENT_SPRITE))
 		pygame.display.update()

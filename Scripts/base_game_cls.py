@@ -4,7 +4,6 @@ import math
 import numpy as np
 import pygame
 import random
-import game
 import constants as c
 
 
