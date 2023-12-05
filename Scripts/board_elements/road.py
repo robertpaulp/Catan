@@ -25,9 +25,8 @@ class Road:
 		pygame.draw.line(window, (200, 50, 0), self.start, self.end, 7)
 
 		# Redraw start settlement so that it is not covered by the road
+		if self.borders[1].is_placed is True:
+			self.borders[1].draw_settlement(window)
+
 		settlement = self.borders[0]
 		settlement.draw_settlement(window)
-
-		window.blit(settlement.image,
-		            (settlement.position[0] - SETTLEMENT_SPRITE, settlement.position[1] - SETTLEMENT_SPRITE))
-		pygame.display.update()
