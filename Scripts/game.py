@@ -10,7 +10,7 @@ from Scripts.board_elements.road import Road, roads
 from Scripts.board_elements.board import redraw_board
 
 # Importing player
-from Scripts.player.player import Player
+from Scripts.player.player import Player, players
 
 # Importing events
 from Scripts.events.settlement_events import SettlementEventHandler
@@ -81,18 +81,21 @@ class Game:
         # --- Roads ---
 
         # --- Player ---
-        player = Player()
+        current_player = players[0]  # Current player
+
+        current_player.draw_player(window)
 
         while running:
             # --- Roads ---
-            if len(player.roads) != 0:
-                current_road = player.roads[-1]
+            # This needs to activate only when the player is placing a road
+            if len(current_player.roads) != 0:
+                current_road = current_player.roads[-1]
             else:
                 current_road = Road()
-                player.roads.append(current_road)
+                current_player.roads.append(current_road)
 
             if current_road.is_placed is True:  # If we successfully placed a road, prepare a new one
-                player.roads.append(Road())
+                current_player.roads.append(Road())
 
             # --- Event loop ---
             mouse_pos = pygame.mouse.get_pos()
@@ -105,9 +108,14 @@ class Game:
                     if dice_btn.collidepoint(mouse_pos):
                         roll = [base.Dice.dice_roll(), base.Dice.dice_roll()]
 
+                        # Acquire resources
+                        for player in players:
+                            player.acquire_cards(sum(roll))
+                        redraw_board(window, roll, current_player)
+
                         if sum(roll) == 7:
                             print("Robber")
-                            redraw_board(window, roll)
+                            redraw_board(window, roll, current_player)
 
                     # TODO: after first click
                     for center_point in base.HexagonTile.center_points:
@@ -125,21 +133,21 @@ class Game:
                     SettlementEventHandler.press(window)
 
                     # Place road event
-                    RoadEventHandler.press(window, event, current_road, player)
+                    RoadEventHandler.press(window, event, current_road, current_player)
 
                 elif event.type == pygame.MOUSEBUTTONUP:
                     # Release road event
                     print("entered")
 
                     # If placing the road was unsuccessful, remove it from the list
-                    if RoadEventHandler.place(window, event, current_road, player) == -1:
-                        player.roads.pop()
+                    if RoadEventHandler.place(window, event, current_road, current_player) == -1:
+                        current_player.roads.pop()
                     else:
                         # If placing the road was successful, append it to the main list of roads as well
                         roads.append(current_road)
 
                     # Place settlement event
-                    SettlementEventHandler.place(window, player)
+                    SettlementEventHandler.place(window, current_player)
 
                 elif event.type == pygame.MOUSEMOTION:
                     # Dragging road event

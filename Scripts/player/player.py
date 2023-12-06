@@ -14,7 +14,7 @@ class Player:
 			"Wheat": 0,
 			"Sheep": 0,
 			"Brick": 0,
-			"Stone": 0
+			"Ore": 0
 		}  # Dictionary of cards: key = resource, value = number of cards
 		self.settlements = []
 		self.roads = []
@@ -75,13 +75,13 @@ class Player:
 
 		window.blit(brick_surface[0], (BRICK_POSITION[0] + ICON_SIZE + 10, BRICK_POSITION[1] + 5))
 
-		# Stone
+		# Ore
 		pygame.draw.rect(Player.image, self.color, (0, 0, ICON_SIZE, ICON_SIZE), 0)
-		window.blit(Player.image, STONE_POSITION)
+		window.blit(Player.image, ORE_POSITION)
 		# Quantity
-		stone_surface = font.render(str(self.cards["Stone"]), (0, 0, 0))
+		ore_surface = font.render(str(self.cards["Ore"]), (0, 0, 0))
 
-		window.blit(stone_surface[0], (STONE_POSITION[0] + ICON_SIZE + 10, STONE_POSITION[1] + 5))
+		window.blit(ore_surface[0], (ORE_POSITION[0] + ICON_SIZE + 10, ORE_POSITION[1] + 5))
 
 		pygame.display.update()
 
@@ -95,5 +95,9 @@ class Player:
 		for settlement in self.settlements:
 			# If settlement is placed next to a hexagon with the dice roll associated to it, acquire resources
 			if dice_roll in settlement.dice_rolls:
-				for resource in settlement.resources:
-					self.cards[resource] += 1
+				resource = settlement.resources[settlement.dice_rolls.index(dice_roll)]
+				self.cards[resource] += 1
+
+
+# List of players
+players = [Player(color=(255, 0, 0)), Player((200, 100, 100)), Player((0, 0, 255)), Player((0, 255, 0))]
