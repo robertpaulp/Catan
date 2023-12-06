@@ -1,4 +1,6 @@
 # Importing modules
+import time
+
 import pygame
 
 import Scripts.constants as c
@@ -15,33 +17,6 @@ from Scripts.player.player import Player, players
 # Importing events
 from Scripts.events.settlement_events import SettlementEventHandler
 from Scripts.events.road_events import RoadEventHandler
-
-
-# def redraw_board(window):  # TODO: maybe turn static
-#     """ Redraw assets in case of necessary board changes
-#
-#     :return:
-#     """
-#
-#     window.fill(c.LIGHT_CYAN_BLUE)
-#
-#     # Remove robber
-#     base.HexagonTile.create_hexagon_grid(window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS, False)
-#     # TODO: Move robber
-#
-#     # Replace roads
-#     for road in roads:
-#         if road.is_placed is True:
-#             road.draw_road(window)
-#
-#     # Replace settlements
-#     for settlement in settlements:
-#         if settlement.is_placed is True:
-#             settlement.draw_settlement(window)
-#
-#             window.blit(settlement.image,
-#                         (settlement.position[0] - SETTLEMENT_SPRITE, settlement.position[1] - SETTLEMENT_SPRITE))
-#             pygame.display.update()
 
 
 class Game:
@@ -116,6 +91,11 @@ class Game:
                         if sum(roll) == 7:
                             print("Robber")
                             redraw_board(window, roll, current_player)
+                        else:  # Switch to next player
+                            current_player = players[(players.index(current_player) + 1) % len(players)]
+                            time.sleep(3)
+                            redraw_board(window, roll, current_player)
+                            # TODO switch to start of turn state
 
                     # TODO: after first click
                     for center_point in base.HexagonTile.center_points:

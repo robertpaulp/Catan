@@ -34,7 +34,7 @@ def redraw_board(window, roll, current_player=players[0]):  # TODO: maybe turn s
     # Replace settlements
     for settlement in settlements:
         if settlement.is_placed is True:
-            settlement.draw_settlement(window)
+            settlement.draw_settlement(window, settlement.color)
 
             window.blit(settlement.image,
                         (settlement.position[0] - SETTLEMENT_SPRITE, settlement.position[1] - SETTLEMENT_SPRITE))

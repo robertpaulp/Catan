@@ -2,7 +2,6 @@ import pygame
 from Scripts.constants import *
 
 settlement_img = pygame.Surface((SETTLEMENT_SPRITE * 3, SETTLEMENT_SPRITE * 3), pygame.SRCALPHA)
-color = (200, 100, 23)
 lowered_opacity_color = (200, 100, 23, 50)
 
 settlements = []
@@ -12,7 +11,7 @@ sprites = pygame.sprite.Group()
 class Settlement(pygame.sprite.Sprite):
 	# settlements = []
 
-	def __init__(self, window, position, color):
+	def __init__(self, window, position):
 		""" Instantiates settlement object
 
 		"""
@@ -28,15 +27,16 @@ class Settlement(pygame.sprite.Sprite):
 		self.prepared_for_placement = False
 		self.is_placed = False
 		self.is_hovered = False
-		self.color = color
+		self.color = (0, 0, 0, 0)
 
 		# Gameplay attributes
 		self.resources = []
 		self.dice_rolls = []
 
-	def draw_settlement(self, window):
+	def draw_settlement(self, window, color):
 		""" Draws settlement icon on the map
 
+		:param color:
 		:param window:
 		:return:
 		"""
@@ -70,7 +70,7 @@ class Settlement(pygame.sprite.Sprite):
 		"""
 
 		for node in nodes:
-			settlement = Settlement(window, node, color)
+			settlement = Settlement(window, node)
 
 			# Get adjacent resources and dice roll values
 			for hexagon in hexagons:

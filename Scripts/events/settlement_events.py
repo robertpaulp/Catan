@@ -39,9 +39,10 @@ class SettlementEventHandler:
 			# If mouse was released on the settlement we prepared, draw it
 			if settlement.rect.collidepoint(mouse_pos) and settlement.prepared_for_placement is True:
 				# Draw settlement sprite and change state
-				settlement.draw_settlement(window)
+				settlement.draw_settlement(window, player.color)
 				settlement.prepared_for_placement = False
 				settlement.is_placed = True
+				settlement.color = player.color
 
 				# Add settlement to player's settlements
 				player.settlements.append(settlement)
