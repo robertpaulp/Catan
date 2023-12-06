@@ -1,3 +1,6 @@
+import time
+from threading import Event
+
 import pygame.draw
 
 from Scripts.board_elements.settlement import Settlement, settlements, sprites
@@ -32,15 +35,15 @@ class SettlementEventHandler:
 				settlement.prepared_for_placement = True
 
 	@staticmethod
-	def place(window, player: Player):
+	def place(window, roll, player: Player, GAME_START):
 		mouse_pos = pygame.mouse.get_pos()
 
 		for settlement in settlements:
 			# If mouse was released on the settlement we prepared, draw it
 			if settlement.rect.collidepoint(mouse_pos) and settlement.prepared_for_placement is True:
 				# Check if placement is possible
-				if Settlement.placement_is_possible(player) is False:
-					SettlementEventHandler.__error_popup(window)
+				if Settlement.placement_is_possible(player, GAME_START) is False:
+					SettlementEventHandler.__error_popup(window, roll, player)
 					settlement.prepared_for_placement = False
 					return
 
@@ -55,7 +58,9 @@ class SettlementEventHandler:
 				sprites.add(settlement)
 
 				# Spend resources
-				SettlementEventHandler.__buy_settlement(player)
+				if GAME_START is False:
+					SettlementEventHandler.__buy_settlement(player)
+					redraw_board(window, roll, player)
 
 			# If mouse was not released on the settlement we prepared, reset its state
 			elif settlement.prepared_for_placement is True:
@@ -75,7 +80,11 @@ class SettlementEventHandler:
 		player.cards["Wheat"] -= 1
 
 	@staticmethod
-	def __error_popup(window):
+	def __error_popup(window, roll, player):
 		err_image = pygame.image.load("../Assets/Sprites/saracie_error.png")
 		err_image = pygame.transform.scale(err_image, (400, 100))
 		window.blit(err_image, (0, 0))
+		pygame.display.update()
+
+		Event().wait(2)
+		redraw_board(window, roll, player)
