@@ -1,5 +1,8 @@
 from win32api import GetSystemMetrics
 
+GAME_START = True
+END_START_ROUND = False
+
 # Screen Constants
 SCREEN_WIDTH = GetSystemMetrics(0) - 400
 SCREEN_HEIGHT = GetSystemMetrics(1) - 200

@@ -3,7 +3,7 @@ import time
 
 import pygame
 
-import Scripts.constants as c
+from Scripts.constants import *
 import Scripts.base_game_cls as base
 
 # Importing board elements
@@ -24,7 +24,7 @@ class Game:
     def window_setup():
         pygame.init()
 
-        window = pygame.display.set_mode((c.SCREEN_WIDTH, c.SCREEN_HEIGHT))
+        window = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         pygame.display.set_caption("Catan")
         icon = pygame.image.load("../Assets/icon.png")
         icon = pygame.transform.scale(icon, (32, 32))
@@ -42,10 +42,10 @@ class Game:
         roll = [0, 0]
 
         # --- Background ---
-        window.fill(c.LIGHT_CYAN_BLUE)
+        window.fill(LIGHT_CYAN_BLUE)
 
         # --- Hexagon grid ---
-        base.HexagonTile.create_hexagon_grid(window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS)
+        base.HexagonTile.create_hexagon_grid(window, HEXAGON_X_AXIS, HEXAGON_Y_AXIS)
 
         print(base.HexagonTile.resourcesArray)
         print(base.HexagonTile.center_points)
@@ -60,11 +60,29 @@ class Game:
 
         current_player.draw_player(window)
 
+        END_START_ROUND = False
+
         while running:
-            # TODO add start of turn state
+            # TODO add start of game state
             # TODO place things only if you have enough resources
             # TODO spend resources buttons
             # TODO trade mechanic
+
+            GAME_START = False
+
+            for player in players:
+                if len(player.settlements) < 2:
+                    GAME_START = True
+                elif players.index(player) == 3 and END_START_ROUND is False:
+                    print("intra")
+                    GAME_START = True
+                    END_START_ROUND = True
+
+            if GAME_START and len(current_player.settlements) == 2:
+                # Switch player
+                current_player = players[(players.index(current_player) + 1) % len(players)]
+                time.sleep(1)
+                redraw_board(window, roll, current_player)
 
             # --- Roads ---
             # This needs to activate only when the player is placing a road
@@ -104,9 +122,9 @@ class Game:
 
                     # TODO: after first click
                     for center_point in base.HexagonTile.center_points:
-                        if center_point[0] - c.HEXAGON_SIDE / 3 <= mouse_pos[0] <= center_point[0] + c.HEXAGON_SIDE / 3:
-                            if center_point[1] - c.HEXAGON_SIDE / 3 <= mouse_pos[1] <= \
-                                    center_point[1] + c.HEXAGON_SIDE / 3:
+                        if center_point[0] - HEXAGON_SIDE / 3 <= mouse_pos[0] <= center_point[0] + HEXAGON_SIDE / 3:
+                            if center_point[1] - HEXAGON_SIDE / 3 <= mouse_pos[1] <= \
+                                    center_point[1] + HEXAGON_SIDE / 3:
                                 print("Trying")
                                 if base.Robber.check_move(mouse_pos):
                                     print("Moving")
@@ -132,7 +150,7 @@ class Game:
                         roads.append(current_road)
 
                     # Place settlement event
-                    SettlementEventHandler.place(window, current_player)
+                    SettlementEventHandler.place(window, roll, current_player, GAME_START)
 
                 elif event.type == pygame.MOUSEMOTION:
                     # Dragging road event
