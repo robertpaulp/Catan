@@ -81,7 +81,7 @@ class RoadEventHandler:
 					road.end = settlement.position
 
 					print(road.start, road.end)
-					road.draw_road(window)
+					road.draw_road(window, player.color)
 					return 0
 
 			# If mouse was not released on a valid settlement, reset road state

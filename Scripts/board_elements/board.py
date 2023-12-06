@@ -29,7 +29,7 @@ def redraw_board(window, roll, current_player=players[0]):  # TODO: maybe turn s
     # Replace roads
     for road in roads:
         if road.is_placed is True:
-            road.draw_road(window)
+            road.draw_road(window, road.color)
 
     # Replace settlements
     for settlement in settlements:
