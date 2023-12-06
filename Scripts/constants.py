@@ -29,6 +29,7 @@ SHEEP_SPRITE = "../Assets/Sprites/pasture.png"
 BRICK_SPRITE = "../Assets/Sprites/hill.png"
 STONE_SPRITE = "../Assets/Sprites/mountain.png"
 DESERT_SPRITE = "../Assets/Sprites/desert.png"
+ROBBER_SPRITE = "../Assets/Sprites/robber.png"
 
 # Dice Constants
 DICE_WIDTH = 80

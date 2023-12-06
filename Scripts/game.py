@@ -34,9 +34,6 @@ class Game:
         # --- Robber ---
         base.Robber.create_robber(window)
 
-        # print(base.HexagonTile.resourcesArray)
-        # print(base.HexagonTile.center_points)
-
         while running:
             # --- Event loop ---
             for event in pygame.event.get():
@@ -48,20 +45,17 @@ class Game:
                     if dice_btn.collidepoint(mouse_pos):
                         roll = [base.Dice.dice_roll(), base.Dice.dice_roll()]
 
-                        if sum(roll) == 7:
-                            print("Robber")
-                            # Remove robber
+                        if sum(roll) == 7:                            
+                            # --- Update dice roll before moving robber ---
+                            base.Dice.dices(window, roll)
+                            pygame.display.update()
 
-                    #TODO: after first click
-                    for center_point in base.HexagonTile.center_points:
-                        if mouse_pos[0] >= center_point[0] - c.HEXAGON_SIDE/3 and mouse_pos[0] <= center_point[0] + c.HEXAGON_SIDE/3 :
-                            if mouse_pos[1] >= center_point[1] - c.HEXAGON_SIDE/3 and mouse_pos[1] <= center_point[1] + c.HEXAGON_SIDE/3 :
-                                print("Trying")
-                                if base.Robber.check_move(mouse_pos):
-                                    print("Moving")
-                                    base.Robber.move_robber(window,center_point[0], center_point[1])
-                            #base.HexagonTile.create_hexagon_grid(window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS, False)
-                            # TODO: Move robber
+                            # --- Move robber ---
+                            robber_pos = base.Robber.move_robber_event(window, running)
+
+                            # --- Update board ---
+                            base.Board.redraw_board(window, robber_pos)
+
 
             # --- Dice ---
             dice_btn = base.Board.roll_dice_btn(window)

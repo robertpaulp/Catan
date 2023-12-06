@@ -60,8 +60,8 @@ class HexagonTile:
         for node in vertices:
             if node not in HexagonTile.distinct_vertices:
                 HexagonTile.distinct_vertices.append(node)
-
         HexagonTile.hexagon_points.append(vertices)
+
         if image is not None:
             image = pygame.image.load(image)
             image = pygame.transform.scale(image, (c.HEXAGON_WIDTH * 1.1, c.HEXAGON_HEIGHT * 1.35))
@@ -229,11 +229,19 @@ class Robber:
     def delete_cards():
         pass
 
+    def get_image():
+        image = pygame.image.load(c.ROBBER_SPRITE)
+        image = pygame.transform.scale(image, (c.HEXAGON_SIDE * 1.2, c.HEXAGON_SIDE * 1.2))
+
+        return image
+
     # You can't move the robber in the same tile
     def check_move(mouse_pos):
-        if mouse_pos[0] >= Robber.current_pos[0] - c.HEXAGON_SIDE/3 and mouse_pos[0] <= Robber.current_pos[0] + c.HEXAGON_SIDE/3 :
-            if mouse_pos[1] >= Robber.current_pos[1] - c.HEXAGON_SIDE/3 and mouse_pos[1] <= Robber.current_pos[1] + c.HEXAGON_SIDE/3 :
-                return False
+        range_x = [Robber.current_pos[0] - c.HEXAGON_SIDE/3, Robber.current_pos[0] + c.HEXAGON_SIDE/3]
+        range_y = [Robber.current_pos[1] - c.HEXAGON_SIDE/3, Robber.current_pos[1] + c.HEXAGON_SIDE/3]
+
+        if (range_x[0] <= mouse_pos[0] <= range_x[1] and range_y[0] <= mouse_pos[1] <= range_y[1]):
+            return False
         return True
 
         # if mouse_pos == robber_pos:
@@ -243,11 +251,42 @@ class Robber:
     def create_robber(window):
         index = HexagonTile.get_index("Desert")
         Robber.current_pos = HexagonTile.center_points[index]
-        pygame.draw.circle(window, c.BLACK, HexagonTile.center_points[index], c.HEXAGON_SIDE / 3, 0)
 
-    def move_robber(window, x, y):
-        Robber.current_pos = (x, y)
-        pygame.draw.circle(window, c.BLACK, (x, y + 5), c.HEXAGON_SIDE / 3, 0)
+        image = Robber.get_image()
+        
+        window.blit(image, (HexagonTile.center_points[index][0] - c.HEXAGON_SIDE/1.8, HexagonTile.center_points[index][1] - c.HEXAGON_SIDE / 2))
+
+
+    def move_robber(window, robber_pos):
+        Robber.current_pos = robber_pos
+        image = Robber.get_image()
+        
+        window.blit(image, (robber_pos[0] - c.HEXAGON_SIDE/1.8, robber_pos[1] - c.HEXAGON_SIDE / 2))
+        
+
+    def move_robber_event(window, running):
+        moved_robber = False
+
+        while not moved_robber:
+            for inner_event in pygame.event.get():
+                if inner_event.type == pygame.QUIT:
+                    running = False
+
+                elif inner_event.type == pygame.MOUSEBUTTONDOWN:
+                    mouse_pos = pygame.mouse.get_pos()
+
+                    for center_point in HexagonTile.center_points:
+                        range_x = [center_point[0] - c.HEXAGON_SIDE / 3, center_point[0] + c.HEXAGON_SIDE / 3]
+                        range_y = [center_point[1] - c.HEXAGON_SIDE / 3, center_point[1] + c.HEXAGON_SIDE / 3]
+
+                        if (range_x[0] <= mouse_pos[0] <= range_x[1] and range_y[0] <= mouse_pos[1] <= range_y[1]):
+                            if Robber.check_move(mouse_pos):
+                                Robber.move_robber(window, center_point)
+                                robber_pos = center_point
+                                moved_robber = True
+                                break
+        return robber_pos 
+        
 
 # --- Dice class ---
 class Dice:
@@ -343,3 +382,9 @@ class Board:
         text_rect = text.get_rect(center=(x + 100, y + 25))
         window.blit(text, text_rect)
         return button
+    
+    def redraw_board(window, robber_pos):
+        window.fill(c.LIGHT_CYAN_BLUE)
+        HexagonTile.create_hexagon_grid(window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS, False)
+        Robber.move_robber(window, robber_pos)
+        pygame.display.update()
