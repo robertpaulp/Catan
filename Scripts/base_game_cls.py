@@ -9,6 +9,8 @@ import constants as c
 
 # --- Hexagon class ---
 class HexagonTile:
+    hexagons = []  # List of hexagons
+    distinct_vertices = []  # List of distinct vertices
 
     center_points = []
     resourcesArray = []
@@ -23,7 +25,17 @@ class HexagonTile:
     hexagon_points = []
     desert_index = -1
 
+    def __init__(self):
+        self.center = None
+        self.resource = None
+        self.number = 0
+        self.vertices = []
+        self.edges = []
+
     def create_hexagon(window, x = c.HEXAGON_X_CENTER, y = c.HEXAGON_Y_CENTER, image = None):
+        hexagon = HexagonTile()
+        HexagonTile.hexagons.append(hexagon)
+
         vertices = [
 
             # (x - c.HEXAGON_SIDE, y),
@@ -41,6 +53,14 @@ class HexagonTile:
             (x - c.HEXAGON_SIDE, y + c.HEXAGON_SIDE * 1.2)            # Bottom left
             
         ]
+
+        hexagon.center = (x, y)
+        hexagon.vertices = vertices
+
+        for node in vertices:
+            if node not in HexagonTile.distinct_vertices:
+                HexagonTile.distinct_vertices.append(node)
+
         HexagonTile.hexagon_points.append(vertices)
         if image is not None:
             image = pygame.image.load(image)
@@ -130,7 +150,6 @@ class HexagonTile:
         # Shuffle the array
         HexagonTile.resourcesArray.sort(key=lambda x: random.random())
 
-
     def create_row(window, x, y, hexagon_numbers, rows):
         for row in range(0,rows):
             number = hexagon_numbers.pop(0)
@@ -183,6 +202,10 @@ class HexagonTile:
         HexagonTile.resourcesArray = resources_copy.copy()
         HexagonTile.hexagon_numbers = hexagon_numbers_copy.copy()
         HexagonTile.append_center_points(HexagonTile.get_index("Desert"))
+
+        # Assign resources to hexagons
+        for (resource, hexagon) in zip(HexagonTile.resourcesArray, HexagonTile.hexagons):
+            hexagon.resource = resource
 
 # --- Settlement class ---
 class Settlement:
