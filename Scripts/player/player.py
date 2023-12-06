@@ -1,16 +1,89 @@
 import pygame
+import pygame.freetype
 from Scripts.constants import *
 from Scripts.base_game_cls import HexagonTile
 
 
 class Player:
-	def __init__(self):
+	image = pygame.Surface((PLAYER_BOARD_WIDTH, PLAYER_BOARD_HEIGHT), pygame.SRCALPHA)
+
+	def __init__(self, color):
 		# Gameplay attributes
-		self.cards = {}  # Dictionary of cards: key = resource, value = number of cards
+		self.cards = {
+			"Wood": 0,
+			"Wheat": 0,
+			"Sheep": 0,
+			"Brick": 0,
+			"Stone": 0
+		}  # Dictionary of cards: key = resource, value = number of cards
 		self.settlements = []
 		self.roads = []
 
 		self.win_points = 0
+		self.color = color
+		self.name = "Player"
+
+	def draw_player(self, window):
+		""" Draws player icon on the map
+
+		:param window:
+		:return:
+		"""
+
+		# PLayer Icon
+		pygame.draw.rect(Player.image, self.color, (0, 0, ICON_SIZE, ICON_SIZE), 0)
+		window.blit(Player.image, ICON_POSITION)
+
+		# Player Name
+		font = pygame.freetype.SysFont('Arial', 40)
+		name_surface = font.render(self.name, (0, 0, 0))
+
+		window.blit(name_surface[0], NAME_POSITION)
+
+		# Player Resources
+
+		# Wood
+		pygame.draw.rect(Player.image, self.color, (0, 0, ICON_SIZE, ICON_SIZE), 0)
+		window.blit(Player.image, WOOD_POSITION)
+		# Quantity
+		font = pygame.freetype.SysFont('Arial', 25)
+		wood_surface = font.render(str(self.cards["Wood"]), (0, 0, 0))
+
+		window.blit(wood_surface[0], (WOOD_POSITION[0] + ICON_SIZE + 10, WOOD_POSITION[1] + 5))
+
+		# Wheat
+		pygame.draw.rect(Player.image, self.color, (0, 0, ICON_SIZE, ICON_SIZE), 0)
+		window.blit(Player.image, WHEAT_POSITION)
+		# Quantity
+		wheat_surface = font.render(str(self.cards["Wheat"]), (0, 0, 0))
+
+		window.blit(wheat_surface[0], (WHEAT_POSITION[0] + ICON_SIZE + 10, WHEAT_POSITION[1] + 5))
+
+		# Sheep
+		pygame.draw.rect(Player.image, self.color, (0, 0, ICON_SIZE, ICON_SIZE), 0)
+		window.blit(Player.image, SHEEP_POSITION)
+		# Quantity
+		sheep_surface = font.render(str(self.cards["Sheep"]), (0, 0, 0))
+
+		window.blit(sheep_surface[0], (SHEEP_POSITION[0] + ICON_SIZE + 10, SHEEP_POSITION[1] + 5))
+
+		# Brick
+		pygame.draw.rect(Player.image, self.color, (0, 0, ICON_SIZE, ICON_SIZE), 0)
+		window.blit(Player.image, BRICK_POSITION)
+		# Quantity
+		brick_surface = font.render(str(self.cards["Brick"]), (0, 0, 0))
+
+		window.blit(brick_surface[0], (BRICK_POSITION[0] + ICON_SIZE + 10, BRICK_POSITION[1] + 5))
+
+		# Stone
+		pygame.draw.rect(Player.image, self.color, (0, 0, ICON_SIZE, ICON_SIZE), 0)
+		window.blit(Player.image, STONE_POSITION)
+		# Quantity
+		stone_surface = font.render(str(self.cards["Stone"]), (0, 0, 0))
+
+		window.blit(stone_surface[0], (STONE_POSITION[0] + ICON_SIZE + 10, STONE_POSITION[1] + 5))
+
+		pygame.display.update()
 
 	def acquire_cards(self, dice_roll):
 		""" Acquires cards based on dice roll and settlement position
@@ -24,4 +97,3 @@ class Player:
 			if dice_roll in settlement.dice_rolls:
 				for resource in settlement.resources:
 					self.cards[resource] += 1
-
