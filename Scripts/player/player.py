@@ -6,8 +6,14 @@ from Scripts.base_game_cls import HexagonTile
 
 class Player:
 	image = pygame.Surface((PLAYER_BOARD_WIDTH, PLAYER_BOARD_HEIGHT), pygame.SRCALPHA)
+	noPlayers = 1
 
 	def __init__(self, color):
+		self.name = f"Player {Player.noPlayers}"
+		Player.noPlayers += 1
+
+		self.color = color
+
 		# Gameplay attributes
 		self.cards = {
 			"Wood": 0,
@@ -20,8 +26,6 @@ class Player:
 		self.roads = []
 
 		self.win_points = 0
-		self.color = color
-		self.name = "Player"
 
 	def draw_player(self, window):
 		""" Draws player icon on the map
@@ -100,4 +104,4 @@ class Player:
 
 
 # List of players
-players = [Player(color=(255, 0, 0)), Player((200, 100, 100)), Player((0, 0, 255)), Player((0, 255, 0))]
+players = [Player(color=(255, 0, 0)), Player((230, 120, 0)), Player((0, 0, 255)), Player((0, 255, 0))]
