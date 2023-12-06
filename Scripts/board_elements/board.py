@@ -4,9 +4,10 @@ from Scripts.constants import *
 from Scripts.base_game_cls import HexagonTile, Board, Dice
 from Scripts.board_elements.settlement import Settlement, settlements, sprites
 from Scripts.board_elements.road import Road, roads
+from Scripts.player.player import Player, players
 
 
-def redraw_board(window, roll):  # TODO: maybe turn static
+def redraw_board(window, roll, current_player=players[0]):  # TODO: maybe turn static
     """ Redraw assets in case of necessary board changes
 
     :return:
@@ -41,3 +42,7 @@ def redraw_board(window, roll):  # TODO: maybe turn static
 
     # sprites.draw(window)
     # pygame.display.update()
+
+    # Update player's resources
+    current_player.draw_player(window)
+
