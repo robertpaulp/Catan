@@ -61,6 +61,11 @@ class Game:
         current_player.draw_player(window)
 
         while running:
+            # TODO add start of turn state
+            # TODO place things only if you have enough resources
+            # TODO spend resources buttons
+            # TODO trade mechanic
+
             # --- Roads ---
             # This needs to activate only when the player is placing a road
             if len(current_player.roads) != 0:
