@@ -60,6 +60,12 @@ class Settlement(pygame.sprite.Sprite):
 		pygame.display.update()
 
 	@staticmethod
+	def placement_is_possible(player):
+		if player.cards["Wood"] >= 1 and player.cards["Brick"] >= 1 and player.cards["Sheep"] >= 1 and player.cards["Wheat"] >= 1:
+			return True
+		return False
+
+	@staticmethod
 	def prepare_board_surfaces(window, nodes: tuple, hexagons: list):
 		""" Places possible settlement position surfaces on the map
 
