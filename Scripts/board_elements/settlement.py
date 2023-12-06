@@ -60,7 +60,9 @@ class Settlement(pygame.sprite.Sprite):
 		pygame.display.update()
 
 	@staticmethod
-	def placement_is_possible(player):
+	def placement_is_possible(player, GAME_START):
+		if GAME_START is True:
+			return True
 		if player.cards["Wood"] >= 1 and player.cards["Brick"] >= 1 and player.cards["Sheep"] >= 1 and player.cards["Wheat"] >= 1:
 			return True
 		return False
