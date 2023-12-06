@@ -105,7 +105,6 @@ class HexagonTile:
                 return 2
         return 0
 
-    
     def append_center_points(desert_idx):
         check = HexagonTile.check_for_corner_case(desert_idx)
         align_x = 0
