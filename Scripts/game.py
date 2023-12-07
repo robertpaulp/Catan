@@ -28,6 +28,7 @@ class Game:
         return window
     
     # --- Main loop ---
+    @staticmethod
     def main(window):
 
         # Game loop variables
@@ -43,6 +44,14 @@ class Game:
 
         # --- Robber ---
         robber.create_robber(window)
+
+        # --- Settlement Surfaces ---
+        # Settlement.prepare_board_surfaces(window, base.HexagonTile.distinct_vertices, base.HexagonTile.hexagons)
+
+        # --- Player ---
+        # current_player = players[0]  # Current player
+
+        # current_player.draw_player(window)
 
         while running:
             # --- Event loop ---
