@@ -63,12 +63,10 @@ class Game:
         END_START_ROUND = False
 
         while running:
-            # TODO add start of game state
-            # TODO place things only if you have enough resources
-            # TODO spend resources buttons
+            # TODO place roads only if you have enough resources
             # TODO trade mechanic
 
-            GAME_START = False
+            GAME_START = False  # TODO dont pass as parameter to settlement_place!
 
             for player in players:
                 if len(player.settlements) < 2:
