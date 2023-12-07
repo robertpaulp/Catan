@@ -1,7 +1,6 @@
 # Importing modules
 import pygame
 import constants as c
-import base_game_cls as base
 import game
 import options
 

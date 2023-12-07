@@ -1,9 +1,7 @@
 # Importing modules
 import pygame
 import constants as c
-import base_game_cls as base
 import menu
-
 
 class Options:
     
