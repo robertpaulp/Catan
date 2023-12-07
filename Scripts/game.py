@@ -1,16 +1,25 @@
 # Importing modules
 import pygame
-import constants as c
-import base_game_cls as base
 import random
+import sys
 
+sys.path.append("Base Game/Board/")
+sys.path.append("Base Game/Hexagon Tiles/")
+sys.path.append("Base Game/Robber/")
+sys.path.append("Base Game/Dice/")
+
+from board import Board as board
+from hexagon_tile import HexagonTile as hexagon
+from robber import Robber as robber
+from dice import Dice as dice
+from constants import *
 
 class Game:
-    def window_setup(self):
+    @staticmethod
+    def window_setup():
         pygame.init()
 
-        # Window
-        window = pygame.display.set_mode((c.SCREEN_WIDTH, c.SCREEN_HEIGHT))
+        window = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         pygame.display.set_caption("Catan")
         icon = pygame.image.load("../Assets/icon.png")
         icon = pygame.transform.scale(icon, (32, 32))
@@ -19,8 +28,7 @@ class Game:
         return window
     
     # --- Main loop ---
-    def main(self):
-        window = self.window_setup()
+    def main(window):
 
         # Game loop variables
         dice_first_dsp = True
@@ -28,14 +36,13 @@ class Game:
         roll = [0, 0]
 
         # --- Background ---
-        window.fill(c.LIGHT_CYAN_BLUE)
+        window.fill(LIGHT_CYAN_BLUE)
 
         # --- Hexagon grid ---
-        hexagon_numbers = [2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12, -1]
-        hexagon_numbers.sort(key=lambda x: random.random())
-        base.HexagonTile.create_hexagon_grid(
-            window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS, hexagon_numbers
-        )
+        hexagon.create_hexagon_grid(window, HEXAGON_X_AXIS, HEXAGON_Y_AXIS)
+
+        # --- Robber ---
+        robber.create_robber(window)
 
         while running:
             # --- Event loop ---
@@ -46,25 +53,35 @@ class Game:
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     mouse_pos = pygame.mouse.get_pos()
                     if dice_btn.collidepoint(mouse_pos):
-                        roll = [base.Dice.dice_roll(), base.Dice.dice_roll()]
+                        roll = [dice.dice_roll(), dice.dice_roll()]
 
-                        if sum(roll) == 7:
-                            print("Robber")
-                            # TODO: Move robber
+                        if sum(roll) == 7:                            
+                            # --- Update dice roll before moving robber ---
+                            dice.dices(window, roll)
+                            pygame.display.update()
+
+                            # --- Move robber ---
+                            robber_pos = robber.move_robber_event(window, running)
+
+                            # --- Update board ---
+                            board.redraw_board(window, robber_pos)
+
 
             # --- Dice ---
-            dice_btn = base.Board.roll_dice_btn(window)
+            dice_btn = dice.roll_dice_btn(window)
 
             if dice_first_dsp:
-                base.Dice.dices(window, [1, 1])
+                dice.dices(window, [1, 1])
                 dice_first_dsp = False
 
-            base.Dice.dices(window, roll)
+            dice.dices(window, roll)
 
             pygame.display.update()
 
         pygame.quit()
 
-if __name__ == "__main__":
-    game_instance = Game()
-    game_instance.main()
+    # TODO: remove this after testing
+    if __name__ == "__main__":
+        window = window_setup()
+        main(window)
+        exit()

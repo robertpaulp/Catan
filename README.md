@@ -7,6 +7,9 @@
 - [x] Added some TODOs
 - [x] Created the dice class
 - [x] Created the hexagon class
+- [x] Created the menu class
+- [x] Added the constants for each class I worked on
+- [ ] Plan to work on the robber class
 
 -> Anca
 
