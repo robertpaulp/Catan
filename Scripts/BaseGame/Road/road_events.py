@@ -1,10 +1,10 @@
 import pygame
 
-from board_elements.settlement import Settlement, settlements
+from Settlements import Settlement, settlements
 from constants import *
-from player.player import Player
-from board_elements.road import Road, roads
-from board_elements.settlement import Settlement
+from Player import Player
+from Road import Road, roads
+from Settlements import Settlement
 import time
 
 

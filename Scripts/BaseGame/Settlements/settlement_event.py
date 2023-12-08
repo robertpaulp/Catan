@@ -3,11 +3,11 @@ from threading import Event
 
 import pygame.draw
 
-from board_elements.settlement import Settlement, settlements, sprites
-from player.player import Player
+from Settlements.settlement import Settlement, settlements, sprites
+from Player.player import Player
 from constants import *
 
-from board_elements.board import redraw_board
+from Board.board import redraw_board
 
 
 class SettlementEventHandler:

@@ -6,10 +6,10 @@ import sys
 import numpy as np
 
 sys.path.append("../../")
-sys.path.append("../Hexagon Tiles/")
+sys.path.append("../Hexagon_Tiles/")
 
 from constants import *
-from hexagon_tile import HexagonTile as hexagon
+from Hexagon_Tiles.hexagon_tile import HexagonTile as hexagon
 
 # --- Robber class ---
 class Robber:

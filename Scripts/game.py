@@ -2,16 +2,20 @@
 import pygame
 import random
 import sys
-
-sys.path.append("Base Game/Board/")
-sys.path.append("Base Game/Hexagon Tiles/")
-sys.path.append("Base Game/Robber/")
-sys.path.append("Base Game/Dice/")
-
-from board import Board as board
-from hexagon_tile import HexagonTile as hexagon
-from robber import Robber as robber
-from dice import Dice as dice
+"""
+sys.path.append("./BaseGame/Board/")
+sys.path.append("./BaseGame/Hexagon Tiles/")
+sys.path.append("./BaseGame/Robber/")
+sys.path.append("./BaseGame/Dice/")"""
+from Scripts.BaseGame.Board import board
+from Scripts.BaseGame.Buttons import Button, button
+from Scripts.BaseGame.CardsPrompt import cards_prompt, CardsPrompt
+from Scripts.BaseGame.Dice import Dice, dice
+from Scripts.BaseGame.Hexagon_Tiles import hexagon_tile, hexagon
+from Scripts.BaseGame.Player import Player, players
+from Scripts.BaseGame.Road import Road, road, road_events
+from Scripts.BaseGame.Robber import Robber, robber
+from Scripts.BaseGame.Settlements import settlement, settlement_event
 from constants import *
 
 class Game:
@@ -48,10 +52,21 @@ class Game:
         # --- Settlement Surfaces ---
         # Settlement.prepare_board_surfaces(window, base.HexagonTile.distinct_vertices, base.HexagonTile.hexagons)
 
-        # --- Player ---
-        # current_player = players[0]  # Current player
+        # --- Cards prompt ---
+        cards_prompt.show_cards(window, current_player)
 
-        # current_player.draw_player(window)
+        # --- Buttons ---
+        road_button = Button.create_road_button()
+        road_button.draw(window)
+        settlement_button = Button.create_settlement_button()
+        settlement_button.draw(window)
+        special_card_button = Button.create_special_card_button()
+        special_card_button.draw(window)
+
+        # --- Player ---
+        current_player = players[0]  # Current player
+
+        current_player.draw_player(window)
 
         while running:
             # --- Event loop ---
