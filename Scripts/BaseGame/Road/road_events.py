@@ -1,10 +1,10 @@
 import pygame
 
-from Settlements import Settlement, settlements
 from constants import *
-from Player import Player
-from Road import Road, roads
-from Settlements import Settlement
+from BaseGame.Hexagon_Tiles.hexagon_tile import HexagonTile
+from BaseGame.Settlements.settlement import Settlement, settlements, sprites
+from BaseGame.Road.road import Road, roads
+from BaseGame.Player.player import Player, players
 import time
 
 

@@ -9,7 +9,7 @@ sys.path.append("../../")
 sys.path.append("../Hexagon_Tiles/")
 
 from constants import *
-from Hexagon_Tiles.hexagon_tile import HexagonTile as hexagon
+from BaseGame.Hexagon_Tiles.hexagon_tile import HexagonTile as hexagon
 
 # --- Robber class ---
 class Robber:

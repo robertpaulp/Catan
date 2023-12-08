@@ -11,28 +11,29 @@ sys.path.append("../Robber/")
 import pygame
 
 from constants import *
-from Dice.dice import Dice
-from Hexagon_Tiles.hexagon_tile import HexagonTile, Board, Dice
-from Settlements.settlement import Settlement, settlements, sprites
-from Road.road import Road, roads
-from Player.player import Player, players
+from BaseGame.Dice.dice import Dice
+from BaseGame.Hexagon_Tiles.hexagon_tile import HexagonTile
+from BaseGame.Settlements.settlement import Settlement, settlements, sprites
+from BaseGame.Road.road import Road, roads
+from BaseGame.Player.player import Player, players
+from BaseGame.Robber import robber
 
 # --- Board class ---
 class Board:
     # TODO: Create a class called Board
     # Incorporate all the classes and create the board
 
-    def redraw_board(window, robber_pos):
+    def redraw_board(window, robber_pos, roll, current_player=players[0]):
         window.fill(LIGHT_CYAN_BLUE)
 
         dice_btn = Board.roll_dice_btn(window)
 
         if roll == [0, 0]:
-        Dice.dices(window, [1, 1])
+            Dice.dices(window, [1, 1])
 
         Dice.dices(window, roll)
 
-        hexagon.create_hexagon_grid(window, HEXAGON_X_AXIS, HEXAGON_Y_AXIS, False)
+        HexagonTile.create_hexagon_grid(window, HEXAGON_X_AXIS, HEXAGON_Y_AXIS, False)
 
         # Move robber
         robber.move_robber(window, robber_pos)
