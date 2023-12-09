@@ -95,6 +95,11 @@ class Game:
 
             GAME_START = False  # TODO dont pass as parameter to settlement_place!
 
+            # Add buttons hover feature
+            road_button.hover()
+            settlement_button.hover()
+            special_card_button.hover()
+
             for player in players:
                 if len(player.settlements) < 2:
                     GAME_START = True
