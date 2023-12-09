@@ -80,7 +80,9 @@ class Game:
         # --- Player ---
         current_player = players[0]  # Current player
 
-        current_player.draw_player(window)
+        Player.draw_players(window)
+
+        #current_player.draw_player(window)
 
         # --- Cards prompt ---
         cards_prompt.show_cards(window, current_player)
@@ -153,7 +155,7 @@ class Game:
 
                             else:  # Switch to next player
                                 current_player = players[(players.index(current_player) + 1) % len(players)]
-                                time.sleep(3)
+                                #time.sleep(3)
                                 Board.redraw_board(window, robber_pos, roll, current_player)
                                 # TODO switch to start of turn state
 

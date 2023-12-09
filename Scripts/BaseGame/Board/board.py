@@ -76,4 +76,4 @@ class Board:
         # pygame.display.update()
 
         # Update player's resources
-        current_player.draw_player(window)
+        Player.draw_players(window)

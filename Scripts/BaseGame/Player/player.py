@@ -21,6 +21,8 @@ class Player:
 		Player.noPlayers += 1
 
 		self.color = color
+		self.resource_cards = 0
+		self.special_cards = 0
 
 		# Gameplay attributes
 		self.cards = {
@@ -35,6 +37,41 @@ class Player:
 
 		self.win_points = 0
 
+	@staticmethod
+	def draw_players(window):
+		i = 0
+		for player in players:
+			# PLayer Icon
+			pygame.draw.rect(player.image, player.color, (0, 0 + i * 130, ICON_SIZE, ICON_SIZE), 0)
+			window.blit(player.image, ICON_POSITION)
+
+			# Player Name
+			font = pygame.freetype.SysFont('Arial', 40)
+			name_surface = font.render(player.name, (0, 0, 0))
+
+			window.blit(name_surface[0], NAME_POSITION[i])
+
+			# Player Resources
+
+			# Resource Cards Icon
+			# TODO: Add resource card icon
+			window.blit(player.image, RESOURCE_CARDS_POSITION)
+			# Resource Cards Quantity
+			font = pygame.freetype.SysFont('Arial', 25)
+			resource_cards_quantity = font.render(str(player.resource_cards), (0, 0, 0))
+			window.blit(resource_cards_quantity[0], (RESOURCE_CARDS_POSITION[0] + ICON_SIZE + 10, RESOURCE_CARDS_POSITION[1] + i * 130 + 5))
+			
+			# Special Cards Icon
+			## TODO: Add special card icon
+			window.blit(player.image, SPECIAL_CARDS_POSITION)
+			# Special Cards Quantity
+			font = pygame.freetype.SysFont('Arial', 25)
+			special_cards_quantity= font.render(str(player.special_cards), (0, 0, 0))
+			window.blit(special_cards_quantity[0], (RESOURCE_CARDS_POSITION[0] + ICON_SIZE + 10, RESOURCE_CARDS_POSITION[1] + i * 130 + 45))
+			
+			i = i + 1
+
+	# Delete this
 	def draw_player(self, window):
 		""" Draws player icon on the map
 
@@ -108,9 +145,9 @@ class Player:
 			print(settlement.position)
 			# If settlement is placed next to a hexagon with the dice roll associated to it, acquire resources
 			if dice_roll in settlement.dice_rolls:
-				print('we can take')
 				resource = settlement.resources[settlement.dice_rolls.index(dice_roll)]
 				self.cards[resource] += 1
+				self.resource_cards += 1
 
 
 # List of players
