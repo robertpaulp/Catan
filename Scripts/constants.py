@@ -1,8 +1,8 @@
 from win32api import GetSystemMetrics
 
 # Screen Constants
-SCREEN_WIDTH = GetSystemMetrics(0) - 400
-SCREEN_HEIGHT = GetSystemMetrics(1) - 200
+SCREEN_WIDTH = GetSystemMetrics(0) - 60
+SCREEN_HEIGHT = GetSystemMetrics(1) - 80
 
 # Color Constants
 WHITE = (255, 255, 255)
@@ -32,6 +32,7 @@ HEXAGON_SIDE = HEXAGON_WIDTH / 2
 HEXAGON_CENTER = HEXAGON_HEIGHT / 2
 HEXAGON_X_AXIS = SCREEN_WIDTH / 2 - HEXAGON_WIDTH / 2 - HEXAGON_WIDTH
 HEXAGON_Y_AXIS = 75
+POLYGON_RADIUS = 370
 
 # Sprite Constants
 WOOD_SPRITE = "../Assets/Sprites/forest.png"
@@ -42,6 +43,8 @@ STONE_SPRITE = "../Assets/Sprites/mountain.png"
 DESERT_SPRITE = "../Assets/Sprites/desert.png"
 ROBBER_SPRITE = "../Assets/Sprites/robber.png"
 BUTTON_SPRITE = "../Assets/Sprites/button.png"
+ERROR_RESOURCE_SPRITE = "../Assets/Sprites/error_resource.png"
+ERROR_DICE_SPRITE = "../Assets/Sprites/error_dice.png"
 
 # Player Constants
 PLAYER_BOARD_X_AXIS = HEXAGON_X_AXIS + HEXAGON_WIDTH * 3.7

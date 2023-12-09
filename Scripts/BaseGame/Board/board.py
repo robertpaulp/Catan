@@ -26,7 +26,7 @@ class Board:
     # Incorporate all the classes and create the board
 
     def redraw_board(window, robber_pos, roll, current_player=players[0]):
-        window.fill(LIGHT_CYAN_BLUE)
+        window.fill(BRASS)
 
         dice_btn = Dice.roll_dice_btn(window)
 
@@ -34,6 +34,8 @@ class Board:
             Dice.dices(window, [1, 1])
 
         Dice.dices(window, roll)
+
+        HexagonTile.draw_sea_hexagon(window, SCREEN_WIDTH / 2 - HEXAGON_WIDTH / 2 - HEXAGON_WIDTH - 50, HEXAGON_Y_AXIS - 55)
 
         HexagonTile.create_hexagon_grid(window, HEXAGON_X_AXIS, HEXAGON_Y_AXIS, False)
 

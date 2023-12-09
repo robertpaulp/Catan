@@ -94,6 +94,7 @@ class Settlement(pygame.sprite.Sprite):
 				if node in hexagon.vertices:
 					settlement.resources.append(hexagon.resource)
 					settlement.dice_rolls.append(hexagon.number)
+					print(settlement.dice_rolls)
 
 			add_settlement_permission = True
 			for settlement1 in settlements:

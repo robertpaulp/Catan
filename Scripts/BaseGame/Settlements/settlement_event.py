@@ -43,7 +43,7 @@ class SettlementEventHandler:
 			if settlement.rect.collidepoint(mouse_pos) and settlement.prepared_for_placement is True:
 				# Check if placement is possible
 				if Settlement.placement_is_possible(player, GAME_START) is False:
-					SettlementEventHandler.__error_popup(window, roll, player)
+					SettlementEventHandler.__error_popup_resources(window, roll, player)
 					settlement.prepared_for_placement = False
 					return
 
@@ -83,8 +83,8 @@ class SettlementEventHandler:
 		player.cards["Wheat"] -= 1
 
 	@staticmethod
-	def __error_popup(window, roll, player):
-		err_image = pygame.image.load("../Assets/Sprites/saracie_error.png")
+	def __error_popup_resources(window, roll, player):
+		err_image = pygame.image.load(ERROR_RESOURCE_SPRITE)
 		err_image = pygame.transform.scale(err_image, (400, 100))
 		window.blit(err_image, (0, 0))
 		pygame.display.update()

@@ -1,6 +1,7 @@
 # Importing modules
 import pygame
 import time
+import math
 import random
 import sys
 """
@@ -45,7 +46,9 @@ class Game:
         robber_pos = (-1, -1)
 
         # --- Background ---
-        window.fill(LIGHT_CYAN_BLUE)
+        window.fill(BRASS)
+    
+        HexagonTile.draw_sea_hexagon(window, SCREEN_WIDTH / 2 - HEXAGON_WIDTH / 2 - HEXAGON_WIDTH - 50, HEXAGON_Y_AXIS - 55)
 
         # --- Hexagon grid ---
         HexagonTile.create_hexagon_grid(window, HEXAGON_X_AXIS, HEXAGON_Y_AXIS)
@@ -58,7 +61,9 @@ class Game:
 
         # --- Settlement Surfaces ---
         Settlement.prepare_board_surfaces(window, HexagonTile.distinct_vertices, HexagonTile.hexagons)
-
+        print("-------------------")
+        print(HexagonTile.hexagon_numbers)
+        print("---------")
         # --- Buttons ---
         road_button = Button.create_road_button()
         road_button.draw(window)
@@ -123,30 +128,34 @@ class Game:
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     print("running")
                     if dice_btn.collidepoint(mouse_pos):
-                        print("dice")
-                        roll = [Dice.dice_roll(), Dice.dice_roll()]
+                        if GAME_START:
+                            print("error, all players need to place sett first")
+                        else:
+                            print("dice")
+                            roll = [Dice.dice_roll(), Dice.dice_roll()]
 
-                        # Acquire resources
-                        for player in players:
-                            player.acquire_cards(sum(roll))
-                        Board.redraw_board(window, robber_pos, roll, current_player)
-
-                        if sum(roll) == 7:
-                            print("Robber")
-                            Dice.dices(window, roll)
-                            pygame.display.update()
-
-                            # --- Move robber ---
-                            robber_pos = Robber.move_robber_event(window, running)
-
-                            # --- Update board ---
+                            # Acquire resources
+                            for player in players:
+                                print('aquiring')
+                                player.acquire_cards(sum(roll))
                             Board.redraw_board(window, robber_pos, roll, current_player)
 
-                        else:  # Switch to next player
-                            current_player = players[(players.index(current_player) + 1) % len(players)]
-                            time.sleep(3)
-                            Board.redraw_board(window, robber_pos, roll, current_player)
-                            # TODO switch to start of turn state
+                            if sum(roll) == 7:
+                                print("Robber")
+                                Dice.dices(window, roll)
+                                pygame.display.update()
+
+                                # --- Move robber ---
+                                robber_pos = Robber.move_robber_event(window, running)
+
+                                # --- Update board ---
+                                Board.redraw_board(window, robber_pos, roll, current_player)
+
+                            else:  # Switch to next player
+                                current_player = players[(players.index(current_player) + 1) % len(players)]
+                                time.sleep(3)
+                                Board.redraw_board(window, robber_pos, roll, current_player)
+                                # TODO switch to start of turn state
 
                     # TODO: after first click
                     for center_point in HexagonTile.center_points:

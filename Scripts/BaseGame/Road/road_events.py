@@ -71,6 +71,8 @@ class RoadEventHandler:
 						if existing_road.start == road.start and existing_road.end == settlement.position:
 							road.is_dragged = False
 							return -1
+						
+					# Check if the two points of the road are adjacent  
 
 					print("placed")
 					road.borders.append(settlement)  # Append end settlement to road borders
