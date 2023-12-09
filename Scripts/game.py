@@ -106,19 +106,24 @@ class Game:
                 #print(len(player.roads))
                 if len(player.settlements) < 2 or len(player.roads) < 2:
                     GAME_START = True
+                elif len(current_player.roads) == 2 and current_player.roads[-1].is_placed is False:
+                    GAME_START = True
                 elif players.index(player) == 3 and END_START_ROUND is False:
                     print("intra")
                     GAME_START = True
                     END_START_ROUND = True
 
-            if GAME_START and len(current_player.settlements) == 2 and len(current_player.roads) == 2:
-                if len(current_player.roads) != 0 and current_player.roads[-1].is_placed is True:
+            # Finished placing initial settlements and roads
+            if END_START_ROUND is True and GAME_START is True:
+                current_player = players[0]
+                Board.redraw_board(window, robber_pos, roll, current_player)
+            elif GAME_START and len(current_player.settlements) == 2 and len(current_player.roads) == 2:
+                if current_player.roads[-1].is_placed is True:
                     # Switch player
                     current_player = players[(players.index(current_player) + 1) % len(players)]
-                    time.sleep(1)
                     Board.redraw_board(window, robber_pos, roll, current_player)
 
-            if(road_button.clicked_up):
+            if(road_button.clicked_up or GAME_START is True):
                 print('prepare road')
                 # --- Roads ---
                 # This needs to activate only when the player is placing a road
@@ -144,23 +149,23 @@ class Game:
                     print("running")
                     if dice_btn.collidepoint(mouse_pos):
                         if GAME_START:
-                            if(len(current_player.roads) < 2 and len(current_player.settlements) <= 2):
+                            if(len(current_player.roads) <= 2 and len(current_player.settlements) < 2):
                                 if(len(current_player.roads) == 0):
                                     Error.error_popup_place_settlements_roads(window)
-                                    Board.redraw_board(window, robber_pos, roll, player)
+                                    Board.redraw_board(window, robber_pos, roll, current_player)
                                 elif len(current_player.roads) != 0 and current_player.roads[-1].is_placed is False:
                                     Error.error_popup_place_settlements_roads(window)
-                                    Board.redraw_board(window, robber_pos, roll, player)
+                                    Board.redraw_board(window, robber_pos, roll, current_player)
                             elif(len(current_player.roads) <= 2):
                                 if(len(current_player.roads) == 0):
                                     Error.error_popup_place_roads(window)
-                                    Board.redraw_board(window, robber_pos, roll, player)
+                                    Board.redraw_board(window, robber_pos, roll, current_player)
                                 elif current_player.roads[-1].is_placed is False:
                                     Error.error_popup_place_roads(window)
-                                    Board.redraw_board(window, robber_pos, roll, player)
+                                    Board.redraw_board(window, robber_pos, roll, current_player)
                             elif(len(current_player.settlements) < 2):
                                 Error.error_popup_place_settlements(window)
-                                Board.redraw_board(window, robber_pos, roll, player)
+                                Board.redraw_board(window, robber_pos, roll, current_player)
                                 
                             print("error, all players need to place sett first")
                         else:
@@ -226,7 +231,7 @@ class Game:
                         road_button.clicked_up = True
                         road_button.clicked = False
 
-                    elif(road_button.clicked_up):
+                    elif(road_button.clicked_up or GAME_START is True):
                         # If placing the road was unsuccessful, remove it from the list
                         if RoadEventHandler.place(window, event, current_player.current_road, current_player) == -1:
                             print('didnt work out')
