@@ -44,8 +44,6 @@ class SettlementEventHandler:
 			if settlement.rect.collidepoint(mouse_pos) and settlement.prepared_for_placement is True:
 				# Check if placement is possible
 				if Settlement.placement_is_possible(player, GAME_START) is False:
-					Error.error_popup_resources(window)
-					Board.redraw_board(window, robber_pos, roll, player)
 					settlement.prepared_for_placement = False
 					return
 

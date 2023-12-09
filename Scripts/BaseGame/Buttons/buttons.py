@@ -38,19 +38,19 @@ class Button:
         return action
     
     @staticmethod
-    def create_road_button():
-        button_img = pygame.image.load(BUTTON_SPRITE).convert_alpha()
-        button = Button(SCREEN_WIDTH - 500, SCREEN_HEIGHT - 100, button_img, 0.8)
-        return button
-    
-    @staticmethod
     def create_settlement_button():
-        button_img = pygame.image.load(BUTTON_SPRITE).convert_alpha()
-        button = Button(SCREEN_WIDTH - 400, SCREEN_HEIGHT - 100, button_img, 0.8)
+        button_img = pygame.image.load(SETTLEMENT_BUTTON_SPRITE).convert_alpha()
+        button = Button(SCREEN_WIDTH - 650, SCREEN_HEIGHT - 110, button_img, 0.11)
+        return button
+
+    @staticmethod
+    def create_road_button():
+        button_img = pygame.image.load(ROAD_BUTTON_SPRITE).convert_alpha()
+        button = Button(SCREEN_WIDTH - 500, SCREEN_HEIGHT - 110, button_img, 0.11)
         return button
     
     @staticmethod
     def create_special_card_button():
-        button_img = pygame.image.load(BUTTON_SPRITE).convert_alpha()
-        button = Button(SCREEN_WIDTH - 300, SCREEN_HEIGHT - 100, button_img, 0.8)
+        button_img = pygame.image.load(SPECIAL_CARD_BUTTON_SPRITE).convert_alpha()
+        button = Button(SCREEN_WIDTH - 350, SCREEN_HEIGHT - 110, button_img, 0.11)
         return button

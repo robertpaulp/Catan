@@ -200,6 +200,16 @@ class Game:
                         print('buy road')
                         road_button.clicked = True
 
+                    if settlement_button.rect.collidepoint(mouse_pos):
+                        print('buy settlement')
+                        road_button.clicked = True
+
+                    """
+                    if special_card_button.rect.collidepoint(mouse_pos):
+                        print('buy special_card')
+                        special_card_button.clicked = True
+                    """
+
                     # TODO: after first click
                     for center_point in HexagonTile.center_points:
                         if center_point[0] - HEXAGON_SIDE / 3 <= mouse_pos[0] <= center_point[0] + HEXAGON_SIDE / 3:
@@ -224,9 +234,27 @@ class Game:
                     # Place settlement event
                     SettlementEventHandler.place(window, robber_pos, roll, current_player, GAME_START)
 
+                    if(settlement_button.clicked):
+                        if Settlement.placement_is_possible(player, GAME_START) is False:
+                            Error.error_popup_resources(window)
+                            Board.redraw_board(window, robber_pos, roll, current_player)
+                        else:
+                            settlement_button.clicked_up = True
+                            settlement_button.clicked = False
+
+                    # TODO: Implement special cards
+                    """
+                    if(special_card_button.clicked):
+                        if SpecialCard.placement_is_possible(player, GAME_START) is False:
+                            Error.error_popup_resources(window)
+                            Board.redraw_board(window, robber_pos, roll, current_player)
+                        else:
+                            special_card_button.clicked_up = True
+                            special_card_button.clicked = False
+                    """
+
                     # Release road event
                     print("entered")
-
                     if(road_button.clicked):
                         if Road.placement_is_possible(current_player, GAME_START) is False:
                             Error.error_popup_resources(window)
@@ -234,7 +262,6 @@ class Game:
                         else:
                             road_button.clicked_up = True
                             road_button.clicked = False
-
                     elif(road_button.clicked_up or GAME_START is True):
                         # If placing the road was unsuccessful, remove it from the list
                         if RoadEventHandler.place(window, event, current_player.current_road, current_player) == -1:
