@@ -13,7 +13,6 @@ from BaseGame.Dice.dice import Dice
 from BaseGame.Hexagon_Tiles.hexagon_tile import HexagonTile
 from BaseGame.Player.player import Player, players
 from BaseGame.Road.road import Road, roads
-from BaseGame.Road.road_events import RoadEventHandler
 from BaseGame.Robber.robber import Robber
 from constants import *
 
@@ -26,8 +25,6 @@ class Error:
         pygame.display.update()
 
         Event().wait(2)
-        # Redraw after every error!!!
-        # Board.redraw_board(window, roll, player)
 
     @staticmethod
     def error_popup_place_roads(window):

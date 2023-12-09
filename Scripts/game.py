@@ -228,8 +228,12 @@ class Game:
                     print("entered")
 
                     if(road_button.clicked):
-                        road_button.clicked_up = True
-                        road_button.clicked = False
+                        if Road.placement_is_possible(current_player, GAME_START) is False:
+                            Error.error_popup_resources(window)
+                            Board.redraw_board(window, robber_pos, roll, current_player)
+                        else:
+                            road_button.clicked_up = True
+                            road_button.clicked = False
 
                     elif(road_button.clicked_up or GAME_START is True):
                         # If placing the road was unsuccessful, remove it from the list

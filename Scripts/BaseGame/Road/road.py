@@ -34,3 +34,11 @@ class Road:
 		settlement = self.borders[0]
 		if settlement.is_placed is True:
 			settlement.draw_settlement(window, settlement.color)
+
+	@staticmethod
+	def placement_is_possible(player, GAME_START):
+		if GAME_START is True:
+			return True
+		if player.cards["Wood"] >= 1 and player.cards["Brick"] >= 1:
+			return True
+		return False
