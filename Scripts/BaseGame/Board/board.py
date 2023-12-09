@@ -25,7 +25,7 @@ class Board:
     # TODO: Create a class called Board
     # Incorporate all the classes and create the board
 
-    def redraw_board(window, robber_pos, roll, current_player=players[0]):
+    def redraw_board(window, robber_pos, roll, current_player=players[0], GAME_START = False):
         window.fill(BRASS)
 
         dice_btn = Dice.roll_dice_btn(window)
@@ -39,13 +39,14 @@ class Board:
 
         HexagonTile.create_hexagon_grid(window, HEXAGON_X_AXIS, HEXAGON_Y_AXIS, False)
 
-        # --- Buttons ---
-        road_button = Button.create_road_button()
-        road_button.draw(window)
-        settlement_button = Button.create_settlement_button()
-        settlement_button.draw(window)
-        special_card_button = Button.create_special_card_button()
-        special_card_button.draw(window)
+        if GAME_START is False:
+            # --- Buttons ---
+            road_button = Button.create_road_button()
+            road_button.draw(window)
+            settlement_button = Button.create_settlement_button()
+            settlement_button.draw(window)
+            special_card_button = Button.create_special_card_button()
+            special_card_button.draw(window)
 
         # --- Cards prompt ---
         cards_prompt.show_cards(window, current_player)

@@ -16,7 +16,7 @@ class SettlementEventHandler:
 		pass
 
 	@staticmethod
-	def hover_settlement(window, roll):
+	def hover_settlement(window, robber_pos, roll, current_player, GAME_START):
 		mouse_pos = pygame.mouse.get_pos()
 
 		for settlement in settlements:
@@ -25,7 +25,7 @@ class SettlementEventHandler:
 					settlement.hover_state(window)
 				elif not settlement.rect.collidepoint(mouse_pos) and settlement.is_hovered is True:
 					settlement.is_hovered = False
-					Board.redraw_board(window, roll)
+					Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
 
 	@staticmethod
 	def press(window):
@@ -36,14 +36,21 @@ class SettlementEventHandler:
 				settlement.prepared_for_placement = True
 
 	@staticmethod
-	def place(window, robber_pos, roll, player: Player, GAME_START):
+	def place(window, robber_pos, roll, player: Player, GAME_START, settlement_button):
 		mouse_pos = pygame.mouse.get_pos()
 
 		for settlement in settlements:
 			# If mouse was released on the settlement we prepared, draw it
 			if settlement.rect.collidepoint(mouse_pos) and settlement.prepared_for_placement is True:
 				# Check if placement is possible
+				"""
+				# Check if you have the resources
 				if Settlement.placement_is_possible(player, GAME_START) is False:
+					settlement.prepared_for_placement = False
+					return
+				"""
+				# It isn't the start of the game and the purchase button hasn't been pressed
+				if settlement_button.clicked_up is False and GAME_START is False:
 					settlement.prepared_for_placement = False
 					return
 
@@ -63,7 +70,7 @@ class SettlementEventHandler:
 				# Spend resources
 				if GAME_START is False:
 					SettlementEventHandler.__buy_settlement(player)
-					Board.redraw_board(window, roll, player)
+					Board.redraw_board(window, robber_pos, roll, player, GAME_START)
 
 			# If mouse was not released on the settlement we prepared, reset its state
 			elif settlement.prepared_for_placement is True:

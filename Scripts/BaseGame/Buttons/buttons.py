@@ -3,10 +3,11 @@ import pygame.freetype
 from constants import *
 
 class Button:
-    def __init__(self, x, y, image, scale):
+    def __init__(self, name, x, y, image, scale):
         width = image.get_width()
         height = image.get_height()
         self.image = pygame.transform.scale(image, (int(width * scale), int(height * scale)))
+        self.name = name
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
         self.clicked = False
@@ -40,17 +41,17 @@ class Button:
     @staticmethod
     def create_settlement_button():
         button_img = pygame.image.load(SETTLEMENT_BUTTON_SPRITE).convert_alpha()
-        button = Button(SCREEN_WIDTH - 650, SCREEN_HEIGHT - 110, button_img, 0.11)
+        button = Button("settlement", SCREEN_WIDTH - 650, SCREEN_HEIGHT - 110, button_img, 0.11)
         return button
 
     @staticmethod
     def create_road_button():
         button_img = pygame.image.load(ROAD_BUTTON_SPRITE).convert_alpha()
-        button = Button(SCREEN_WIDTH - 500, SCREEN_HEIGHT - 110, button_img, 0.11)
+        button = Button("road", SCREEN_WIDTH - 500, SCREEN_HEIGHT - 110, button_img, 0.11)
         return button
     
     @staticmethod
     def create_special_card_button():
         button_img = pygame.image.load(SPECIAL_CARD_BUTTON_SPRITE).convert_alpha()
-        button = Button(SCREEN_WIDTH - 350, SCREEN_HEIGHT - 110, button_img, 0.11)
+        button = Button("special_card", SCREEN_WIDTH - 350, SCREEN_HEIGHT - 110, button_img, 0.11)
         return button
