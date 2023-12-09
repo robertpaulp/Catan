@@ -1,5 +1,7 @@
 import pygame
 
+import pygame.event
+
 from constants import *
 from BaseGame.Hexagon_Tiles.hexagon_tile import HexagonTile
 from BaseGame.Settlements.settlement import Settlement, settlements, sprites
@@ -30,7 +32,7 @@ class RoadEventHandler:
 					road.is_dragged = True
 					road.borders.append(settlement)
 
-					if road.start == [0, 0]:  # If road has not been placed yet
+					if road.start == (0, 0):  # If road has not been placed yet
 						road.start = settlement.position
 						
 			# Start point is a road
@@ -57,10 +59,12 @@ class RoadEventHandler:
 		"""
 
 		if event.button == 1:
+			print('okkkkkk')
 			for settlement in settlements:
 				# If mouse was released on a valid settlement, draw the road
 				# Check if road has valid start point (settlement exists)
 				if settlement.rect.collidepoint(event.pos) and road.start != [0, 0]:
+					print('clicked on sett')
 					# Check if the end settlement is not the same as the start settlement
 					if settlement.position == road.start:
 						road.is_dragged = False
@@ -91,7 +95,7 @@ class RoadEventHandler:
 			return -1
 
 	@staticmethod
-	def drag(window, event: pygame.event, road: Road):
+	def drag(window, position, road: Road):
 		""" Drag road to mouse position
 
 		:param window: Display window
@@ -101,6 +105,6 @@ class RoadEventHandler:
 		"""
 
 		if road.is_dragged:
-			print("dragging")
-			road.end[0] = event.pos[0]
-			road.end[1] = event.pos[1]
+			road.end = position
+			#road.end[0] = position[0]
+			#road.end[1] = position[1]

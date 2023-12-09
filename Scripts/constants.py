@@ -43,8 +43,13 @@ STONE_SPRITE = "../Assets/Sprites/mountain.png"
 DESERT_SPRITE = "../Assets/Sprites/desert.png"
 ROBBER_SPRITE = "../Assets/Sprites/robber.png"
 BUTTON_SPRITE = "../Assets/Sprites/button.png"
+# Error sprites
 ERROR_RESOURCE_SPRITE = "../Assets/Sprites/error_resource.png"
-ERROR_DICE_SPRITE = "../Assets/Sprites/error_dice.png"
+ERROR_PLACE_SPRITE = "../Assets/Sprites/error_place_first.png"
+ERROR_ROBBER_SPRITE = "../Assets/Sprites/error_robber.png"
+ERROR_PLACE_SETTLEMENTS_ROADS_SPRITE = "../Assets/Sprites/error_place_settlements_roads.png"
+ERROR_PLACE_SETTLEMENTS_SPRITE = "../Assets/Sprites/error_place_settlements.png"
+ERROR_PLACE_ROADS_SPRITE = "../Assets/Sprites/error_place_roads.png"
 
 # Player Constants
 PLAYER_BOARD_X_AXIS = HEXAGON_X_AXIS + HEXAGON_WIDTH * 4.2

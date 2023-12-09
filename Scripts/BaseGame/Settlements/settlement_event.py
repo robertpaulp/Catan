@@ -5,6 +5,7 @@ import pygame.draw
 
 from BaseGame.Settlements.settlement import Settlement, settlements, sprites
 from BaseGame.Player.player import Player
+from BaseGame.Error.error import Error
 from constants import *
 
 from BaseGame.Board.board import Board
@@ -35,7 +36,7 @@ class SettlementEventHandler:
 				settlement.prepared_for_placement = True
 
 	@staticmethod
-	def place(window, roll, player: Player, GAME_START):
+	def place(window, robber_pos, roll, player: Player, GAME_START):
 		mouse_pos = pygame.mouse.get_pos()
 
 		for settlement in settlements:
@@ -43,7 +44,8 @@ class SettlementEventHandler:
 			if settlement.rect.collidepoint(mouse_pos) and settlement.prepared_for_placement is True:
 				# Check if placement is possible
 				if Settlement.placement_is_possible(player, GAME_START) is False:
-					SettlementEventHandler.__error_popup_resources(window, roll, player)
+					Error.error_popup_resources(window)
+					Board.redraw_board(window, robber_pos, roll, player)
 					settlement.prepared_for_placement = False
 					return
 
@@ -81,13 +83,3 @@ class SettlementEventHandler:
 		player.cards["Brick"] -= 1
 		player.cards["Sheep"] -= 1
 		player.cards["Wheat"] -= 1
-
-	@staticmethod
-	def __error_popup_resources(window, roll, player):
-		err_image = pygame.image.load(ERROR_RESOURCE_SPRITE)
-		err_image = pygame.transform.scale(err_image, (400, 100))
-		window.blit(err_image, (0, 0))
-		pygame.display.update()
-
-		Event().wait(2)
-		Board.redraw_board(window, roll, player)

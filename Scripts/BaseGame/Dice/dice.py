@@ -86,13 +86,3 @@ class Dice:
         text_rect = text.get_rect(center=(x + 100, y + 25))
         window.blit(text, text_rect)
         return button
-    
-    @staticmethod
-    def __error_popup_dice(window, roll, player):
-        err_image = pygame.image.load("../Assets/Sprites/dice_error.png")
-        err_image = pygame.transform.scale(err_image, (400, 100))
-        window.blit(err_image, (0, 0))
-        pygame.display.update()
-
-        Event().wait(2)
-       # Board.redraw_board(window, roll, player)

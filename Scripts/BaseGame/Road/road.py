@@ -13,8 +13,8 @@ class Road:
 
 		self.color = (0, 0, 0, 0)
 
-		self.start = [0, 0]
-		self.end = [0, 0]
+		self.start = (0, 0)
+		self.end = (0, 0)
 		self.borders = []  # List of settlement borders that the road is connected to
 
 	def draw_road(self, window, color):

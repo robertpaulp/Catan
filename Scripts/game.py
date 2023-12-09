@@ -1,5 +1,6 @@
 # Importing modules
 import pygame
+import pygame.event
 import time
 import math
 import random
@@ -20,6 +21,7 @@ from BaseGame.Road.road_events import RoadEventHandler
 from BaseGame.Robber.robber import Robber
 from BaseGame.Settlements.settlement import Settlement
 from BaseGame.Settlements.settlement_event import SettlementEventHandler
+from BaseGame.Error.error import Error
 from constants import *
 
 class Game:
@@ -61,16 +63,14 @@ class Game:
 
         # --- Settlement Surfaces ---
         Settlement.prepare_board_surfaces(window, HexagonTile.distinct_vertices, HexagonTile.hexagons)
-        print("-------------------")
-        print(HexagonTile.hexagon_numbers)
-        print("---------")
+        
         # --- Buttons ---
         road_button = Button.create_road_button()
         road_button.draw(window)
         settlement_button = Button.create_settlement_button()
-        settlement_button.draw(window)
+        #settlement_button.draw(window)
         special_card_button = Button.create_special_card_button()
-        special_card_button.draw(window)
+        #special_card_button.draw(window)
 
         # --- Settlement Surfaces ---
         Settlement.prepare_board_surfaces(window, HexagonTile.distinct_vertices, HexagonTile.hexagons)
@@ -79,10 +79,11 @@ class Game:
 
         # --- Player ---
         current_player = players[0]  # Current player
+        print(":;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;")
+        print(len(current_player.roads))
 
         Player.draw_players(window)
-
-        #current_player.draw_player(window)
+        print(len(current_player.roads))
 
         # --- Cards prompt ---
         cards_prompt.show_cards(window, current_player)
@@ -92,38 +93,27 @@ class Game:
         while running:
             # TODO place roads only if you have enough resources
             # TODO trade mechanic
-
+            #print(len(current_player.roads))
             GAME_START = False  # TODO dont pass as parameter to settlement_place!
 
             # Add buttons hover feature
-            road_button.hover()
+           # road_button.hover()
             settlement_button.hover()
             special_card_button.hover()
 
             for player in players:
-                if len(player.settlements) < 2:
+                if len(player.settlements) < 2 or len(player.roads) < 2:
                     GAME_START = True
                 elif players.index(player) == 3 and END_START_ROUND is False:
                     print("intra")
                     GAME_START = True
                     END_START_ROUND = True
 
-            if GAME_START and len(current_player.settlements) == 2:
+            if GAME_START and len(current_player.settlements) == 2 and len(current_player.roads) == 3:
                 # Switch player
                 current_player = players[(players.index(current_player) + 1) % len(players)]
                 time.sleep(1)
                 Board.redraw_board(window, robber_pos, roll, current_player)
-
-            # --- Roads ---
-            # This needs to activate only when the player is placing a road
-            if len(current_player.roads) != 0:
-                current_road = current_player.roads[-1]
-            else:
-                current_road = Road()
-                current_player.roads.append(current_road)
-
-            if current_road.is_placed is True:  # If we successfully placed a road, prepare a new one
-                current_player.roads.append(Road())
 
             # --- Event loop ---
             mouse_pos = pygame.mouse.get_pos()
@@ -136,6 +126,16 @@ class Game:
                     print("running")
                     if dice_btn.collidepoint(mouse_pos):
                         if GAME_START:
+                            if(len(current_player.roads) < 3 and len(current_player.settlements) < 2):
+                                Error.error_popup_place_settlements_roads(window)
+                                Board.redraw_board(window, robber_pos, roll, player)
+                            elif(len(current_player.roads) < 2):
+                                Error.error_popup_place_roads(window)
+                                Board.redraw_board(window, robber_pos, roll, player)
+                            elif(len(current_player.settlements) < 2):
+                                Error.error_popup_place_settlements(window)
+                                Board.redraw_board(window, robber_pos, roll, player)
+                                
                             print("error, all players need to place sett first")
                         else:
                             print("dice")
@@ -163,7 +163,25 @@ class Game:
                                 #time.sleep(3)
                                 Board.redraw_board(window, robber_pos, roll, current_player)
                                 # TODO switch to start of turn state
+    #----------------------------------------------------------------------------------------------
 
+                    if road_button.rect.collidepoint(mouse_pos):
+                        print('buy road')
+                        road_button.clicked = True
+                        
+                    if(road_button.clicked):
+                        print('prepare road')
+                        # --- Roads ---
+                        # This needs to activate only when the player is placing a road
+                        if len(current_player.roads) != 0:
+                            current_player.current_road = current_player.roads[-1]
+                        else:
+                            current_player.current_road = Road()
+                            current_player.roads.append(current_player.current_road)
+
+                        if current_player.current_road.is_placed is True:  # If we successfully placed a road, prepare a new one
+                            print('prepare NEW road')
+                            current_player.roads.append(Road())
                     # TODO: after first click
                     for center_point in HexagonTile.center_points:
                         if center_point[0] - HEXAGON_SIDE / 3 <= mouse_pos[0] <= center_point[0] + HEXAGON_SIDE / 3:
@@ -177,33 +195,45 @@ class Game:
                             # TODO: Move robber
                             # i moved it somewhere else
 
+###############   move it
                     # Prepare settlement event
                     SettlementEventHandler.press(window)
 
                     # Place road event
-                    RoadEventHandler.press(window, event, current_road, current_player)
+                    RoadEventHandler.press(window, event, current_player.current_road, current_player)
 
                 elif event.type == pygame.MOUSEBUTTONUP:
+                    print('enter place settlement')
+                    # Place settlement event
+                    SettlementEventHandler.place(window, robber_pos, roll, current_player, GAME_START)
+
                     # Release road event
                     print("entered")
 
-                    # If placing the road was unsuccessful, remove it from the list
-                    if RoadEventHandler.place(window, event, current_road, current_player) == -1:
-                        current_player.roads.pop()
-                    else:
-                        # If placing the road was successful, append it to the main list of roads as well
-                        roads.append(current_road)
+                    if(road_button.clicked):
+                        road_button.clicked_up = True
+                        road_button.clicked = False
 
-                    print('enter place settlement')
-                    # Place settlement event
-                    SettlementEventHandler.place(window, roll, current_player, GAME_START)
+                    elif(road_button.clicked_up):
+                        # If placing the road was unsuccessful, remove it from the list
+                        if RoadEventHandler.place(window, event, current_player.current_road, current_player) == -1:
+                            print('didnt work out')
+                            if(len(current_player.roads) != 0):
+                                current_player.roads.pop()
+                        else:
+                            print('new road')
+                            road_button.clicked_up = False
+                            # If placing the road was successful, append it to the main list of roads as well
+                            roads.append(current_player.current_road)
+                        #road_button.clicked = False
 
                 elif event.type == pygame.MOUSEMOTION:
                     # Dragging road event
-                    RoadEventHandler.drag(window, event, current_road)
+                    #print('draggin')
+                    RoadEventHandler.drag(window, pygame.mouse.get_pos(), current_player.current_road)
 
-                    # Hover settlement event TODO
-                    # SettlementEventHandler.hover_settlement(window, roll)
+                # Hover settlement event TODO
+                # SettlementEventHandler.hover_settlement(window, roll)
 
             # --- Dice ---
 

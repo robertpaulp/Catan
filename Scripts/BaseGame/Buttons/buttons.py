@@ -10,6 +10,7 @@ class Button:
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
         self.clicked = False
+        self.clicked_up = False
 
     def hover(self):
         #get mouse position

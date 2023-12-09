@@ -10,6 +10,7 @@ sys.path.append("../Hexagon Tiles/")
 
 from constants import *
 from BaseGame.Hexagon_Tiles.hexagon_tile import HexagonTile as hexagon
+from BaseGame.Road.road import Road
 
 
 class Player:
@@ -23,6 +24,7 @@ class Player:
 		self.color = color
 		self.resource_cards = 0
 		self.special_cards = 0
+		self.current_road = Road()
 
 		# Gameplay attributes
 		self.cards = {
