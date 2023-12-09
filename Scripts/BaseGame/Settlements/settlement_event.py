@@ -3,11 +3,11 @@ from threading import Event
 
 import pygame.draw
 
-from Settlements.settlement import Settlement, settlements, sprites
-from Player.player import Player
+from BaseGame.Settlements.settlement import Settlement, settlements, sprites
+from BaseGame.Player.player import Player
 from constants import *
 
-from Board.board import redraw_board
+from BaseGame.Board.board import Board
 
 
 class SettlementEventHandler:
@@ -24,7 +24,7 @@ class SettlementEventHandler:
 					settlement.hover_state(window)
 				elif not settlement.rect.collidepoint(mouse_pos) and settlement.is_hovered is True:
 					settlement.is_hovered = False
-					redraw_board(window, roll)
+					Board.redraw_board(window, roll)
 
 	@staticmethod
 	def press(window):
@@ -54,13 +54,16 @@ class SettlementEventHandler:
 				settlement.color = player.color
 
 				# Add settlement to player's settlements
-				player.settlements.append(settlement)
-				sprites.add(settlement)
+				if settlement not in player.settlements:
+					player.settlements.append(settlement)
+					print(settlement.position)
+					print('player got settlement')
+					sprites.add(settlement)
 
 				# Spend resources
 				if GAME_START is False:
 					SettlementEventHandler.__buy_settlement(player)
-					redraw_board(window, roll, player)
+					Board.redraw_board(window, roll, player)
 
 			# If mouse was not released on the settlement we prepared, reset its state
 			elif settlement.prepared_for_placement is True:
@@ -87,4 +90,4 @@ class SettlementEventHandler:
 		pygame.display.update()
 
 		Event().wait(2)
-		redraw_board(window, roll, player)
+		Board.redraw_board(window, roll, player)

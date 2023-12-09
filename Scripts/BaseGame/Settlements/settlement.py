@@ -95,7 +95,14 @@ class Settlement(pygame.sprite.Sprite):
 					settlement.resources.append(hexagon.resource)
 					settlement.dice_rolls.append(hexagon.number)
 
-			settlements.append(settlement)
+			add_settlement_permission = True
+			for settlement1 in settlements:
+				if settlement1.position == settlement.position:
+					add_settlement_permission = False
+					break
+			
+			if(add_settlement_permission):
+				settlements.append(settlement)
 
 			settlement.image.set_alpha(255)
 			hover_area = pygame.draw.circle(settlement.image, (0, 0, 0, 0),

@@ -103,10 +103,11 @@ class Player:
 		:param dice_roll: Dice roll value
 		:return: None
 		"""
-
 		for settlement in self.settlements:
+			print(settlement.position)
 			# If settlement is placed next to a hexagon with the dice roll associated to it, acquire resources
 			if dice_roll in settlement.dice_rolls:
+				print('we can take')
 				resource = settlement.resources[settlement.dice_rolls.index(dice_roll)]
 				self.cards[resource] += 1
 

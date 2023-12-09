@@ -18,6 +18,7 @@ from BaseGame.Road.road import Road, roads
 from BaseGame.Road.road_events import RoadEventHandler
 from BaseGame.Robber.robber import Robber
 from BaseGame.Settlements.settlement import Settlement
+from BaseGame.Settlements.settlement_event import SettlementEventHandler
 from constants import *
 
 class Game:
@@ -41,6 +42,7 @@ class Game:
         dice_first_dsp = True
         running = True
         roll = [0, 0]
+        robber_pos = (-1, -1)
 
         # --- Background ---
         window.fill(LIGHT_CYAN_BLUE)
@@ -48,11 +50,14 @@ class Game:
         # --- Hexagon grid ---
         HexagonTile.create_hexagon_grid(window, HEXAGON_X_AXIS, HEXAGON_Y_AXIS)
 
+        print(HexagonTile.resourcesArray)
+        print(HexagonTile.center_points)
+
         # --- Robber ---
         Robber.create_robber(window)
 
         # --- Settlement Surfaces ---
-        # Settlement.prepare_board_surfaces(window, base.HexagonTile.distinct_vertices, base.HexagonTile.hexagons)
+        Settlement.prepare_board_surfaces(window, HexagonTile.distinct_vertices, HexagonTile.hexagons)
 
         # --- Buttons ---
         road_button = Button.create_road_button()
@@ -61,9 +66,6 @@ class Game:
         settlement_button.draw(window)
         special_card_button = Button.create_special_card_button()
         special_card_button.draw(window)
-
-        print(HexagonTile.resourcesArray)
-        print(HexagonTile.center_points)
 
         # --- Settlement Surfaces ---
         Settlement.prepare_board_surfaces(window, HexagonTile.distinct_vertices, HexagonTile.hexagons)
@@ -75,7 +77,7 @@ class Game:
 
         current_player.draw_player(window)
 
-         # --- Cards prompt ---
+        # --- Cards prompt ---
         cards_prompt.show_cards(window, current_player)
 
         END_START_ROUND = False
@@ -98,7 +100,7 @@ class Game:
                 # Switch player
                 current_player = players[(players.index(current_player) + 1) % len(players)]
                 time.sleep(1)
-                Board.redraw_board(window, roll, current_player)
+                Board.redraw_board(window, robber_pos, roll, current_player)
 
             # --- Roads ---
             # This needs to activate only when the player is placing a road
@@ -119,21 +121,31 @@ class Game:
                     running = False
 
                 elif event.type == pygame.MOUSEBUTTONDOWN:
+                    print("running")
                     if dice_btn.collidepoint(mouse_pos):
+                        print("dice")
                         roll = [Dice.dice_roll(), Dice.dice_roll()]
 
                         # Acquire resources
                         for player in players:
                             player.acquire_cards(sum(roll))
-                        Board.redraw_board(window, roll, current_player)
+                        Board.redraw_board(window, robber_pos, roll, current_player)
 
                         if sum(roll) == 7:
                             print("Robber")
-                            Board.redraw_board(window, roll, current_player)
+                            Dice.dices(window, roll)
+                            pygame.display.update()
+
+                            # --- Move robber ---
+                            robber_pos = Robber.move_robber_event(window, running)
+
+                            # --- Update board ---
+                            Board.redraw_board(window, robber_pos, roll, current_player)
+
                         else:  # Switch to next player
                             current_player = players[(players.index(current_player) + 1) % len(players)]
                             time.sleep(3)
-                            Board.redraw_board(window, roll, current_player)
+                            Board.redraw_board(window, robber_pos, roll, current_player)
                             # TODO switch to start of turn state
 
                     # TODO: after first click
@@ -144,16 +156,13 @@ class Game:
                                 print("Trying")
                                 if Robber.check_move(mouse_pos):
                                     print("Moving")
-                                    Robber.move_robber(window, center_point[0], center_point[1])
+                                    Robber.move_robber(window, center_point)
                             # base.HexagonTile.create_hexagon_grid(window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS, False)
                             # TODO: Move robber
-                            robber_pos = Robber.move_robber_event(window, running)
-
-                            # --- Update board ---
-                            Board.redraw_board(window, robber_pos)
+                            # i moved it somewhere else
 
                     # Prepare settlement event
-                    Settlement.SettlementEventHandler.press(window)
+                    SettlementEventHandler.press(window)
 
                     # Place road event
                     RoadEventHandler.press(window, event, current_road, current_player)
@@ -169,19 +178,20 @@ class Game:
                         # If placing the road was successful, append it to the main list of roads as well
                         roads.append(current_road)
 
+                    print('enter place settlement')
                     # Place settlement event
-                    Settlement.SettlementEventHandler.place(window, roll, current_player, GAME_START)
+                    SettlementEventHandler.place(window, roll, current_player, GAME_START)
 
                 elif event.type == pygame.MOUSEMOTION:
                     # Dragging road event
-                    Road.RoadEventHandler.drag(window, event, current_road)
+                    RoadEventHandler.drag(window, event, current_road)
 
                     # Hover settlement event TODO
                     # SettlementEventHandler.hover_settlement(window, roll)
 
             # --- Dice ---
 
-            dice_btn = Board.roll_dice_btn(window)
+            dice_btn = Dice.roll_dice_btn(window)
 
             if dice_first_dsp:
                 Dice.dices(window, [1, 1])

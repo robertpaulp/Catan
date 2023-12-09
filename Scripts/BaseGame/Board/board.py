@@ -16,7 +16,9 @@ from BaseGame.Hexagon_Tiles.hexagon_tile import HexagonTile
 from BaseGame.Settlements.settlement import Settlement, settlements, sprites
 from BaseGame.Road.road import Road, roads
 from BaseGame.Player.player import Player, players
-from BaseGame.Robber import robber
+from BaseGame.Robber.robber import Robber
+from BaseGame.Buttons.buttons import Button
+from BaseGame.CardsPrompt.cards_prompt import cards_prompt, CardsPrompt
 
 # --- Board class ---
 class Board:
@@ -26,7 +28,7 @@ class Board:
     def redraw_board(window, robber_pos, roll, current_player=players[0]):
         window.fill(LIGHT_CYAN_BLUE)
 
-        dice_btn = Board.roll_dice_btn(window)
+        dice_btn = Dice.roll_dice_btn(window)
 
         if roll == [0, 0]:
             Dice.dices(window, [1, 1])
@@ -35,8 +37,23 @@ class Board:
 
         HexagonTile.create_hexagon_grid(window, HEXAGON_X_AXIS, HEXAGON_Y_AXIS, False)
 
+        # --- Buttons ---
+        road_button = Button.create_road_button()
+        road_button.draw(window)
+        settlement_button = Button.create_settlement_button()
+        settlement_button.draw(window)
+        special_card_button = Button.create_special_card_button()
+        special_card_button.draw(window)
+
+        # --- Cards prompt ---
+        cards_prompt.show_cards(window, current_player)
+
         # Move robber
-        robber.move_robber(window, robber_pos)
+        if(robber_pos[0] != -1):
+            Robber.move_robber(window, robber_pos)
+        else:
+            Robber.create_robber(window)
+        
         pygame.display.update()
 
          # Replace roads
@@ -49,9 +66,9 @@ class Board:
             if settlement.is_placed is True:
                 settlement.draw_settlement(window, settlement.color)
 
-            window.blit(settlement.image,
-                        (settlement.position[0] - SETTLEMENT_SPRITE, settlement.position[1] - SETTLEMENT_SPRITE))
-            pygame.display.update()
+                window.blit(settlement.image,
+                            (settlement.position[0] - SETTLEMENT_SPRITE, settlement.position[1] - SETTLEMENT_SPRITE))
+                pygame.display.update()
 
         # sprites.draw(window)
         # pygame.display.update()
