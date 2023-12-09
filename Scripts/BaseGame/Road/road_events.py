@@ -44,7 +44,7 @@ class RoadEventHandler:
 						road.is_dragged = True
 						road.borders.append(existing_road.borders[1])
 
-						if road.start == [0, 0]:
+						if road.start == (0, 0):
 							road.start = existing_road.borders[1].position
 
 	@staticmethod
@@ -63,7 +63,7 @@ class RoadEventHandler:
 			for settlement in settlements:
 				# If mouse was released on a valid settlement, draw the road
 				# Check if road has valid start point (settlement exists)
-				if settlement.rect.collidepoint(event.pos) and road.start != [0, 0]:
+				if settlement.rect.collidepoint(event.pos) and road.start != (0, 0):
 					print('clicked on sett')
 					# Check if the end settlement is not the same as the start settlement
 					if settlement.position == road.start:

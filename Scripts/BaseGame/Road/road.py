@@ -28,7 +28,7 @@ class Road:
 		self.color = color
 
 		# Redraw start settlement so that it is not covered by the road
-		if self.borders[1].is_placed is True:
+		if self.borders[1] and self.borders[1].is_placed is True:
 			self.borders[1].draw_settlement(window, self.borders[1].color)
 
 		settlement = self.borders[0]
