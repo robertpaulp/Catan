@@ -48,9 +48,8 @@ class Player:
 			window.blit(player.image, ICON_POSITION)
 
 			# Player Name
-			font = pygame.freetype.SysFont('Arial', 40)
-			name_surface = font.render(player.name, (0, 0, 0))
-
+			font = pygame.freetype.SysFont('Segoe UI Black', 30)
+			name_surface = font.render(player.name, BROWN)
 			window.blit(name_surface[0], NAME_POSITION[i])
 
 			# Player Resources
@@ -60,7 +59,7 @@ class Player:
 			window.blit(player.image, RESOURCE_CARDS_POSITION)
 			# Resource Cards Quantity
 			font = pygame.freetype.SysFont('Arial', 25)
-			resource_cards_quantity = font.render(str(player.resource_cards), (0, 0, 0))
+			resource_cards_quantity = font.render(str(player.resource_cards), BROWN)
 			window.blit(resource_cards_quantity[0], (RESOURCE_CARDS_POSITION[0] + ICON_SIZE + 10, RESOURCE_CARDS_POSITION[1] + i * 130 + 5))
 			
 			# Special Cards Icon
@@ -68,7 +67,7 @@ class Player:
 			window.blit(player.image, SPECIAL_CARDS_POSITION)
 			# Special Cards Quantity
 			font = pygame.freetype.SysFont('Arial', 25)
-			special_cards_quantity= font.render(str(player.special_cards), (0, 0, 0))
+			special_cards_quantity= font.render(str(player.special_cards), BROWN)
 			window.blit(special_cards_quantity[0], (RESOURCE_CARDS_POSITION[0] + ICON_SIZE + 10, RESOURCE_CARDS_POSITION[1] + i * 130 + 45))
 			
 			i = i + 1
@@ -153,4 +152,4 @@ class Player:
 
 
 # List of players
-players = [Player(color=(255, 0, 0)), Player((230, 120, 0)), Player((0, 0, 255)), Player((0, 255, 0))]
+players = [Player(color=(255, 100, 100)), Player((230, 120, 0)), Player((51, 153, 255)), Player((110, 210, 0))]

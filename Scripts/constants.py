@@ -13,8 +13,10 @@ BEIGE = (245, 245, 220)
 TRANSPARENT = (0, 0, 0, 0)
 SANDY = (228, 213, 183)
 BRASS = (225, 193, 110)
+BRASS2 = (211, 148, 68)
 BRONZE = (205, 127, 50)
 TRANSPARENT = (0, 0, 0, 0)
+BROWN = (147, 81, 22)
 
 # Resources colors
 BRICK_COLOR = (188, 74, 60)
@@ -52,6 +54,10 @@ ERROR_ROBBER_SPRITE = "../Assets/Sprites/error_robber.png"
 ERROR_PLACE_SETTLEMENTS_ROADS_SPRITE = "../Assets/Sprites/error_place_settlements_roads.png"
 ERROR_PLACE_SETTLEMENTS_SPRITE = "../Assets/Sprites/error_place_settlements.png"
 ERROR_PLACE_ROADS_SPRITE = "../Assets/Sprites/error_place_roads.png"
+# Pop up sprites
+POPUP_STARTING_ROUND_SPRITE = "../Assets/Sprites/popup_starting_round.png"
+POPUP_ROUND_NUMBER_SPRITE = "../Assets/Sprites/popup_round_number.png"
+
 
 # Player Constants
 PLAYER_BOARD_X_AXIS = HEXAGON_X_AXIS + HEXAGON_WIDTH * 4.2

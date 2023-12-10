@@ -22,6 +22,7 @@ from BaseGame.Robber.robber import Robber
 from BaseGame.Settlements.settlement import Settlement
 from BaseGame.Settlements.settlement_event import SettlementEventHandler
 from BaseGame.Error.error import Error
+from BaseGame.PopUp.pop_up import PopUp
 from constants import *
 
 class Game:
@@ -46,6 +47,7 @@ class Game:
         running = True
         roll = [0, 0]
         robber_pos = (-1, -1)
+        ROUND_NUMBER = 0
 
         # --- Background ---
         window.fill(BRASS)
@@ -88,6 +90,14 @@ class Game:
         # --- Cards prompt ---
         cards_prompt.show_cards(window, current_player)
 
+        # --- Dice ---
+
+        dice_btn = Dice.roll_dice_btn(window)
+
+        if dice_first_dsp:
+            Dice.dices(window, [1, 1])
+            dice_first_dsp = False
+
         END_START_ROUND = False
 
         while running:
@@ -112,11 +122,26 @@ class Game:
                         GAME_START = True
                         END_START_ROUND = True
 
+            # Round pop up
+            if ROUND_NUMBER == 0:
+                PopUp.starting_round_popup(window)
+                Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
+                ROUND_NUMBER = ROUND_NUMBER + 1
+            """else:
+                PopUp.round_number(window, ROUND_NUMBER)
+                Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
+            """
+
             # Finished placing initial settlements and roads
             if END_START_ROUND is True and GAME_START is True:
                 current_player = players[0]
                 GAME_START = False
                 Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
+                # Switch to first round:
+                PopUp.round_number_popup(window, ROUND_NUMBER)
+                Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
+                ROUND_NUMBER = ROUND_NUMBER + 1
+
             elif GAME_START and len(current_player.settlements) == 2 :
                 # Switch player
                 if (len(current_player.roads) == 2 and current_player.roads[-1].is_placed is True):
@@ -192,7 +217,15 @@ class Game:
                                 # --- Update board ---
                                 Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
 
-                            else:  # Switch to next player
+                            else:
+
+                                # Possibly switch to next round
+                                if(players.index(current_player) + 1) % len(players) == 0:
+                                    ROUND_NUMBER = ROUND_NUMBER + 1
+                                    PopUp.round_number_popup(window, ROUND_NUMBER)
+                                    Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
+                            
+                                # Switch to next player
                                 current_player = players[(players.index(current_player) + 1) % len(players)]
                                 #time.sleep(3)
                                 Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
@@ -290,14 +323,6 @@ class Game:
 
                 # Hover settlement event TODO
                 # SettlementEventHandler.hover_settlement(window, roll)
-
-            # --- Dice ---
-
-            dice_btn = Dice.roll_dice_btn(window)
-
-            if dice_first_dsp:
-                Dice.dices(window, [1, 1])
-                dice_first_dsp = False
 
             Dice.dices(window, roll)
 
