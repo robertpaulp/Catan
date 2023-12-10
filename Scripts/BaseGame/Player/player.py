@@ -37,6 +37,14 @@ class Player:
 		self.settlements = []
 		self.roads = []
 
+		self.possible_trade = {
+			"Wood": False,
+			"Wheat": False,
+			"Sheep": False,
+			"Brick": False,
+			"Ore": False
+		} 
+
 		self.win_points = 0
 
 	@staticmethod
@@ -72,7 +80,7 @@ class Player:
 			
 			i = i + 1
 
-	# Delete this
+	# TODO : Delete this
 	def draw_player(self, window):
 		""" Draws player icon on the map
 
@@ -149,6 +157,11 @@ class Player:
 				resource = settlement.resources[settlement.dice_rolls.index(dice_roll)]
 				self.cards[resource] += 1
 				self.resource_cards += 1
+
+		# Update the possible trades that the current player can make
+		for card in self.cards:
+			if(self.cards[card] >= 3 ):
+				self.possible_trade[card] = True
 
 
 # List of players

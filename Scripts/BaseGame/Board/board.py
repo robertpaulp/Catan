@@ -19,6 +19,7 @@ from BaseGame.Player.player import Player, players
 from BaseGame.Robber.robber import Robber
 from BaseGame.Buttons.buttons import Button
 from BaseGame.CardsPrompt.cards_prompt import cards_prompt, CardsPrompt
+from BaseGame.Trade.trade import trade
 
 # --- Board class ---
 class Board:
@@ -50,6 +51,9 @@ class Board:
 
         # --- Cards prompt ---
         cards_prompt.show_cards(window, current_player)
+
+        # --- Trade prompt ---
+        trade.show_trade(window, current_player)
 
         # Move robber
         if(robber_pos[0] != -1):
