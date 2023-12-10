@@ -37,7 +37,9 @@ class Road:
 
 	@staticmethod
 	def placement_is_possible(player, GAME_START):
-		if GAME_START is True:
+		if GAME_START is True and len(player.roads) < 2:
+			return True
+		if GAME_START is True and len(player.roads) == 2 and player.roads[-1].is_placed is False:
 			return True
 		if player.cards["Wood"] >= 1 and player.cards["Brick"] >= 1:
 			return True

@@ -107,10 +107,8 @@ class Game:
                     if len(player.settlements) < 2 or len(player.roads) < 2:
                         GAME_START = True
                     elif len(current_player.roads) == 2 and current_player.roads[-1].is_placed is False:
-                        print('caz ????')
                         GAME_START = True
                     elif players.index(player) == 3 and END_START_ROUND is False:
-                        print("intra")
                         GAME_START = True
                         END_START_ROUND = True
 
@@ -124,7 +122,7 @@ class Game:
                 if (len(current_player.roads) == 2 and current_player.roads[-1].is_placed is True):
                     current_player = players[(players.index(current_player) + 1) % len(players)]
                     Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
-                    
+
                 elif (len(current_player.roads) == 3 and current_player.roads[-1].is_placed is False):
                     current_player = players[(players.index(current_player) + 1) % len(players)]
                     Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
@@ -272,9 +270,9 @@ class Game:
                                 road_button.clicked_up = True
                                 road_button.clicked = False
                             
-                    if(road_button.clicked is False and (road_button.clicked_up is True or GAME_START is True)):
+                    if(road_button.clicked_up is True or GAME_START is True):
                         # If placing the road was unsuccessful, remove it from the list
-                        if RoadEventHandler.place(window, event, current_player.current_road, current_player) == -1:
+                        if RoadEventHandler.place(window, event, current_player.current_road, current_player, GAME_START) == -1:
                             print('didnt work out')
                             #if(len(current_player.roads) != 0):
                              #   current_player.roads.pop()

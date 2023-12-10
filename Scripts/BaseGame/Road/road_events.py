@@ -50,7 +50,7 @@ class RoadEventHandler:
 							road.start = existing_road.borders[1].position
 
 	@staticmethod
-	def place(window, event: pygame.event, road: Road, player: Player):
+	def place(window, event: pygame.event, road: Road, player: Player, GAME_START):
 		""" Handles road placement events
 
 		:param window: Display window
@@ -59,6 +59,9 @@ class RoadEventHandler:
 		:param player: Current player
 		:return: None
 		"""
+		if Road.placement_is_possible(player, GAME_START) is False:
+			road.is_dragged = False
+			return -1
 
 		if event.button == 1:
 			for settlement in settlements:
