@@ -50,7 +50,7 @@ class RoadEventHandler:
 							road.start = existing_road.borders[1].position
 
 	@staticmethod
-	def place(window, event: pygame.event, road: Road, player: Player, GAME_START):
+	def place(window, event: pygame.event, road: Road, player: Player, GAME_START, robber_pos, roll):
 		""" Handles road placement events
 
 		:param window: Display window
@@ -81,7 +81,6 @@ class RoadEventHandler:
 						
 					# Check if the two points of the road are adjacent  
 
-					print("placed")
 					road.borders.append(settlement)  # Append end settlement to road borders
 
 					road.is_placed = True
@@ -91,6 +90,13 @@ class RoadEventHandler:
 
 					print(road.start, road.end)
 					road.draw_road(window, player.color)
+
+					roads.append(road)
+
+					if GAME_START is False:
+						RoadEventHandler.__buy_road(player)
+						Board.redraw_board(window, robber_pos, roll, player, GAME_START)
+			
 					return 0
 
 			# If mouse was not released on a valid settlement, reset road state
@@ -109,3 +115,14 @@ class RoadEventHandler:
 
 		if road.is_dragged:
 			road.end = position
+		
+	@staticmethod
+	def __buy_road(player):
+		""" Spend resources to buy settlement
+
+		:param player:
+		:return:
+		"""
+		print("buy")
+		player.cards["Wood"] -= 1
+		player.cards["Brick"] -= 1

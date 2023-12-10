@@ -305,7 +305,7 @@ class Game:
                             
                     if(road_button.clicked_up is True or GAME_START is True):
                         # If placing the road was unsuccessful, remove it from the list
-                        if RoadEventHandler.place(window, event, current_player.current_road, current_player, GAME_START) == -1:
+                        if RoadEventHandler.place(window, event, current_player.current_road, current_player, GAME_START, robber_pos, roll) == -1:
                             print('didnt work out')
                             #if(len(current_player.roads) != 0):
                              #   current_player.roads.pop()
@@ -313,7 +313,7 @@ class Game:
                             print('new road')
                             road_button.clicked_up = False
                             # If placing the road was successful, append it to the main list of roads as well
-                            roads.append(current_player.current_road)
+                            # roads.append(current_player.current_road)
                         #road_button.clicked = False
 
                 elif event.type == pygame.MOUSEMOTION:
