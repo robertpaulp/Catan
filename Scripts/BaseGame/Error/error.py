@@ -5,15 +5,6 @@ import math
 import random
 import sys
 from threading import Event
-
-from BaseGame.Buttons.buttons import Button
-from BaseGame.Board.board import Board
-from BaseGame.CardsPrompt.cards_prompt import cards_prompt, CardsPrompt
-from BaseGame.Dice.dice import Dice
-from BaseGame.Hexagon_Tiles.hexagon_tile import HexagonTile
-from BaseGame.Player.player import Player, players
-from BaseGame.Road.road import Road, roads
-from BaseGame.Robber.robber import Robber
 from constants import *
 
 class Error:
@@ -61,3 +52,5 @@ class Error:
         pygame.display.update()
 
         Event().wait(2)
+        pygame.draw.rect(window, BRASS, (0, 0, 405, 105))
+        pygame.display.update()

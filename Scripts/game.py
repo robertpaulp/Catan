@@ -212,7 +212,7 @@ class Game:
                                 pygame.display.update()
 
                                 # --- Move robber ---
-                                robber_pos = Robber.move_robber_event(window, running)
+                                robber_pos = Robber.move_robber_event(window, running, dice_btn)
 
                                 # --- Update board ---
                                 Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
