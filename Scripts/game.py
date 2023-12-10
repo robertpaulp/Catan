@@ -104,11 +104,10 @@ class Game:
 
             if END_START_ROUND is False:
                 for player in players:
-                # print(len(player.settlements))
-                    #print(len(player.roads))
                     if len(player.settlements) < 2 or len(player.roads) < 2:
                         GAME_START = True
                     elif len(current_player.roads) == 2 and current_player.roads[-1].is_placed is False:
+                        print('caz ????')
                         GAME_START = True
                     elif players.index(player) == 3 and END_START_ROUND is False:
                         print("intra")
@@ -120,14 +119,17 @@ class Game:
                 current_player = players[0]
                 GAME_START = False
                 Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
-            elif GAME_START and len(current_player.settlements) == 2 and len(current_player.roads) == 2:
-                if current_player.roads[-1].is_placed is True:
-                    # Switch player
+            elif GAME_START and len(current_player.settlements) == 2 :
+                # Switch player
+                if (len(current_player.roads) == 2 and current_player.roads[-1].is_placed is True):
+                    current_player = players[(players.index(current_player) + 1) % len(players)]
+                    Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
+                    
+                elif (len(current_player.roads) == 3 and current_player.roads[-1].is_placed is False):
                     current_player = players[(players.index(current_player) + 1) % len(players)]
                     Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
 
             if(road_button.clicked_up or GAME_START is True):
-                print('prepare road')
                 # --- Roads ---
                 # This needs to activate only when the player is placing a road
                 if len(current_player.roads) != 0:

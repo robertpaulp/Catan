@@ -43,12 +43,12 @@ class SettlementEventHandler:
 			# If mouse was released on the settlement we prepared, draw it
 			if settlement.rect.collidepoint(mouse_pos) and settlement.prepared_for_placement is True:
 				# Check if placement is possible
-				"""
+
 				# Check if you have the resources
 				if Settlement.placement_is_possible(player, GAME_START) is False:
 					settlement.prepared_for_placement = False
 					return
-				"""
+
 				# It isn't the start of the game and the purchase button hasn't been pressed
 				if settlement_button.clicked_up is False and GAME_START is False:
 					settlement.prepared_for_placement = False
