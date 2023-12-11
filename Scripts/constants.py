@@ -44,9 +44,9 @@ BRICK_SPRITE = "../Assets/Sprites/hill.png"
 STONE_SPRITE = "../Assets/Sprites/mountain.png"
 DESERT_SPRITE = "../Assets/Sprites/desert.png"
 ROBBER_SPRITE = "../Assets/Sprites/robber.png"
-SETTLEMENT_BUTTON_SPRITE = "../Assets/Sprites/button_settlement.png"
-ROAD_BUTTON_SPRITE = "../Assets/Sprites/button_road.png"
-SPECIAL_CARD_BUTTON_SPRITE = "../Assets/Sprites/button_special_card.png"
+SETTLEMENT_BUTTON_SPRITE = "../Assets/Sprites/settlement_button.png"
+ROAD_BUTTON_SPRITE = "../Assets/Sprites/road_button.png"
+SPECIAL_CARD_BUTTON_SPRITE = "../Assets/Sprites/special_card_button.png"
 # Error sprites
 ERROR_RESOURCE_SPRITE = "../Assets/Sprites/error_resource.png"
 ERROR_PLACE_SPRITE = "../Assets/Sprites/error_place_first.png"
@@ -57,7 +57,15 @@ ERROR_PLACE_ROADS_SPRITE = "../Assets/Sprites/error_place_roads.png"
 # Pop up sprites
 POPUP_STARTING_ROUND_SPRITE = "../Assets/Sprites/popup_starting_round.png"
 POPUP_ROUND_NUMBER_SPRITE = "../Assets/Sprites/popup_round_number.png"
-
+# Background
+BACKGROUND_SPRITE = "../Assets/Sprites/background2.jpg"
+TRADE_TABLE_SPRITE = "../Assets/Sprites/trade_table.png"
+TRADE_BUTTON_SPRITE = "../Assets/Sprites/trade_button.png"
+BRICKS_SPRITE = "../Assets/Sprites/bricks.png"
+LUMBER_SPRITE = "../Assets/Sprites/lumber.png"
+GRAIN_SPRITE = "../Assets/Sprites/grain.png"
+ORE_SPRITE = "../Assets/Sprites/ore.png"
+WOOL_SPRITE = "../Assets/Sprites/wool.png"
 
 # Player Constants
 PLAYER_BOARD_X_AXIS = HEXAGON_X_AXIS + HEXAGON_WIDTH * 4.2
@@ -104,8 +112,8 @@ CARDS_PROMPT_WIDTH = 450
 CARDS_PROMPT_HEIGHT = 125
 CARDS_PROMPT_X_AXIS = 20
 CARDS_PROMPT_Y_AXIS = SCREEN_HEIGHT - CARDS_PROMPT_HEIGHT - 20 
-CARD_WIDTH = 30
-CARD_HEIGHT = 40
+CARD_WIDTH = 40
+CARD_HEIGHT = 45
 CARDS_POSITION_X = CARDS_PROMPT_X_AXIS + 40
 CARDS_POSITION_Y = CARDS_PROMPT_Y_AXIS + 35
 CARDS_SPACING_HELPER = 80

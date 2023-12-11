@@ -52,6 +52,11 @@ class Game:
 
         # --- Background ---
         window.fill(BRASS)
+        """
+        image = pygame.image.load(BACKGROUND_SPRITE)
+        image = pygame.transform.scale_by(image, 1.6)
+        window.blit(image, (0, 0))
+        """
     
         HexagonTile.draw_sea_hexagon(window, SCREEN_WIDTH / 2 - HEXAGON_WIDTH / 2 - HEXAGON_WIDTH - 50, HEXAGON_Y_AXIS - 55)
 

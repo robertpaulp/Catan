@@ -158,11 +158,6 @@ class Player:
 				self.cards[resource] += 1
 				self.resource_cards += 1
 
-		# Update the possible trades that the current player can make
-		for card in self.cards:
-			if(self.cards[card] >= 3 ):
-				self.possible_trade[card] = True
-
 
 # List of players
 players = [Player(color=(255, 100, 100)), Player((230, 120, 0)), Player((51, 153, 255)), Player((110, 210, 0))]

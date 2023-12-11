@@ -33,7 +33,7 @@ class PopUp:
         popup_image = pygame.transform.scale(popup_image, (383.4, 234))
         window.blit(popup_image, (500, 250))
         font = pygame.freetype.SysFont('Segoe UI Black', 50)
-        name_surface = font.render(str(ROUND_NUMBER), BRASS2)
+        name_surface = font.render(str(ROUND_NUMBER), WHITE)
         window.blit(name_surface[0], (680, 385))
         pygame.display.update()
 
