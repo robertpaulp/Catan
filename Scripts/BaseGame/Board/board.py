@@ -57,7 +57,7 @@ class Board:
         for card in current_player.cards:
             if(current_player.cards[card] >= 3):
                 current_player.possible_trade[card] = True
-            else
+            else:
                 current_player.possible_trade[card] = False
 
         # --- Trade prompt ---
