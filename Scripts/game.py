@@ -10,7 +10,7 @@ sys.path.append("./BaseGame/Board/")
 sys.path.append("./BaseGame/Hexagon Tiles/")
 sys.path.append("./BaseGame/Robber/")
 sys.path.append("./BaseGame/Dice/")"""
-from BaseGame.Buttons.buttons import Button
+from BaseGame.Buttons.buttons import Button, Trade, trade, TradePrompt, trade_prompt
 from BaseGame.Board.board import Board
 from BaseGame.CardsPrompt.cards_prompt import cards_prompt, CardsPrompt
 from BaseGame.Dice.dice import Dice
@@ -23,7 +23,7 @@ from BaseGame.Settlements.settlement import Settlement
 from BaseGame.Settlements.settlement_event import SettlementEventHandler
 from BaseGame.Error.error import Error
 from BaseGame.PopUp.pop_up import PopUp
-from BaseGame.Trade.trade import Trade, trade
+#from BaseGame.Trade.trade import Trade, trade
 from constants import *
 
 class Game:
@@ -240,6 +240,12 @@ class Game:
                     if settlement_button.rect.collidepoint(mouse_pos):
                         settlement_button.clicked = True
 
+                    for trade_button in current_player.trade_button:
+                        # Trade button is clicked down
+                        if trade_button.rect.collidepoint(mouse_pos):
+                            trade_button.clicked = True
+
+
                     """
                     # Special card button is clicked down
                     if special_card_button.rect.collidepoint(mouse_pos):
@@ -311,6 +317,14 @@ class Game:
                             road_button.clicked_up = False
                             # If placing the road was successful, append it to the main list of roads as well
                             #roads.append(current_player.current_road)
+
+                    # Trade button is clicked up
+                    for trade_button in current_player.trade_button:
+                        if trade_button.rect.collidepoint(pygame.mouse.get_pos()):
+                            if(trade_button.clicked):
+                                print("trade")
+                                trade_prompt.show_trade_prompt(window, current_player)
+                                trade_button.clicked = False
 
                 elif event.type == pygame.MOUSEMOTION:
                     # Dragging road event

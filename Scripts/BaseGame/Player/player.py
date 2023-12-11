@@ -44,6 +44,8 @@ class Player:
 			"Brick": False,
 			"Ore": False
 		} 
+		self.trade_counter = 0
+		self.trade_button = []
 
 		self.win_points = 0
 

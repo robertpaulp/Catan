@@ -66,6 +66,10 @@ LUMBER_SPRITE = "../Assets/Sprites/lumber.png"
 GRAIN_SPRITE = "../Assets/Sprites/grain.png"
 ORE_SPRITE = "../Assets/Sprites/ore.png"
 WOOL_SPRITE = "../Assets/Sprites/wool.png"
+TRADE_POSITION_X = 500
+TRADE_POSITION_Y = 300
+TRADE_POSITION_X_RIGHT = 530
+TRADE_POSITION_Y_DOWN = 330
 
 # Player Constants
 PLAYER_BOARD_X_AXIS = HEXAGON_X_AXIS + HEXAGON_WIDTH * 4.2

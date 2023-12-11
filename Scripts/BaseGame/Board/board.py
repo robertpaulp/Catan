@@ -17,9 +17,9 @@ from BaseGame.Settlements.settlement import Settlement, settlements, sprites
 from BaseGame.Road.road import Road, roads
 from BaseGame.Player.player import Player, players
 from BaseGame.Robber.robber import Robber
-from BaseGame.Buttons.buttons import Button
+from BaseGame.Buttons.buttons import Button, Trade, trade
 from BaseGame.CardsPrompt.cards_prompt import cards_prompt, CardsPrompt
-from BaseGame.Trade.trade import trade
+#from BaseGame.Trade.trade import trade
 
 # --- Board class ---
 class Board:

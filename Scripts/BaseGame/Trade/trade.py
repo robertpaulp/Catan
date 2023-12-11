@@ -2,25 +2,26 @@ import pygame
 import pygame.freetype
 from constants import *
 import time
+from BaseGame.Buttons.buttons import Button
 
 class Trade:
     trade_rect = pygame.Rect(TRADE_PROMPT_X_AXIS, TRADE_PROMPT_Y_AXIS, TRADE_PROMPT_WIDTH, TRADE_PROMPT_HEIGHT)
 
     card_color = {
-			"Wood": (3, 75, 3),
-			"Wheat": (240, 215, 49),
-			"Sheep": (242, 240, 235),
-			"Brick": (188, 74, 60),
-			"Ore": (144, 144, 144)
-		} 
+      "Wood": (3, 75, 3),
+      "Wheat": (240, 215, 49),
+      "Sheep": (242, 240, 235),
+      "Brick": (188, 74, 60),
+      "Ore": (144, 144, 144)
+    } 
 
     card_sprite = {
-			"Wood": LUMBER_SPRITE,
-			"Wheat": GRAIN_SPRITE,
-			"Sheep": WOOL_SPRITE,
-			"Brick": BRICKS_SPRITE,
-			"Ore": ORE_SPRITE
-		} 
+      "Wood": LUMBER_SPRITE,
+      "Wheat": GRAIN_SPRITE,
+      "Sheep": WOOL_SPRITE,
+      "Brick": BRICKS_SPRITE,
+      "Ore": ORE_SPRITE
+    } 
 
     pygame.font.init()
     font = pygame.font.SysFont('Segoe UI Black', 25)
@@ -50,7 +51,10 @@ class Trade:
 
         trades_counter = 0
         for card in player.cards:
+            player.trade_counter = 0
             if player.possible_trade[card] == True:
+
+                player.trade_counter += 1
 
                 # Draw the trade button
                 # button_rect = pygame.Rect(TRADE_BUTTON_X_AXIS, TRADE_BUTTON_Y_AXIS + trades_counter * (TRADE_BUTTON_HEIGHT + 25), TRADE_BUTTON_WIDTH, TRADE_BUTTON_HEIGHT)
@@ -58,6 +62,8 @@ class Trade:
                 image = pygame.image.load(TRADE_BUTTON_SPRITE)
                 image = pygame.transform.scale_by(image, 1)
                 window.blit(image, (TRADE_BUTTON_X_AXIS + 35, TRADE_BUTTON_Y_AXIS + trades_counter * (TRADE_BUTTON_HEIGHT + 25)))
+
+                player.trade_button[player.trade_counter - 1] = Button("trade", TRADE_BUTTON_X_AXIS + 35, TRADE_BUTTON_Y_AXIS + trades_counter * (TRADE_BUTTON_HEIGHT + 25), image, 1)
 
                 # Draw the button images
                # card1_rect = pygame.Rect(TRADE_BUTTON_X_AXIS + 70, TRADE_BUTTON_Y_AXIS + 7 + trades_counter * (TRADE_BUTTON_HEIGHT + 25), CARD_WIDTH, CARD_HEIGHT)
@@ -71,6 +77,7 @@ class Trade:
                 text = Trade.small_font.render("Trade 3 " + card + " cards for any card", True, BROWN)
                 window.blit(text, (TRADE_BUTTON_X_AXIS - 10, TRADE_BUTTON_Y_AXIS + 60 + trades_counter * (TRADE_BUTTON_HEIGHT + 25)))
                 """
-			
+      
                 trades_counter += 1
+
 trade = Trade()
