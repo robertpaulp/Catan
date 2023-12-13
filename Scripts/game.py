@@ -63,8 +63,8 @@ class Game:
         # --- Hexagon grid ---
         HexagonTile.create_hexagon_grid(window, HEXAGON_X_AXIS, HEXAGON_Y_AXIS)
 
-        print(HexagonTile.resourcesArray)
-        print(HexagonTile.center_points)
+        #print(HexagonTile.resourcesArray)
+        #print(HexagonTile.center_points)
 
         # --- Robber ---
         Robber.create_robber(window)
@@ -77,7 +77,8 @@ class Game:
         #road_button.draw(window)
         settlement_button = Button.create_settlement_button()
         #settlement_button.draw(window)
-        special_card_button = Button.create_special_card_button()
+        end_turn_button = Button.create_end_turn_button()
+        #special_card_button = Button.create_special_card_button()
         #special_card_button.draw(window)
 
         # --- Settlement Surfaces ---
@@ -87,8 +88,8 @@ class Game:
 
         # --- Player ---
         current_player = players[0]  # Current player
-        for card in current_player.cards:
-            print(card)
+        #for card in current_player.cards:
+         #   print(card)
                 
 
         Player.draw_players(window)
@@ -98,6 +99,7 @@ class Game:
 
         # --- Trade prompt ---
         trade.show_trade(window, current_player)
+        trade_prompt.create_trade_prompt_buttons()
 
         # --- Dice ---
         dice_btn = Dice.roll_dice_btn(window)
@@ -114,9 +116,23 @@ class Game:
 
             # Add buttons hover feature
             if GAME_START is False:
-                road_button.hover()
-                settlement_button.hover()
-                special_card_button.hover()
+                # Hover Settlement
+                #get mouse position
+                # FINISH HOVER !!!!!! This is for sett, implement for road too
+                """
+                pos = pygame.mouse.get_pos()
+                if settlement_button.rect.collidepoint(pos):
+                    image = pygame.image.load(PAPIRUS_SETTLEMENT_SPRITE)
+                    image = pygame.transform.scale_by(image, 1)
+                    window.blit(image, (SCREEN_WIDTH - 755, SCREEN_HEIGHT - 300))
+                    while settlement_button.rect.collidepoint(pos):
+                        pos = pygame.mouse.get_pos()
+                    Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
+                """
+            
+                #road_button.hover()
+                #settlement_button.hover_settlement(window, robber_pos, roll, current_player, GAME_START)
+                # special_card_button.hover()
 
             if END_START_ROUND is False:
                 for player in players:
@@ -174,8 +190,8 @@ class Game:
                     running = False
 
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-                    print("running")
-                    if dice_btn.collidepoint(mouse_pos):
+                    #print("running")
+                    if dice_btn.collidepoint(mouse_pos) and trade_prompt.showing is False:
                         if GAME_START:
                             # << Place two settlements and two roads >> error popups
                             if(len(current_player.roads) <= 2 and len(current_player.settlements) < 2):
@@ -233,17 +249,28 @@ class Game:
                                 # TODO switch to start of turn state
 
                     # Road button is clicked down
-                    if road_button.rect.collidepoint(mouse_pos):
+                    if road_button.rect.collidepoint(mouse_pos) and trade_prompt.showing is False:
                         road_button.clicked = True
 
                     # Settlement button is clicked down
-                    if settlement_button.rect.collidepoint(mouse_pos):
+                    if settlement_button.rect.collidepoint(mouse_pos) and trade_prompt.showing is False:
                         settlement_button.clicked = True
 
                     for trade_button in current_player.trade_button:
                         # Trade button is clicked down
                         if trade_button.rect.collidepoint(mouse_pos):
                             trade_button.clicked = True
+
+                            # TODO : pressed trade button 
+                            # trade_button.show_pressed_trade_button(window)
+
+                    if(trade_prompt.showing):
+                        for button_name in trade_prompt.trade_2_buttons:
+                            # Trade bank button is clicked down
+                            if trade_prompt.trade_2_buttons[button_name].rect.collidepoint(mouse_pos):
+                                if trade_prompt.current_trade_button.name != button_name:
+                                    trade_prompt.trade_2_buttons[button_name].clicked = True
+                                    TradePrompt.show_pressed_trade_2_button(window, button_name)
 
 
                     """
@@ -276,11 +303,12 @@ class Game:
                     # Settlement button is clicked up
                     if settlement_button.rect.collidepoint(pygame.mouse.get_pos()):
                         if(settlement_button.clicked):
-                            if Settlement.placement_is_possible(player, GAME_START) is False:
+                            if Settlement.placement_is_possible(current_player, GAME_START) is False:
                                 Error.error_popup_resources(window)
                                 Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
                                 settlement_button.clicked = False
                             else:
+                                Button.show_pressed_settlement_button(window)
                                 settlement_button.clicked_up = True
                                 settlement_button.clicked = False
 
@@ -306,6 +334,7 @@ class Game:
                                 Error.error_popup_resources(window)
                                 Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
                             else:
+                                Button.show_pressed_road_button(window)
                                 road_button.clicked_up = True
                                 road_button.clicked = False
                             
@@ -323,8 +352,23 @@ class Game:
                         if trade_button.rect.collidepoint(pygame.mouse.get_pos()):
                             if(trade_button.clicked):
                                 print("trade")
-                                trade_prompt.show_trade_prompt(window, current_player)
-                                trade_button.clicked = False
+                                trade_prompt.current_trade_button = trade_button
+                                trade_prompt.show_trade_prompt(window, current_player, trade_button)
+                                trade_prompt.showing = True
+                                #trade_button.clicked = False
+                                
+                    # Trade bank button is clicked up
+                    if(trade_prompt.showing):
+                        for button_name in trade_prompt.trade_2_buttons:
+                            if trade_prompt.trade_2_buttons[button_name].rect.collidepoint(pygame.mouse.get_pos()):
+                                if(trade_prompt.trade_2_buttons[button_name].clicked):
+                                    trade_prompt.current_trade_button.clicked = False
+                                    trade_prompt.trade_2_buttons[button_name].clicked = False
+                                    if trade_prompt.trade_2_buttons[button_name].name != "Exit":
+                                        current_player.cards[trade_prompt.current_trade_button.name] -= 3
+                                        current_player.cards[trade_prompt.trade_2_buttons[button_name].name] += 1
+                                    trade_prompt.showing = False
+                                    Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
 
                 elif event.type == pygame.MOUSEMOTION:
                     # Dragging road event

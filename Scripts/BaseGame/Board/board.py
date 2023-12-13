@@ -46,8 +46,10 @@ class Board:
             road_button.draw(window)
             settlement_button = Button.create_settlement_button()
             settlement_button.draw(window)
-            special_card_button = Button.create_special_card_button()
-            special_card_button.draw(window)
+            end_turn_button = Button.create_end_turn_button()
+            end_turn_button.draw(window)
+            # special_card_button = Button.create_special_card_button()
+            # special_card_button.draw(window)
 
         # --- Cards prompt ---
         cards_prompt.show_cards(window, current_player)

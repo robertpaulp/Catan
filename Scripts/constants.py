@@ -44,9 +44,24 @@ BRICK_SPRITE = "../Assets/Sprites/hill.png"
 STONE_SPRITE = "../Assets/Sprites/mountain.png"
 DESERT_SPRITE = "../Assets/Sprites/desert.png"
 ROBBER_SPRITE = "../Assets/Sprites/robber.png"
+
 SETTLEMENT_BUTTON_SPRITE = "../Assets/Sprites/settlement_button.png"
 ROAD_BUTTON_SPRITE = "../Assets/Sprites/road_button.png"
 SPECIAL_CARD_BUTTON_SPRITE = "../Assets/Sprites/special_card_button.png"
+END_TURN_BUTTON_SPRITE = "../Assets/Sprites/end_turn_button.png"
+
+PAPIRUS_SETTLEMENT_SPRITE = "../Assets/Sprites/papirus_settlement.png"
+
+PRESSED_ROAD_BUTTON_SPRITE = "../Assets/Sprites/pressed_road_button.png"
+PRESSED_SETTLEMENT_BUTTON_SPRITE = "../Assets/Sprites/pressed_settlement_button.png"
+
+SMALL_BUTTON_SPRITE = "../Assets/Sprites/small_button.png"
+PRESSED_SMALL_BUTTON_SPRITE = "../Assets/Sprites/pressed_small_button.png"
+EXIT_BUTTON_SPRITE = "../Assets/Sprites/exit_button.png"
+PRESSED_EXIT_BUTTON_SPRITE = "../Assets/Sprites/pressed_exit_button.png"
+WOOD_TABLE_SPRITE = "../Assets/Sprites/wood_table.png"
+WOOD_TABLE_DARK_SPRITE = "../Assets/Sprites/wood_table_dark.png"
+
 # Error sprites
 ERROR_RESOURCE_SPRITE = "../Assets/Sprites/error_resource.png"
 ERROR_PLACE_SPRITE = "../Assets/Sprites/error_place_first.png"
@@ -61,14 +76,22 @@ POPUP_ROUND_NUMBER_SPRITE = "../Assets/Sprites/popup_round_number.png"
 BACKGROUND_SPRITE = "../Assets/Sprites/background2.jpg"
 TRADE_TABLE_SPRITE = "../Assets/Sprites/trade_table.png"
 TRADE_BUTTON_SPRITE = "../Assets/Sprites/trade_button.png"
+PRESSED_TRADE_BUTTON_SPRITE = "../Assets/Sprites/pressed_trade_button.png"
 BRICKS_SPRITE = "../Assets/Sprites/bricks.png"
 LUMBER_SPRITE = "../Assets/Sprites/lumber.png"
 GRAIN_SPRITE = "../Assets/Sprites/grain.png"
 ORE_SPRITE = "../Assets/Sprites/ore.png"
 WOOL_SPRITE = "../Assets/Sprites/wool.png"
-TRADE_POSITION_X = 500
-TRADE_POSITION_Y = 300
-TRADE_POSITION_X_RIGHT = 530
+
+PRESSED_BRICKS_SPRITE = "../Assets/Sprites/pressed_bricks.png"
+PRESSED_LUMBER_SPRITE = "../Assets/Sprites/pressed_lumber.png"
+PRESSED_GRAIN_SPRITE = "../Assets/Sprites/pressed_grain.png"
+PRESSED_ORE_SPRITE = "../Assets/Sprites/pressed_ore.png"
+PRESSED_WOOL_SPRITE = "../Assets/Sprites/pressed_wool.png"
+
+TRADE_POSITION_X = 490
+TRADE_POSITION_Y = 200
+TRADE_POSITION_X_RIGHT = 520
 TRADE_POSITION_Y_DOWN = 330
 
 # Player Constants
