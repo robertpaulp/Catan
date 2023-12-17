@@ -62,6 +62,16 @@ class Player:
 			name_surface = font.render(player.name, BROWN)
 			window.blit(name_surface[0], NAME_POSITION[i])
 
+			# Win points banner
+			image = pygame.image.load(POINTS_BANNER_SPRITE)
+			image = pygame.transform.scale_by(image, 1)
+			window.blit(image, (PLAYER_BOARD_X_AXIS + 120, PLAYER_BOARD_Y_AXIS + 50 + i * 130))
+
+			# Win points Quantity
+			font = pygame.freetype.SysFont('Arial', 25)
+			win_points_quantity= font.render(str(player.win_points), BROWN)
+			window.blit(win_points_quantity[0], (PLAYER_BOARD_X_AXIS + 175, PLAYER_BOARD_Y_AXIS + 52 + i * 130))
+
 			# Player Resources
 
 			# Resource Cards Icon
@@ -72,13 +82,6 @@ class Player:
 			resource_cards_quantity = font.render(str(player.resource_cards), BROWN)
 			window.blit(resource_cards_quantity[0], (RESOURCE_CARDS_POSITION[0] + ICON_SIZE + 10, RESOURCE_CARDS_POSITION[1] + i * 130 + 5))
 			
-			# Special Cards Icon
-			## TODO: Add special card icon
-			window.blit(player.image, SPECIAL_CARDS_POSITION)
-			# Special Cards Quantity
-			font = pygame.freetype.SysFont('Arial', 25)
-			special_cards_quantity= font.render(str(player.special_cards), BROWN)
-			window.blit(special_cards_quantity[0], (RESOURCE_CARDS_POSITION[0] + ICON_SIZE + 10, RESOURCE_CARDS_POSITION[1] + i * 130 + 45))
 			
 			i = i + 1
 

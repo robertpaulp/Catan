@@ -37,6 +37,15 @@ HEXAGON_Y_AXIS = 75
 POLYGON_RADIUS = 370
 
 # Sprite Constants
+"""
+POINTS_BANNER_SPRITE = []
+POINTS_BANNER_SPRITE.append("../Assets/Sprites/points_banner_1.png")
+POINTS_BANNER_SPRITE.append("../Assets/Sprites/points_banner_2.png")
+POINTS_BANNER_SPRITE.append("../Assets/Sprites/points_banner_3.png")
+POINTS_BANNER_SPRITE.append("../Assets/Sprites/points_banner_4.png")
+"""
+POINTS_BANNER_SPRITE = "../Assets/Sprites/points_banner.png"
+
 WOOD_SPRITE = "../Assets/Sprites/forest.png"
 WHEAT_SPRITE = "../Assets/Sprites/field.png"
 SHEEP_SPRITE = "../Assets/Sprites/pasture.png"
@@ -51,9 +60,11 @@ SPECIAL_CARD_BUTTON_SPRITE = "../Assets/Sprites/special_card_button.png"
 END_TURN_BUTTON_SPRITE = "../Assets/Sprites/end_turn_button.png"
 
 PAPIRUS_SETTLEMENT_SPRITE = "../Assets/Sprites/papirus_settlement.png"
+PAPIRUS_ROAD_SPRITE = "../Assets/Sprites/papirus_road.png"
 
 PRESSED_ROAD_BUTTON_SPRITE = "../Assets/Sprites/pressed_road_button.png"
 PRESSED_SETTLEMENT_BUTTON_SPRITE = "../Assets/Sprites/pressed_settlement_button.png"
+PRESSED_END_TURN_BUTTON_SPRITE = "../Assets/Sprites/pressed_end_turn_button.png"
 
 SMALL_BUTTON_SPRITE = "../Assets/Sprites/small_button.png"
 PRESSED_SMALL_BUTTON_SPRITE = "../Assets/Sprites/pressed_small_button.png"
@@ -105,7 +116,7 @@ NAME_POSITION = []
 for i in range(4):
     NAME_POSITION.append((PLAYER_BOARD_X_AXIS + 80 + ICON_SIZE * 1.5, PLAYER_BOARD_Y_AXIS + 20 + 130 * i))
 ICON_POSITION = (PLAYER_BOARD_X_AXIS + 80, PLAYER_BOARD_Y_AXIS + 20)
-RESOURCE_CARDS_POSITION = (PLAYER_BOARD_X_AXIS + 90, PLAYER_BOARD_Y_AXIS + 60)
+RESOURCE_CARDS_POSITION = (PLAYER_BOARD_X_AXIS + 90, PLAYER_BOARD_Y_AXIS + 90)
 SPECIAL_CARDS_POSITION = (PLAYER_BOARD_X_AXIS + 90, PLAYER_BOARD_Y_AXIS + 100)
 
 """

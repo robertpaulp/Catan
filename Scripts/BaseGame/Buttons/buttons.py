@@ -13,6 +13,7 @@ class Button:
         self.clicked = False
         self.clicked_up = False
         self.card = " "
+        self.hover = False
     """
     def hover_settlement(self, window, robber_pos, roll, current_player, GAME_START):
         #get mouse position
@@ -32,6 +33,7 @@ class Button:
         pos = pygame.mouse.get_pos()
 
         #check mouseover and clicked conditions
+        
         if self.rect.collidepoint(pos):
             if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
                 self.clicked = True
@@ -39,7 +41,7 @@ class Button:
 
         if pygame.mouse.get_pressed()[0] == 0:
             self.clicked = False
-
+        
         #draw button on screen
         surface.blit(self.image, (self.rect.x, self.rect.y))
 
@@ -48,25 +50,25 @@ class Button:
     @staticmethod
     def create_settlement_button():
         button_img = pygame.image.load(SETTLEMENT_BUTTON_SPRITE).convert_alpha()
-        button = Button("settlement", SCREEN_WIDTH - 750, SCREEN_HEIGHT - 100, button_img, 1)
+        button = Button("settlement", SCREEN_WIDTH - 750, SCREEN_HEIGHT - 70, button_img, 1)
         return button
 
     @staticmethod
     def create_road_button():
         button_img = pygame.image.load(ROAD_BUTTON_SPRITE).convert_alpha()
-        button = Button("road", SCREEN_WIDTH - 570, SCREEN_HEIGHT - 100, button_img, 1)
+        button = Button("road", SCREEN_WIDTH - 570, SCREEN_HEIGHT - 70, button_img, 1)
         return button
     
     @staticmethod
     def show_pressed_settlement_button(window):
         button_img = pygame.image.load(PRESSED_SETTLEMENT_BUTTON_SPRITE).convert_alpha()
-        button = Button("settlement", SCREEN_WIDTH - 750, SCREEN_HEIGHT - 100, button_img, 1)
+        button = Button("settlement", SCREEN_WIDTH - 750, SCREEN_HEIGHT - 70, button_img, 1)
         window.blit(button_img, (button.rect.x, button.rect.y))
 
     @staticmethod
     def show_pressed_road_button(window):
         button_img = pygame.image.load(PRESSED_ROAD_BUTTON_SPRITE).convert_alpha()
-        button = Button("road", SCREEN_WIDTH - 570, SCREEN_HEIGHT - 100, button_img, 1)
+        button = Button("road", SCREEN_WIDTH - 570, SCREEN_HEIGHT - 70, button_img, 1)
         window.blit(button_img, (button.rect.x, button.rect.y))
     
     """
@@ -79,8 +81,14 @@ class Button:
     @staticmethod
     def create_end_turn_button():
         button_img = pygame.image.load(END_TURN_BUTTON_SPRITE).convert_alpha()
-        button = Button("end_turn", SCREEN_WIDTH - 390, SCREEN_HEIGHT - 100, button_img, 1)
+        button = Button("end_turn", SCREEN_WIDTH - 390, SCREEN_HEIGHT - 70, button_img, 1)
         return button
+    
+    @staticmethod
+    def show_pressed_end_turn_button(window):
+        button_img = pygame.image.load(PRESSED_END_TURN_BUTTON_SPRITE).convert_alpha()
+        button = Button("end_turn", SCREEN_WIDTH - 390, SCREEN_HEIGHT - 70, button_img, 1)
+        window.blit(button_img, (button.rect.x, button.rect.y))
     
     def show_pressed_trade_button(self, window):
         image = pygame.image.load(PRESSED_TRADE_BUTTON_SPRITE).convert_alpha()

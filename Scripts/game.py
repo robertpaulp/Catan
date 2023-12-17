@@ -114,26 +114,6 @@ class Game:
             # TODO trade mechanic
             GAME_START = False  # TODO dont pass as parameter to settlement_place!
 
-            # Add buttons hover feature
-            if GAME_START is False:
-                # Hover Settlement
-                #get mouse position
-                # FINISH HOVER !!!!!! This is for sett, implement for road too
-                """
-                pos = pygame.mouse.get_pos()
-                if settlement_button.rect.collidepoint(pos):
-                    image = pygame.image.load(PAPIRUS_SETTLEMENT_SPRITE)
-                    image = pygame.transform.scale_by(image, 1)
-                    window.blit(image, (SCREEN_WIDTH - 755, SCREEN_HEIGHT - 300))
-                    while settlement_button.rect.collidepoint(pos):
-                        pos = pygame.mouse.get_pos()
-                    Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
-                """
-            
-                #road_button.hover()
-                #settlement_button.hover_settlement(window, robber_pos, roll, current_player, GAME_START)
-                # special_card_button.hover()
-
             if END_START_ROUND is False:
                 for player in players:
                     if len(player.settlements) < 2 or len(player.roads) < 2:
@@ -143,6 +123,30 @@ class Game:
                     elif players.index(player) == 3 and END_START_ROUND is False:
                         GAME_START = True
                         END_START_ROUND = True
+
+             # Add buttons hover feature
+            if GAME_START is False:
+
+                # Hover over Settlement button
+                pos = pygame.mouse.get_pos()
+                if settlement_button.rect.collidepoint(pos):
+                    PopUp.show_settlement_info(window)
+                    settlement_button.hover = True
+                if settlement_button.rect.collidepoint(pos) == False and settlement_button.hover == True:
+                    settlement_button.hover = False
+                    Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
+                    if(settlement_button.clicked_up == True):
+                        Button.show_pressed_settlement_button(window)
+
+                # Hover over Road button
+                if road_button.rect.collidepoint(pos):
+                    PopUp.show_road_info(window)
+                    road_button.hover = True
+                if road_button.rect.collidepoint(pos) == False and road_button.hover == True:
+                    road_button.hover = False
+                    Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
+                    if(road_button.clicked_up == True):
+                        Button.show_pressed_road_button(window)
 
             # Round pop up
             if ROUND_NUMBER == 0:
@@ -367,6 +371,7 @@ class Game:
                                     if trade_prompt.trade_2_buttons[button_name].name != "Exit":
                                         current_player.cards[trade_prompt.current_trade_button.name] -= 3
                                         current_player.cards[trade_prompt.trade_2_buttons[button_name].name] += 1
+                                        current_player.resource_cards -= 2
                                     trade_prompt.showing = False
                                     Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
 

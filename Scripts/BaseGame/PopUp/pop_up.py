@@ -38,3 +38,15 @@ class PopUp:
         pygame.display.update()
 
         Event().wait(2)
+
+    @staticmethod
+    def show_settlement_info(window):
+        image = pygame.image.load(PAPIRUS_SETTLEMENT_SPRITE)
+        image = pygame.transform.scale_by(image, 1)
+        window.blit(image, (SCREEN_WIDTH - 753, SCREEN_HEIGHT - 190))
+
+    @staticmethod
+    def show_road_info(window):
+        image = pygame.image.load(PAPIRUS_ROAD_SPRITE)
+        image = pygame.transform.scale_by(image, 1)
+        window.blit(image, (SCREEN_WIDTH - 573, SCREEN_HEIGHT - 190))

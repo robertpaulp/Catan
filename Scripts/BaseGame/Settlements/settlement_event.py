@@ -64,8 +64,8 @@ class SettlementEventHandler:
 				if settlement not in player.settlements:
 					player.settlements.append(settlement)
 					print(settlement.position)
-					print('player got settlement')
 					sprites.add(settlement)
+					player.win_points += 1
 
 				# Spend resources
 				if GAME_START is False:
@@ -88,3 +88,4 @@ class SettlementEventHandler:
 		player.cards["Brick"] -= 1
 		player.cards["Sheep"] -= 1
 		player.cards["Wheat"] -= 1
+		player.resource_cards -= 4
