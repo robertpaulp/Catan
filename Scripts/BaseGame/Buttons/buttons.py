@@ -127,29 +127,44 @@ class Trade:
 
     pygame.font.init()
     font = pygame.font.SysFont('Segoe UI Black', 25)
-    font2 = pygame.font.SysFont('Segoe UI Black', 22)
+    font2 = pygame.font.SysFont('Segoe UI Black', 17)
     font_numbers = pygame.font.SysFont('Arial', 25)
     small_font = pygame.font.SysFont('Segoe UI Black', 15)
     medium_font = pygame.font.SysFont('Segoe UI Black', 18)
 
     def show_trade(self, window, player):
         # Draw prompt rectangle
-        pygame.draw.rect(window, BRASS, Trade.trade_rect)
-        pygame.draw.rect(window, BROWN, (TRADE_PROMPT_X_AXIS - 4, TRADE_PROMPT_Y_AXIS - 4, TRADE_PROMPT_WIDTH + 4, TRADE_PROMPT_HEIGHT + 4), 4)
+       # pygame.draw.rect(window, BRASS, Trade.trade_rect)
+       # pygame.draw.rect(window, BROWN, (TRADE_PROMPT_X_AXIS - 4, TRADE_PROMPT_Y_AXIS - 4, TRADE_PROMPT_WIDTH + 4, TRADE_PROMPT_HEIGHT + 4), 4)
+
+        image = pygame.image.load(TRADE_TABLE_SPRITE)
+        window.blit(image, (TRADE_PROMPT_X_AXIS - 150, TRADE_PROMPT_Y_AXIS - 100))
+
+        # Draw exchange arrows bank icon
+        image = pygame.image.load(BANK_ARROWS_ICON_SPRITE)
+        image = pygame.transform.scale_by(image, 1)
+        window.blit(image, (TRADE_PROMPT_X_AXIS + 60, TRADE_PROMPT_Y_AXIS - 30))
+
+        """
+        # Draw bank icon
+        image = pygame.image.load(BANK_ICON_SPRITE)
+        image = pygame.transform.scale_by(image, 0.85)
+        window.blit(image, (TRADE_PROMPT_X_AXIS + 125, TRADE_PROMPT_Y_AXIS - 5))
+        """
 
         """
         image = pygame.image.load(TRADE_TABLE_SPRITE)
         image = pygame.transform.scale(image, (TRADE_PROMPT_WIDTH  - 10, TRADE_PROMPT_HEIGHT - 30))
         window.blit(image, (TRADE_PROMPT_X_AXIS, TRADE_PROMPT_Y_AXIS))
         """
-        
+        """
         # Write text
-        text = Trade.font.render("TRADE THE BANK", True, BROWN)
-        text_rect = pygame.Rect(TRADE_PROMPT_X_AXIS + 30, TRADE_PROMPT_Y_AXIS + 10, TRADE_PROMPT_WIDTH, TRADE_PROMPT_HEIGHT)
+        text = Trade.font.render("TRADE", True, BROWN)
+        text_rect = pygame.Rect(TRADE_PROMPT_X_AXIS + 100, TRADE_PROMPT_Y_AXIS + 40, TRADE_PROMPT_WIDTH, TRADE_PROMPT_HEIGHT)
         window.blit(text, text_rect)
-
+        """
         text = Trade.font2.render(player.name + " possible trades : ", True, BROWN)
-        text_rect = pygame.Rect(TRADE_PROMPT_X_AXIS + 10, TRADE_PROMPT_Y_AXIS + 70, TRADE_PROMPT_WIDTH, TRADE_PROMPT_HEIGHT)
+        text_rect = pygame.Rect(TRADE_PROMPT_X_AXIS + 35, TRADE_PROMPT_Y_AXIS + 70, TRADE_PROMPT_WIDTH, TRADE_PROMPT_HEIGHT)
         window.blit(text, text_rect)
 
         player.trade_counter = 0

@@ -42,7 +42,8 @@ class Game:
     # --- Main loop ---
     @staticmethod
     def main(window):
-
+        print(GetSystemMetrics(0))
+        print(GetSystemMetrics(1))
         # Game loop variables
         dice_first_dsp = True
         running = True

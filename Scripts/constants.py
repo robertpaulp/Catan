@@ -1,8 +1,8 @@
 from win32api import GetSystemMetrics
 
 # Screen Constants
-SCREEN_WIDTH = GetSystemMetrics(0) - 60
-SCREEN_HEIGHT = GetSystemMetrics(1) - 80
+SCREEN_WIDTH = 1476
+SCREEN_HEIGHT = 784
 
 # Color Constants
 WHITE = (255, 255, 255)
@@ -61,6 +61,8 @@ PRESSED_ROAD_BUTTON_SPRITE = "../Assets/Sprites/pressed_road_button.png"
 PRESSED_SETTLEMENT_BUTTON_SPRITE = "../Assets/Sprites/pressed_settlement_button.png"
 PRESSED_END_TURN_BUTTON_SPRITE = "../Assets/Sprites/pressed_end_turn_button.png"
 
+BANK_ICON_SPRITE = "../Assets/Sprites/bank_icon.png"
+BANK_ARROWS_ICON_SPRITE = "../Assets/Sprites/bank_arrows_icon1.png"
 SMALL_BUTTON_SPRITE = "../Assets/Sprites/small_button.png"
 PRESSED_SMALL_BUTTON_SPRITE = "../Assets/Sprites/pressed_small_button.png"
 EXIT_BUTTON_SPRITE = "../Assets/Sprites/exit_button.png"
@@ -82,7 +84,7 @@ POPUP_STARTING_ROUND_SPRITE = "../Assets/Sprites/popup_starting_round.png"
 POPUP_ROUND_NUMBER_SPRITE = "../Assets/Sprites/popup_round_number.png"
 # Background
 BACKGROUND_SPRITE = "../Assets/Sprites/background2.jpg"
-TRADE_TABLE_SPRITE = "../Assets/Sprites/trade_table.png"
+TRADE_TABLE_SPRITE = "../Assets/Sprites/scroll1.png"
 TRADE_BUTTON_BRICKS_SPRITE = "../Assets/Sprites/trade_button_bricks.png"
 TRADE_BUTTON_LUMBER_SPRITE = "../Assets/Sprites/trade_button_lumber.png"
 TRADE_BUTTON_ORE_SPRITE = "../Assets/Sprites/trade_button_ore.png"
