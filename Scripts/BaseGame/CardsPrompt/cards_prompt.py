@@ -18,7 +18,7 @@ class CardsPrompt:
         image = pygame.transform.scale(image, (CARDS_PROMPT_WIDTH + 4, CARDS_PROMPT_HEIGHT + 20))
         pygame.draw.rect(window, BRASS, (CARDS_PROMPT_X_AXIS - 4, CARDS_PROMPT_Y_AXIS - 4, CARDS_PROMPT_WIDTH + 4, 35))
         window.blit(image, (CARDS_PROMPT_X_AXIS - 4, CARDS_PROMPT_Y_AXIS - 10))
-        pygame.draw.rect(window, player.color, (CARDS_PROMPT_X_AXIS + 23, CARDS_PROMPT_Y_AXIS + 25, CARDS_PROMPT_WIDTH - 47, 5), 4)
+        pygame.draw.rect(window, player.color, (CARDS_PROMPT_X_AXIS + 23, CARDS_PROMPT_Y_AXIS + 25, CARDS_PROMPT_WIDTH - 48, 10))
         # pygame.draw.rect(window, player.color, CardsPrompt.cards_prompt_rect, 10)
         # pygame.draw.rect(window, WHITE, (CARDS_PROMPT_X_AXIS - 4, CARDS_PROMPT_Y_AXIS - 4, CARDS_PROMPT_WIDTH + 4, 35))
         # pygame.draw.rect(window, BROWN, (CARDS_PROMPT_X_AXIS - 4, CARDS_PROMPT_Y_AXIS - 4, CARDS_PROMPT_WIDTH + 4, 35), 4)
