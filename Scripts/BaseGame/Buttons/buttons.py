@@ -90,27 +90,38 @@ class Button:
         button = Button("end_turn", SCREEN_WIDTH - 390, SCREEN_HEIGHT - 70, button_img, 1)
         window.blit(button_img, (button.rect.x, button.rect.y))
     
-    def show_pressed_trade_button(self, window):
-        image = pygame.image.load(PRESSED_TRADE_BUTTON_SPRITE).convert_alpha()
-        window.blit(self.image, (self.rect.x, self.rect.y))
+    def show_pressed_trade_button(self, window, card):
+        if(card == "Bricks"):
+            image = pygame.image.load(TRADE_BUTTON_BRICKS_PRESSED_SPRITE)
+        if(card == "Lumber"):
+            image = pygame.image.load(TRADE_BUTTON_LUMBER_PRESSED_SPRITE)
+        if(card == "Ore"):
+            image = pygame.image.load(TRADE_BUTTON_ORE_PRESSED_SPRITE)
+        if(card == "Grain"):
+            image = pygame.image.load(TRADE_BUTTON_GRAIN_PRESSED_SPRITE)
+        if(card == "Wool"):
+            image = pygame.image.load(TRADE_BUTTON_WOOL_PRESSED_SPRITE)
 
-    
+        image = pygame.transform.scale_by(image, 1)
+        window.blit(image, self.rect)
+
+
 class Trade:
     trade_rect = pygame.Rect(TRADE_PROMPT_X_AXIS, TRADE_PROMPT_Y_AXIS, TRADE_PROMPT_WIDTH, TRADE_PROMPT_HEIGHT)
 
     card_color = {
-      "Wood": (3, 75, 3),
-      "Wheat": (240, 215, 49),
-      "Sheep": (242, 240, 235),
-      "Brick": (188, 74, 60),
+      "Lumber": (3, 75, 3),
+      "Grain": (240, 215, 49),
+      "Wool": (242, 240, 235),
+      "Bricks": (188, 74, 60),
       "Ore": (144, 144, 144)
     } 
 
     card_sprite = {
-      "Wood": LUMBER_SPRITE,
-      "Wheat": GRAIN_SPRITE,
-      "Sheep": WOOL_SPRITE,
-      "Brick": BRICKS_SPRITE,
+      "Lumber": LUMBER_SPRITE,
+      "Grain": GRAIN_SPRITE,
+      "Wool": WOOL_SPRITE,
+      "Bricks": BRICKS_SPRITE,
       "Ore": ORE_SPRITE
     } 
 
@@ -146,7 +157,17 @@ class Trade:
             if player.possible_trade[card] == True:
 
                 # Draw the trade button
-                image = pygame.image.load(TRADE_BUTTON_SPRITE)
+                if(card == "Bricks"):
+                    image = pygame.image.load(TRADE_BUTTON_BRICKS_SPRITE)
+                if(card == "Lumber"):
+                    image = pygame.image.load(TRADE_BUTTON_LUMBER_SPRITE)
+                if(card == "Ore"):
+                    image = pygame.image.load(TRADE_BUTTON_ORE_SPRITE)
+                if(card == "Grain"):
+                    image = pygame.image.load(TRADE_BUTTON_GRAIN_SPRITE)
+                if(card == "Wool"):
+                    image = pygame.image.load(TRADE_BUTTON_WOOL_SPRITE)
+
                 image = pygame.transform.scale_by(image, 1)
                 window.blit(image, (TRADE_BUTTON_X_AXIS + 35, TRADE_BUTTON_Y_AXIS + player.trade_counter * (TRADE_BUTTON_HEIGHT + 25)))
 
@@ -154,16 +175,6 @@ class Trade:
                 new_button.card = card
                 player.trade_button.append(new_button)
 
-                # Draw the button images
-                image = pygame.image.load(Trade.card_sprite[card])
-                image = pygame.transform.scale_by(image, 1)
-                window.blit(image, (TRADE_BUTTON_X_AXIS + 70, TRADE_BUTTON_Y_AXIS + 7 + player.trade_counter * (TRADE_BUTTON_HEIGHT + 25)))
-
-                """
-                # Draw the explaining text 
-                text = Trade.small_font.render("Trade 3 " + card + " cards for any card", True, BROWN)
-                window.blit(text, (TRADE_BUTTON_X_AXIS - 10, TRADE_BUTTON_Y_AXIS + 60 + trades_counter * (TRADE_BUTTON_HEIGHT + 25)))
-                """
                 player.trade_counter += 1
 
 
@@ -182,10 +193,10 @@ class TradePrompt:
         self.current_trade_button = None
 
         self.trade_2_buttons = {
-			"Wood": Button,
-			"Wheat": Button,
-			"Sheep": Button,
-			"Brick": Button,
+			"Lumber": Button,
+			"Grain": Button,
+			"Wool": Button,
+			"Bricks": Button,
 			"Ore": Button,
             "Exit": Button
 		} 
@@ -193,15 +204,15 @@ class TradePrompt:
     def create_trade_prompt_buttons(self):
         # Bricks trade from bank button
         button_img = pygame.image.load(SMALL_BUTTON_SPRITE)
-        button = Button("Brick", TRADE_POSITION_X_RIGHT - 10, TRADE_POSITION_Y_DOWN - 7, button_img, 1)
+        button = Button("Bricks", TRADE_POSITION_X_RIGHT - 10, TRADE_POSITION_Y_DOWN - 7, button_img, 1)
 
-        self.trade_2_buttons["Brick"] = button
+        self.trade_2_buttons["Bricks"] = button
         
         # Lumber trade from bank button
         button_img = pygame.image.load(SMALL_BUTTON_SPRITE)
-        button = Button("Wood", TRADE_POSITION_X_RIGHT + CARDS_SPACING_HELPER - 5, TRADE_POSITION_Y_DOWN - 7, button_img, 1)
+        button = Button("Lumber", TRADE_POSITION_X_RIGHT + CARDS_SPACING_HELPER - 5, TRADE_POSITION_Y_DOWN - 7, button_img, 1)
         
-        self.trade_2_buttons["Wood"] = button
+        self.trade_2_buttons["Lumber"] = button
 
         # Ore trade from bank button
         button_img = pygame.image.load(SMALL_BUTTON_SPRITE)
@@ -211,15 +222,15 @@ class TradePrompt:
 
         # Grain trade from bank button
         button_img = pygame.image.load(SMALL_BUTTON_SPRITE)
-        button = Button("Wheat", TRADE_POSITION_X_RIGHT + 3 * CARDS_SPACING_HELPER - 5, TRADE_POSITION_Y_DOWN - 7, button_img, 1)
+        button = Button("Grain", TRADE_POSITION_X_RIGHT + 3 * CARDS_SPACING_HELPER - 5, TRADE_POSITION_Y_DOWN - 7, button_img, 1)
 
-        self.trade_2_buttons["Wheat"] = button
+        self.trade_2_buttons["Grain"] = button
 
         # Wool trade from bank button
         button_img = pygame.image.load(SMALL_BUTTON_SPRITE)
-        button = Button("Sheep", TRADE_POSITION_X_RIGHT + 4 * CARDS_SPACING_HELPER - 8, TRADE_POSITION_Y_DOWN - 7, button_img, 1)
+        button = Button("Wool", TRADE_POSITION_X_RIGHT + 4 * CARDS_SPACING_HELPER - 8, TRADE_POSITION_Y_DOWN - 7, button_img, 1)
 
-        self.trade_2_buttons["Sheep"] = button
+        self.trade_2_buttons["Wool"] = button
 
         # Exit trade from bank button
         button_img = pygame.image.load(EXIT_BUTTON_SPRITE)
@@ -305,7 +316,7 @@ class TradePrompt:
             image = pygame.transform.scale_by(image, 0.7)
             window.blit(image, (TRADE_POSITION_X + 360, TRADE_POSITION_Y + 30))
 
-        elif button_name == "Brick":
+        elif button_name == "Bricks":
             # Draw Brick Card
             image = pygame.image.load(PRESSED_SMALL_BUTTON_SPRITE)
             image = pygame.transform.scale_by(image, 1)
@@ -315,7 +326,7 @@ class TradePrompt:
             image = pygame.transform.scale_by(image, 1)
             window.blit(image, (TRADE_POSITION_X_RIGHT - 5, TRADE_POSITION_Y_DOWN))
 
-        elif button_name == "Wood":
+        elif button_name == "Lumber":
             # Draw Lumber Card
             image = pygame.image.load(PRESSED_SMALL_BUTTON_SPRITE)
             image = pygame.transform.scale_by(image, 1)
@@ -335,7 +346,7 @@ class TradePrompt:
             image = pygame.transform.scale_by(image, 1)
             window.blit(image, (TRADE_POSITION_X_RIGHT + 2 * CARDS_SPACING_HELPER + 3, TRADE_POSITION_Y_DOWN + 5))
 
-        elif button_name == "Wheat":
+        elif button_name == "Grain":
             # Draw pressed Grain Card
             image = pygame.image.load(PRESSED_SMALL_BUTTON_SPRITE)
             image = pygame.transform.scale_by(image, 1)
@@ -345,7 +356,7 @@ class TradePrompt:
             image = pygame.transform.scale_by(image, 0.9)
             window.blit(image, (TRADE_POSITION_X_RIGHT + 3 * CARDS_SPACING_HELPER + 3, TRADE_POSITION_Y_DOWN + 7))
 
-        elif button_name == "Sheep":
+        elif button_name == "Wool":
             # Draw pressed Wool Card
             image = pygame.image.load(PRESSED_SMALL_BUTTON_SPRITE)
             image = pygame.transform.scale_by(image, 1)

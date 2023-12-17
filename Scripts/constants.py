@@ -37,14 +37,9 @@ HEXAGON_Y_AXIS = 75
 POLYGON_RADIUS = 370
 
 # Sprite Constants
-"""
-POINTS_BANNER_SPRITE = []
-POINTS_BANNER_SPRITE.append("../Assets/Sprites/points_banner_1.png")
-POINTS_BANNER_SPRITE.append("../Assets/Sprites/points_banner_2.png")
-POINTS_BANNER_SPRITE.append("../Assets/Sprites/points_banner_3.png")
-POINTS_BANNER_SPRITE.append("../Assets/Sprites/points_banner_4.png")
-"""
+
 POINTS_BANNER_SPRITE = "../Assets/Sprites/points_banner.png"
+CARDS_TOTAL_SPRITE = "../Assets/Sprites/cards_total.png"
 
 WOOD_SPRITE = "../Assets/Sprites/forest.png"
 WHEAT_SPRITE = "../Assets/Sprites/field.png"
@@ -80,14 +75,27 @@ ERROR_ROBBER_SPRITE = "../Assets/Sprites/error_robber.png"
 ERROR_PLACE_SETTLEMENTS_ROADS_SPRITE = "../Assets/Sprites/error_place_settlements_roads.png"
 ERROR_PLACE_SETTLEMENTS_SPRITE = "../Assets/Sprites/error_place_settlements.png"
 ERROR_PLACE_ROADS_SPRITE = "../Assets/Sprites/error_place_roads.png"
+ERROR_ROLL_DICE_SPRITE = "../Assets/Sprites/error_roll_dice.png"
+ERROR_ALREADY_ROLLED_SPRITE = "../Assets/Sprites/error_already_rolled.png"
 # Pop up sprites
 POPUP_STARTING_ROUND_SPRITE = "../Assets/Sprites/popup_starting_round.png"
 POPUP_ROUND_NUMBER_SPRITE = "../Assets/Sprites/popup_round_number.png"
 # Background
 BACKGROUND_SPRITE = "../Assets/Sprites/background2.jpg"
 TRADE_TABLE_SPRITE = "../Assets/Sprites/trade_table.png"
-TRADE_BUTTON_SPRITE = "../Assets/Sprites/trade_button.png"
-PRESSED_TRADE_BUTTON_SPRITE = "../Assets/Sprites/pressed_trade_button.png"
+TRADE_BUTTON_BRICKS_SPRITE = "../Assets/Sprites/trade_button_bricks.png"
+TRADE_BUTTON_LUMBER_SPRITE = "../Assets/Sprites/trade_button_lumber.png"
+TRADE_BUTTON_ORE_SPRITE = "../Assets/Sprites/trade_button_ore.png"
+TRADE_BUTTON_GRAIN_SPRITE = "../Assets/Sprites/trade_button_grain.png"
+TRADE_BUTTON_WOOL_SPRITE = "../Assets/Sprites/trade_button_wool.png"
+# Pressed trade buttons
+TRADE_BUTTON_BRICKS_PRESSED_SPRITE = "../Assets/Sprites/trade_button_bricks_pressed.png"
+TRADE_BUTTON_LUMBER_PRESSED_SPRITE = "../Assets/Sprites/trade_button_lumber_pressed.png"
+TRADE_BUTTON_ORE_PRESSED_SPRITE = "../Assets/Sprites/trade_button_ore_pressed.png"
+TRADE_BUTTON_GRAIN_PRESSED_SPRITE = "../Assets/Sprites/trade_button_grain_pressed.png"
+TRADE_BUTTON_WOOL_PRESSED_SPRITE = "../Assets/Sprites/trade_button_wool_pressed.png"
+
+#PRESSED_TRADE_BUTTON_SPRITE = "../Assets/Sprites/pressed_trade_button.png"
 BRICKS_SPRITE = "../Assets/Sprites/bricks.png"
 LUMBER_SPRITE = "../Assets/Sprites/lumber.png"
 GRAIN_SPRITE = "../Assets/Sprites/grain.png"
@@ -133,7 +141,7 @@ SETTLEMENT_SPRITE = 17
 # Dice Constants
 DICE_WIDTH = 80
 DICE_HEIGHT = 80
-DICE_X_AXIS = SCREEN_WIDTH - DICE_WIDTH * 2 - 20
+DICE_X_AXIS = SCREEN_WIDTH - DICE_WIDTH * 2 - 30
 DICE_Y_AXIS = SCREEN_HEIGHT - DICE_HEIGHT - 50 - 10
 DICE_CORNER_RADIUS = 10
 DOT_RADIUS = 7

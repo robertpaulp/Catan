@@ -124,6 +124,6 @@ class RoadEventHandler:
 		:return:
 		"""
 		print("buy")
-		player.cards["Wood"] -= 1
-		player.cards["Brick"] -= 1
+		player.cards["Lumber"] -= 1
+		player.cards["Bricks"] -= 1
 		player.resource_cards -= 2

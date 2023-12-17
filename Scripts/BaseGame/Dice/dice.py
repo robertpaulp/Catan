@@ -81,7 +81,7 @@ class Dice:
     def roll_dice_btn(window, x=DICE_BTN_X_AXIS, y=DICE_BTN_Y_AXIS):
         button = pygame.draw.rect(window, BEIGE, (x, y, DICE_BTN_WIDTH, DICE_BTN_HEIGHT))
         pygame.draw.rect(window, BLACK, (x, y, DICE_BTN_WIDTH, DICE_BTN_HEIGHT), 4)
-        font = pygame.font.SysFont('Arial', 30)
+        font = pygame.font.SysFont('Segoe UI Black', 28)
         text = font.render(str("Roll Dice!"), True, BLACK)
         text_rect = text.get_rect(center=(x + 100, y + 25))
         window.blit(text, text_rect)

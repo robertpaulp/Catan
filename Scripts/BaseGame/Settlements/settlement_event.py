@@ -84,8 +84,8 @@ class SettlementEventHandler:
 		:return:
 		"""
 
-		player.cards["Wood"] -= 1
-		player.cards["Brick"] -= 1
-		player.cards["Sheep"] -= 1
-		player.cards["Wheat"] -= 1
+		player.cards["Lumber"] -= 1
+		player.cards["Bricks"] -= 1
+		player.cards["Wool"] -= 1
+		player.cards["Grain"] -= 1
 		player.resource_cards -= 4

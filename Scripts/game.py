@@ -218,8 +218,9 @@ class Game:
                                 Error.error_popup_place_settlements(window)
                                 Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
                                 
-                        else:
+                        if GAME_START is False and current_player.rolled == False:
                             roll = [Dice.dice_roll(), Dice.dice_roll()]
+                            current_player.rolled = True
 
                             # Acquire resources
                             for player in players:
@@ -238,6 +239,7 @@ class Game:
                                 # --- Update board ---
                                 Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
 
+                            """
                             else:
 
                                 # Possibly switch to next round
@@ -251,6 +253,16 @@ class Game:
                                 # time.sleep(1)
                                 Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
                                 # TODO switch to start of turn state
+                                """
+
+                    # End turn button is clicked down
+                    if end_turn_button.rect.collidepoint(mouse_pos) and GAME_START is False:
+                        if current_player.rolled == True:
+                            end_turn_button.clicked = True
+                            end_turn_button.show_pressed_end_turn_button(window)
+                        else:
+                            Error.error_popup_roll_dice(window)
+                            Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
 
                     # Road button is clicked down
                     if road_button.rect.collidepoint(mouse_pos) and trade_prompt.showing is False:
@@ -264,9 +276,7 @@ class Game:
                         # Trade button is clicked down
                         if trade_button.rect.collidepoint(mouse_pos):
                             trade_button.clicked = True
-
-                            # TODO : pressed trade button 
-                            # trade_button.show_pressed_trade_button(window)
+                            trade_button.show_pressed_trade_button(window, trade_button.card)
 
                     if(trade_prompt.showing):
                         for button_name in trade_prompt.trade_2_buttons:
@@ -374,6 +384,22 @@ class Game:
                                         current_player.resource_cards -= 2
                                     trade_prompt.showing = False
                                     Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
+
+                    # End turn button is clicked up
+                    if end_turn_button.rect.collidepoint(pygame.mouse.get_pos()):
+                        if(end_turn_button.clicked):
+                            end_turn_button.clicked = False
+                            # Possibly switch to next round
+                            if(players.index(current_player) + 1) % len(players) == 0:
+                                ROUND_NUMBER = ROUND_NUMBER + 1
+                                PopUp.round_number_popup(window, ROUND_NUMBER)
+                                Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
+                                
+                            # Switch to next player
+                            current_player = players[(players.index(current_player) + 1) % len(players)]
+                            current_player.rolled = False
+                            # time.sleep(1)
+                            Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
 
                 elif event.type == pygame.MOUSEMOTION:
                     # Dragging road event

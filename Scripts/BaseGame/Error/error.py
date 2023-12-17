@@ -45,6 +45,24 @@ class Error:
         Event().wait(2)
 
     @staticmethod
+    def error_popup_roll_dice(window):
+        err_image = pygame.image.load(ERROR_ROLL_DICE_SPRITE)
+        err_image = pygame.transform.scale(err_image, (400, 100))
+        window.blit(err_image, (0, 0))
+        pygame.display.update()
+
+        Event().wait(2)
+
+    @staticmethod
+    def error_popup_already_rolled(window):
+        err_image = pygame.image.load(ERROR_ALREADY_ROLLED_SPRITE)
+        err_image = pygame.transform.scale(err_image, (400, 100))
+        window.blit(err_image, (0, 0))
+        pygame.display.update()
+
+        Event().wait(2)
+
+    @staticmethod
     def error_popup_robber(window):
         err_image = pygame.image.load(ERROR_ROBBER_SPRITE)
         err_image = pygame.transform.scale(err_image, (400, 100))

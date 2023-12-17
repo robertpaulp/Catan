@@ -17,10 +17,10 @@ class HexagonTile:
     center_points = []
     resourcesArray = []
     resources = [
-            ["Wood", WOOD_SPRITE],
-            ["Wheat", WHEAT_SPRITE],
-            ["Sheep", SHEEP_SPRITE],
-            ["Brick", BRICK_SPRITE],
+            ["Lumber", WOOD_SPRITE],
+            ["Grain", WHEAT_SPRITE],
+            ["Wool", SHEEP_SPRITE],
+            ["Bricks", BRICK_SPRITE],
             ["Ore", STONE_SPRITE]
         ]
     hexagon_numbers = [2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12, -1]

@@ -32,7 +32,7 @@ class CardsPrompt:
         window.blit(brick_text, (CARDS_POSITION_X - 3, CARDS_POSITION_Y + CARD_HEIGHT))
         
         # Brick Cards Number
-        brick_number = CardsPrompt.font_numbers.render(str(player.cards["Brick"]), True, BROWN)
+        brick_number = CardsPrompt.font_numbers.render(str(player.cards["Bricks"]), True, BROWN)
         window.blit(brick_number, (CARDS_POSITION_X + 15, CARDS_POSITION_Y + CARD_HEIGHT + 16))
 
         # Draw Lumber Card
@@ -45,7 +45,7 @@ class CardsPrompt:
         window.blit(lumber_text, (CARDS_POSITION_X - 5 +CARDS_SPACING_HELPER, CARDS_POSITION_Y + CARD_HEIGHT))
 
         # Lumber Cards Number
-        lumber_number = CardsPrompt.font_numbers.render(str(player.cards["Wood"]), True, BROWN)
+        lumber_number = CardsPrompt.font_numbers.render(str(player.cards["Lumber"]), True, BROWN)
         window.blit(lumber_number, (CARDS_POSITION_X + 15 + CARDS_SPACING_HELPER, CARDS_POSITION_Y + CARD_HEIGHT + 16))
 
         # Draw Ore Card
@@ -71,7 +71,7 @@ class CardsPrompt:
         window.blit(grain_text, (CARDS_POSITION_X + 3 * CARDS_SPACING_HELPER, CARDS_POSITION_Y + CARD_HEIGHT))
 
         # Grain Cards Number
-        grain_number = CardsPrompt.font_numbers.render(str(player.cards["Wheat"]), True, BROWN)
+        grain_number = CardsPrompt.font_numbers.render(str(player.cards["Grain"]), True, BROWN)
         window.blit(grain_number, (CARDS_POSITION_X + 15 + 3 *CARDS_SPACING_HELPER, CARDS_POSITION_Y + CARD_HEIGHT + 16))
 
         # Draw Wool Card
@@ -84,7 +84,7 @@ class CardsPrompt:
         window.blit(wool_text, (CARDS_POSITION_X + 4 * CARDS_SPACING_HELPER, CARDS_POSITION_Y + CARD_HEIGHT))
 
         # Wool Cards Number
-        wool_number = CardsPrompt.font_numbers.render(str(player.cards["Sheep"]), True, BROWN)
+        wool_number = CardsPrompt.font_numbers.render(str(player.cards["Wool"]), True, BROWN)
         window.blit(wool_number, (CARDS_POSITION_X + 15 + 4 * CARDS_SPACING_HELPER, CARDS_POSITION_Y + CARD_HEIGHT + 16))
 
 cards_prompt = CardsPrompt()
