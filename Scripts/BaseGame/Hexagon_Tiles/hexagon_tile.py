@@ -17,10 +17,10 @@ class HexagonTile:
     center_points = []
     resourcesArray = []
     resources = [
-            ["Wood", WOOD_SPRITE],
-            ["Wheat", WHEAT_SPRITE],
-            ["Sheep", SHEEP_SPRITE],
-            ["Brick", BRICK_SPRITE],
+            ["Lumber", WOOD_SPRITE],
+            ["Grain", WHEAT_SPRITE],
+            ["Wool", SHEEP_SPRITE],
+            ["Bricks", BRICK_SPRITE],
             ["Ore", STONE_SPRITE]
         ]
     hexagon_numbers = [2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12, -1]
@@ -34,8 +34,9 @@ class HexagonTile:
         self.vertices = []
         self.edges = []
 
-    def create_hexagon(window, x = HEXAGON_X_CENTER, y = HEXAGON_Y_CENTER, image = None):
+    def create_hexagon(window, x = HEXAGON_X_CENTER, y = HEXAGON_Y_CENTER, image = None, number = 0):
         hexagon = HexagonTile()
+        hexagon.number = number
         HexagonTile.hexagons.append(hexagon)
 
         vertices = [
@@ -165,11 +166,21 @@ class HexagonTile:
                         image = HexagonTile.resources[i][1]
                         break
 
-                HexagonTile.create_hexagon(window, x, y, image)
+                HexagonTile.create_hexagon(window, x, y, image, number)
                 HexagonTile.add_hexagon_number(window, x, y, number)
             else:
-                HexagonTile.create_hexagon(window, x, y, DESERT_SPRITE)
+                HexagonTile.create_hexagon(window, x, y, DESERT_SPRITE, number)
             x += HEXAGON_WIDTH * 1.1
+
+    def draw_sea_hexagon(window, x, y):
+        pts = []
+        for i in range(6):
+            x = x + 370 * math.cos(math.pi * 2 * i / 6)
+            y = y + 370 * math.sin(math.pi * 2 * i / 6)
+            pts.append([int(x), int(y)])
+
+        pygame.draw.polygon(window, LIGHT_CYAN_BLUE, pts)
+        pygame.draw.polygon(window, BLACK, pts, 4)
 
     def create_hexagon_grid(window, x, y, first_time = True):
         if first_time:
@@ -200,6 +211,11 @@ class HexagonTile:
         x = HEXAGON_X_AXIS
         y += HEXAGON_HEIGHT
         HexagonTile.create_row(window, x, y, HexagonTile.hexagon_numbers, 3)
+
+        # TODO: Add adjacency to the nodes
+        #for hexagon in HexagonTile.hexagons:
+
+            
 
         HexagonTile.resourcesArray = resources_copy.copy()
         HexagonTile.hexagon_numbers = hexagon_numbers_copy.copy()

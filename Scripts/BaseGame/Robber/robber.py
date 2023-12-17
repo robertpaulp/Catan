@@ -6,10 +6,12 @@ import sys
 import numpy as np
 
 sys.path.append("../../")
-sys.path.append("../Hexagon Tiles/")
+sys.path.append("../Hexagon_Tiles/")
 
 from constants import *
-from hexagon_tile import HexagonTile as hexagon
+from BaseGame.Hexagon_Tiles.hexagon_tile import HexagonTile as hexagon
+from BaseGame.Error.error import Error
+
 
 # --- Robber class ---
 class Robber:
@@ -54,7 +56,7 @@ class Robber:
         window.blit(image, (robber_pos[0] - HEXAGON_SIDE/1.8, robber_pos[1] - HEXAGON_SIDE / 2))
         
 
-    def move_robber_event(window, running):
+    def move_robber_event(window, running, dice_btn):
         moved_robber = False
 
         while not moved_robber:
@@ -65,6 +67,9 @@ class Robber:
 
                 elif inner_event.type == pygame.MOUSEBUTTONDOWN:
                     mouse_pos = pygame.mouse.get_pos()
+
+                    if dice_btn.collidepoint(mouse_pos):
+                        Error.error_popup_robber(window)
 
                     for center_point in hexagon.center_points:
                         range_x = [center_point[0] - HEXAGON_SIDE / 3, center_point[0] + HEXAGON_SIDE / 3]
