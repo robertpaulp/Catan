@@ -12,10 +12,17 @@ class CardsPrompt:
 
     def show_cards(self, window, player):
         # Draw prompt rectangle
-        pygame.draw.rect(window, player.color, CardsPrompt.cards_prompt_rect, 10)
+        pygame.draw.rect(window, WHITE, (CARDS_PROMPT_X_AXIS - 4, CARDS_PROMPT_Y_AXIS - 4, CARDS_PROMPT_WIDTH + 4, CARDS_PROMPT_HEIGHT + 14))
+        surface = pygame.Surface((CARDS_PROMPT_WIDTH + 4, CARDS_PROMPT_HEIGHT + 14))
+        image = pygame.image.load(SIGN_SPRITE)
+        image = pygame.transform.scale(image, (CARDS_PROMPT_WIDTH + 4, CARDS_PROMPT_HEIGHT + 20))
         pygame.draw.rect(window, BRASS, (CARDS_PROMPT_X_AXIS - 4, CARDS_PROMPT_Y_AXIS - 4, CARDS_PROMPT_WIDTH + 4, 35))
-        pygame.draw.rect(window, BROWN, (CARDS_PROMPT_X_AXIS - 4, CARDS_PROMPT_Y_AXIS - 4, CARDS_PROMPT_WIDTH + 4, 35), 4)
-        pygame.draw.rect(window, BROWN, (CARDS_PROMPT_X_AXIS - 4, CARDS_PROMPT_Y_AXIS - 4, CARDS_PROMPT_WIDTH + 4, CARDS_PROMPT_HEIGHT + 14), 4)
+        window.blit(image, (CARDS_PROMPT_X_AXIS - 4, CARDS_PROMPT_Y_AXIS - 10))
+        pygame.draw.rect(window, player.color, (CARDS_PROMPT_X_AXIS + 23, CARDS_PROMPT_Y_AXIS + 25, CARDS_PROMPT_WIDTH - 47, 5), 4)
+        # pygame.draw.rect(window, player.color, CardsPrompt.cards_prompt_rect, 10)
+        # pygame.draw.rect(window, WHITE, (CARDS_PROMPT_X_AXIS - 4, CARDS_PROMPT_Y_AXIS - 4, CARDS_PROMPT_WIDTH + 4, 35))
+        # pygame.draw.rect(window, BROWN, (CARDS_PROMPT_X_AXIS - 4, CARDS_PROMPT_Y_AXIS - 4, CARDS_PROMPT_WIDTH + 4, 35), 4)
+        # pygame.draw.rect(window, BROWN, (CARDS_PROMPT_X_AXIS - 4, CARDS_PROMPT_Y_AXIS - 4, CARDS_PROMPT_WIDTH + 4, CARDS_PROMPT_HEIGHT + 14), 4)
 
         # Write prompt text
         text = CardsPrompt.font.render(player.name + " Resources", True, BROWN)

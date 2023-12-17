@@ -28,6 +28,9 @@ class Board:
 
     def redraw_board(window, robber_pos, roll, current_player=players[0], GAME_START = False):
         window.fill(BRASS)
+        background = pygame.image.load(BACKGROUND_SPRITE)
+        background = pygame.transform.scale(background, (SCREEN_WIDTH, SCREEN_HEIGHT))
+        window.blit(background, (0, 0))
 
         dice_btn = Dice.roll_dice_btn(window)
 

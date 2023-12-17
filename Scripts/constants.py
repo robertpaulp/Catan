@@ -1,8 +1,8 @@
 from win32api import GetSystemMetrics
 
 # Screen Constants
-SCREEN_WIDTH = GetSystemMetrics(0) - 60
-SCREEN_HEIGHT = GetSystemMetrics(1) - 80
+SCREEN_WIDTH = 1476
+SCREEN_HEIGHT = 784
 
 # Color Constants
 WHITE = (255, 255, 255)
@@ -81,7 +81,8 @@ ERROR_ALREADY_ROLLED_SPRITE = "../Assets/Sprites/error_already_rolled.png"
 POPUP_STARTING_ROUND_SPRITE = "../Assets/Sprites/popup_starting_round.png"
 POPUP_ROUND_NUMBER_SPRITE = "../Assets/Sprites/popup_round_number.png"
 # Background
-BACKGROUND_SPRITE = "../Assets/Sprites/background2.jpg"
+SIGN_SPRITE = "../Assets/Sprites/sign_sprite.png"
+BACKGROUND_SPRITE = "../Assets/Sprites/background_paper.jpg"
 TRADE_TABLE_SPRITE = "../Assets/Sprites/trade_table.png"
 TRADE_BUTTON_BRICKS_SPRITE = "../Assets/Sprites/trade_button_bricks.png"
 TRADE_BUTTON_LUMBER_SPRITE = "../Assets/Sprites/trade_button_lumber.png"

@@ -11,6 +11,7 @@ sys.path.append("../Hexagon_Tiles/")
 from constants import *
 from BaseGame.Hexagon_Tiles.hexagon_tile import HexagonTile as hexagon
 from BaseGame.Error.error import Error
+from BaseGame.Player.player import Player, players
 
 
 # --- Robber class ---
@@ -19,7 +20,17 @@ class Robber:
     current_pos = (0,0)
 
     def delete_cards():
-        pass
+        for player in players:
+            if player.resource_cards >= 7:
+                numberToDelete = math.floor(player.resource_cards / 2)
+                player.resource_cards -= numberToDelete
+                for card in player.cards:
+                    if numberToDelete == 0:
+                        break
+                    if player.cards[card] > 0:
+                        player.cards[card] -= 1
+                        numberToDelete -= 1
+
 
     def get_image():
         image = pygame.image.load(ROBBER_SPRITE)
@@ -35,10 +46,6 @@ class Robber:
         if (range_x[0] <= mouse_pos[0] <= range_x[1] and range_y[0] <= mouse_pos[1] <= range_y[1]):
             return False
         return True
-
-        # if mouse_pos == robber_pos:
-        #     return False
-        # return True
 
     def create_robber(window):
         index = hexagon.get_index("Desert")
@@ -81,4 +88,6 @@ class Robber:
                                 robber_pos = center_point
                                 moved_robber = True
                                 break
-        return robber_pos 
+
+        Robber.delete_cards()
+        return robber_pos
