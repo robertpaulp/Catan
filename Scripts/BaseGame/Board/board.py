@@ -23,8 +23,6 @@ from BaseGame.CardsPrompt.cards_prompt import cards_prompt, CardsPrompt
 
 # --- Board class ---
 class Board:
-    # TODO: Create a class called Board
-    # Incorporate all the classes and create the board
 
     def redraw_board(window, robber_pos, roll, current_player=players[0], GAME_START = False):
         window.fill(BRASS)

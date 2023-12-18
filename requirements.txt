@@ -3,5 +3,3 @@ numpy
 math
 random
 sys
-threading
-time

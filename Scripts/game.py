@@ -5,11 +5,6 @@ import time
 import math
 import random
 import sys
-"""
-sys.path.append("./BaseGame/Board/")
-sys.path.append("./BaseGame/Hexagon Tiles/")
-sys.path.append("./BaseGame/Robber/")
-sys.path.append("./BaseGame/Dice/")"""
 from BaseGame.Buttons.buttons import Button, Trade, trade, TradePrompt, trade_prompt
 from BaseGame.Board.board import Board
 from BaseGame.CardsPrompt.cards_prompt import cards_prompt, CardsPrompt
@@ -120,7 +115,7 @@ class Game:
                 # Hover over Settlement button
                 pos = pygame.mouse.get_pos()
                 if settlement_button.rect.collidepoint(pos):
-                    PopUp.show_settlement_info(window)
+                    Button.show_settlement_info(window)
                     settlement_button.hover = True
                 if settlement_button.rect.collidepoint(pos) == False and settlement_button.hover == True:
                     settlement_button.hover = False
@@ -130,7 +125,7 @@ class Game:
 
                 # Hover over Road button
                 if road_button.rect.collidepoint(pos):
-                    PopUp.show_road_info(window)
+                    Button.show_road_info(window)
                     road_button.hover = True
                 if road_button.rect.collidepoint(pos) == False and road_button.hover == True:
                     road_button.hover = False
