@@ -14,18 +14,6 @@ class Button:
         self.clicked_up = False
         self.card = " "
         self.hover = False
-    """
-    def hover_settlement(self, window, robber_pos, roll, current_player, GAME_START):
-        #get mouse position
-        pos = pygame.mouse.get_pos()
-        if self.rect.collidepoint(pos):
-            image = pygame.image.load(PAPIRUS_SETTLEMENT_SPRITE)
-            image = pygame.transform.scale_by(image, 1)
-            window.blit(image, (SCREEN_WIDTH - 755, SCREEN_HEIGHT - 300))
-        while self.rect.collidepoint(pos):
-            pos = pygame.mouse.get_pos()
-        Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
-        """
 
     def draw(self, surface):
         action = False
@@ -70,14 +58,20 @@ class Button:
         button_img = pygame.image.load(PRESSED_ROAD_BUTTON_SPRITE).convert_alpha()
         button = Button("road", SCREEN_WIDTH - 570, SCREEN_HEIGHT - 70, button_img, 1)
         window.blit(button_img, (button.rect.x, button.rect.y))
-    
-    """
+
+    # Hovering feature
     @staticmethod
-    def create_special_card_button():
-        button_img = pygame.image.load(SPECIAL_CARD_BUTTON_SPRITE).convert_alpha()
-        button = Button("special_card", SCREEN_WIDTH - 390, SCREEN_HEIGHT - 100, button_img, 1)
-        return button
-    """
+    def show_settlement_info(window):
+        image = pygame.image.load(PAPIRUS_SETTLEMENT_SPRITE)
+        image = pygame.transform.scale_by(image, 1)
+        window.blit(image, (SCREEN_WIDTH - 753, SCREEN_HEIGHT - 190))
+
+    @staticmethod
+    def show_road_info(window):
+        image = pygame.image.load(PAPIRUS_ROAD_SPRITE)
+        image = pygame.transform.scale_by(image, 1)
+        window.blit(image, (SCREEN_WIDTH - 573, SCREEN_HEIGHT - 190))
+
     @staticmethod
     def create_end_turn_button():
         button_img = pygame.image.load(END_TURN_BUTTON_SPRITE).convert_alpha()
@@ -294,7 +288,6 @@ class TradePrompt:
 
 
         # Draw Wool Card
-        #pygame.draw.rect(window, WOOL_COLOR, (TRADE_POSITION_X_RIGHT + 4 * CARDS_SPACING_HELPER, TRADE_POSITION_Y_DOWN, CARD_WIDTH, CARD_HEIGHT), 0)
         image = pygame.image.load(SMALL_BUTTON_SPRITE)
         image = pygame.transform.scale_by(image, 1)
         window.blit(image, (TRADE_POSITION_X_RIGHT + 4 * CARDS_SPACING_HELPER - 8, TRADE_POSITION_Y_DOWN - 7))
