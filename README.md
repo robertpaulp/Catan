@@ -94,6 +94,9 @@ total cards and win points display.
 - [x] Implemented the "Rounds" feature
 
 -> 🐝 Trifu
-- [x] Implemented Settlement class & Event Handler
-- [x] Implemented Road class & Event Handler
-- [x] Implemented Card system# Catan
+- [x] Implemented Settlement class
+- [x] Implemented Road class
+- [x] Implemented Card system
+- [x] Implemented Event Handlers
+- [x] Sketched initial Error behaviours 
+- [x] Refactored code; added base class constructors
