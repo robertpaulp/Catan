@@ -48,11 +48,13 @@ class Game:
         dice_first_dsp = True
         running = True
         roll = [0, 0]
-        robber_pos = (-1, -1)
         ROUND_NUMBER = 0
 
         # --- Background ---
         window.fill(BRASS)
+        background = pygame.image.load(BACKGROUND_SPRITE)
+        background = pygame.transform.scale(background, (SCREEN_WIDTH, SCREEN_HEIGHT))
+        window.blit(background, (0, 0))
         """
         image = pygame.image.load(BACKGROUND_SPRITE)
         image = pygame.transform.scale_by(image, 1.6)
@@ -68,6 +70,7 @@ class Game:
         #print(HexagonTile.center_points)
 
         # --- Robber ---
+        robber_pos = HexagonTile.center_points[HexagonTile.get_index("Desert")]
         Robber.create_robber(window)
 
         # --- Settlement Surfaces ---
@@ -295,17 +298,7 @@ class Game:
                         special_card_button.clicked = True
                     """
 
-                    for center_point in HexagonTile.center_points:
-                        if center_point[0] - HEXAGON_SIDE / 3 <= mouse_pos[0] <= center_point[0] + HEXAGON_SIDE / 3:
-                            if center_point[1] - HEXAGON_SIDE / 3 <= mouse_pos[1] <= \
-                                    center_point[1] + HEXAGON_SIDE / 3:
-                                print("Trying")
-                                if Robber.check_move(mouse_pos):
-                                    print("Moving")
-                                    Robber.move_robber(window, center_point)
-                            # base.HexagonTile.create_hexagon_grid(window, c.HEXAGON_X_AXIS, c.HEXAGON_Y_AXIS, False)
-                            # TODO: Move robber
-                            # i moved it somewhere else
+                    
 
                     # Prepare settlement event
                     SettlementEventHandler.press(window)

@@ -84,7 +84,7 @@ POPUP_STARTING_ROUND_SPRITE = "../Assets/Sprites/popup_starting_round.png"
 POPUP_ROUND_NUMBER_SPRITE = "../Assets/Sprites/popup_round_number.png"
 # Background
 BACKGROUND_SPRITE = "../Assets/Sprites/background2.jpg"
-TRADE_TABLE_SPRITE = "../Assets/Sprites/scroll1.png"
+TRADE_TABLE_SPRITE = "../Assets/Sprites/trade_table.png"
 TRADE_BUTTON_BRICKS_SPRITE = "../Assets/Sprites/trade_button_bricks.png"
 TRADE_BUTTON_LUMBER_SPRITE = "../Assets/Sprites/trade_button_lumber.png"
 TRADE_BUTTON_ORE_SPRITE = "../Assets/Sprites/trade_button_ore.png"

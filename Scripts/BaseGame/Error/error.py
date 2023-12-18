@@ -8,6 +8,9 @@ from threading import Event
 from constants import *
 
 class Error:
+
+    waiting_time = 1
+
     @staticmethod
     def error_popup_resources(window):
         err_image = pygame.image.load(ERROR_RESOURCE_SPRITE)
@@ -15,7 +18,7 @@ class Error:
         window.blit(err_image, (0, 0))
         pygame.display.update()
 
-        Event().wait(2)
+        Event().wait(Error.waiting_time)
 
     @staticmethod
     def error_popup_place_roads(window):
@@ -24,7 +27,7 @@ class Error:
         window.blit(err_image, (0, 0))
         pygame.display.update()
 
-        Event().wait(2)
+        Event().wait(Error.waiting_time)
 
     @staticmethod
     def error_popup_place_settlements(window):
@@ -33,7 +36,7 @@ class Error:
         window.blit(err_image, (0, 0))
         pygame.display.update()
 
-        Event().wait(2)
+        Event().wait(Error.waiting_time)
 
     @staticmethod
     def error_popup_place_settlements_roads(window):
@@ -42,7 +45,7 @@ class Error:
         window.blit(err_image, (0, 0))
         pygame.display.update()
 
-        Event().wait(2)
+        Event().wait(Error.waiting_time)
 
     @staticmethod
     def error_popup_roll_dice(window):
@@ -51,7 +54,7 @@ class Error:
         window.blit(err_image, (0, 0))
         pygame.display.update()
 
-        Event().wait(2)
+        Event().wait(Error.waiting_time)
 
     @staticmethod
     def error_popup_already_rolled(window):
@@ -60,7 +63,7 @@ class Error:
         window.blit(err_image, (0, 0))
         pygame.display.update()
 
-        Event().wait(2)
+        Event().wait(Error.waiting_time)
 
     @staticmethod
     def error_popup_robber(window):
@@ -69,6 +72,6 @@ class Error:
         window.blit(err_image, (0, 0))
         pygame.display.update()
 
-        Event().wait(2)
+        Event().wait(Error.waiting_time)
         pygame.draw.rect(window, BRASS, (0, 0, 405, 105))
         pygame.display.update()
