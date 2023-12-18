@@ -73,5 +73,9 @@ class Error:
         pygame.display.update()
 
         Event().wait(Error.waiting_time)
-        pygame.draw.rect(window, BRASS, (0, 0, 405, 105))
+        """
+        image = pygame.image.load(BACKGROUND_SMALL_SPRITE)
+        image = pygame.transform.scale_by(image, 1)
+        window.blit(image, (0, 0))
+        """
         pygame.display.update()

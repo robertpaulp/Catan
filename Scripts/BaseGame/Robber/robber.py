@@ -63,7 +63,7 @@ class Robber:
         window.blit(image, (robber_pos[0] - HEXAGON_SIDE/1.8, robber_pos[1] - HEXAGON_SIDE / 2))
         
 
-    def move_robber_event(window, running, dice_btn):
+    def move_robber_event(window, running, dice_btn, settlement_button, road_button, end_turn_button):
         moved_robber = False
 
         while not moved_robber:
@@ -75,7 +75,7 @@ class Robber:
                 elif inner_event.type == pygame.MOUSEBUTTONDOWN:
                     mouse_pos = pygame.mouse.get_pos()
 
-                    if dice_btn.collidepoint(mouse_pos):
+                    if dice_btn.collidepoint(mouse_pos) or settlement_button.rect.collidepoint(mouse_pos) or road_button.rect.collidepoint(mouse_pos) or end_turn_button.rect.collidepoint(mouse_pos):
                         Error.error_popup_robber(window)
 
                     for center_point in hexagon.center_points:

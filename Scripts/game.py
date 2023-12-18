@@ -23,7 +23,6 @@ from BaseGame.Settlements.settlement import Settlement
 from BaseGame.Settlements.settlement_event import SettlementEventHandler
 from BaseGame.Error.error import Error
 from BaseGame.PopUp.pop_up import PopUp
-#from BaseGame.Trade.trade import Trade, trade
 from constants import *
 
 class Game:
@@ -42,8 +41,7 @@ class Game:
     # --- Main loop ---
     @staticmethod
     def main(window):
-        print(GetSystemMetrics(0))
-        print(GetSystemMetrics(1))
+
         # Game loop variables
         dice_first_dsp = True
         running = True
@@ -55,19 +53,11 @@ class Game:
         background = pygame.image.load(BACKGROUND_SPRITE)
         background = pygame.transform.scale(background, (SCREEN_WIDTH, SCREEN_HEIGHT))
         window.blit(background, (0, 0))
-        """
-        image = pygame.image.load(BACKGROUND_SPRITE)
-        image = pygame.transform.scale_by(image, 1.6)
-        window.blit(image, (0, 0))
-        """
     
         HexagonTile.draw_sea_hexagon(window, SCREEN_WIDTH / 2 - HEXAGON_WIDTH / 2 - HEXAGON_WIDTH - 50, HEXAGON_Y_AXIS - 55)
 
         # --- Hexagon grid ---
         HexagonTile.create_hexagon_grid(window, HEXAGON_X_AXIS, HEXAGON_Y_AXIS)
-
-        #print(HexagonTile.resourcesArray)
-        #print(HexagonTile.center_points)
 
         # --- Robber ---
         robber_pos = HexagonTile.center_points[HexagonTile.get_index("Desert")]
@@ -78,23 +68,14 @@ class Game:
         
         # --- Buttons ---
         road_button = Button.create_road_button()
-        #road_button.draw(window)
         settlement_button = Button.create_settlement_button()
-        #settlement_button.draw(window)
         end_turn_button = Button.create_end_turn_button()
-        #special_card_button = Button.create_special_card_button()
-        #special_card_button.draw(window)
 
         # --- Settlement Surfaces ---
         Settlement.prepare_board_surfaces(window, HexagonTile.distinct_vertices, HexagonTile.hexagons)
 
-        # --- Roads ---
-
         # --- Player ---
         current_player = players[0]  # Current player
-        #for card in current_player.cards:
-         #   print(card)
-                
 
         Player.draw_players(window)
 
@@ -115,8 +96,13 @@ class Game:
         END_START_ROUND = False
 
         while running:
-            # TODO trade mechanic
-            GAME_START = False  # TODO dont pass as parameter to settlement_place!
+            GAME_START = False
+
+            # Winning the game Event
+            for player in players:
+                if player.win_points >= WIN_SCORE:
+                    PopUp.win(window, player)
+                    pygame.quit()
 
             if END_START_ROUND is False:
                 for player in players:
@@ -198,7 +184,6 @@ class Game:
                     running = False
 
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-                    #print("running")
                     if dice_btn.collidepoint(mouse_pos) and trade_prompt.showing is False:
                         if GAME_START:
                             # << Place two settlements and two roads >> error popups
@@ -221,43 +206,29 @@ class Game:
                             elif(len(current_player.settlements) < 2):
                                 Error.error_popup_place_settlements(window)
                                 Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
-                                
+
+                        if GAME_START is False and current_player.rolled == True:
+                            Error.error_popup_already_rolled(window)
+                            Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
+
                         if GAME_START is False and current_player.rolled == False:
                             roll = [Dice.dice_roll(), Dice.dice_roll()]
                             current_player.rolled = True
 
                             # Acquire resources
                             for player in players:
-                                print('aquiring')
                                 player.acquire_cards(sum(roll))
                             Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
 
                             if sum(roll) == 7:
-                                print("Robber")
                                 Dice.dices(window, roll)
                                 pygame.display.update()
 
                                 # --- Move robber ---
-                                robber_pos = Robber.move_robber_event(window, running, dice_btn)
+                                robber_pos = Robber.move_robber_event(window, running, dice_btn, settlement_button, road_button, end_turn_button)
 
                                 # --- Update board ---
                                 Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
-
-                            """
-                            else:
-
-                                # Possibly switch to next round
-                                if(players.index(current_player) + 1) % len(players) == 0:
-                                    ROUND_NUMBER = ROUND_NUMBER + 1
-                                    PopUp.round_number_popup(window, ROUND_NUMBER)
-                                    Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
-                            
-                                # Switch to next player
-                                current_player = players[(players.index(current_player) + 1) % len(players)]
-                                # time.sleep(1)
-                                Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
-                                # TODO switch to start of turn state
-                                """
 
                     # End turn button is clicked down
                     if end_turn_button.rect.collidepoint(mouse_pos) and GAME_START is False:
@@ -290,16 +261,6 @@ class Game:
                                     trade_prompt.trade_2_buttons[button_name].clicked = True
                                     TradePrompt.show_pressed_trade_2_button(window, button_name)
 
-
-                    """
-                    # Special card button is clicked down
-                    if special_card_button.rect.collidepoint(mouse_pos):
-                        print('buy special_card')
-                        special_card_button.clicked = True
-                    """
-
-                    
-
                     # Prepare settlement event
                     SettlementEventHandler.press(window)
 
@@ -323,21 +284,10 @@ class Game:
                     # Place settlement event
                     SettlementEventHandler.place(window, robber_pos, roll, current_player, GAME_START, settlement_button)
 
-                    # TODO: Implement special cards
-                    """
-                    if(special_card_button.clicked):
-                        if SpecialCard.placement_is_possible(player, GAME_START) is False:
-                            Error.error_popup_resources(window)
-                            Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
-                        else:
-                            special_card_button.clicked_up = True
-                            special_card_button.clicked = False
-                    """
-
                     # Road button is clicked up
                     if road_button.rect.collidepoint(pygame.mouse.get_pos()):
                         if(road_button.clicked):
-                            # Checck if you have the resources
+                            # Check if you have the resources
                             if Road.placement_is_possible(current_player, GAME_START) is False:
                                 Error.error_popup_resources(window)
                                 Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
@@ -348,22 +298,16 @@ class Game:
                             
                     if(road_button.clicked_up is True or GAME_START is True):
                         # If placing the road was unsuccessful, remove it from the list
-                        if RoadEventHandler.place(window, event, current_player.current_road, current_player, GAME_START, robber_pos, roll) == -1:
-                            print('didnt work out')
-                        else:
+                        if RoadEventHandler.place(window, event, current_player.current_road, current_player, GAME_START, robber_pos, roll) != -1:
                             road_button.clicked_up = False
-                            # If placing the road was successful, append it to the main list of roads as well
-                            #roads.append(current_player.current_road)
 
                     # Trade button is clicked up
                     for trade_button in current_player.trade_button:
                         if trade_button.rect.collidepoint(pygame.mouse.get_pos()):
                             if(trade_button.clicked):
-                                print("trade")
                                 trade_prompt.current_trade_button = trade_button
                                 trade_prompt.show_trade_prompt(window, current_player, trade_button)
                                 trade_prompt.showing = True
-                                #trade_button.clicked = False
                                 
                     # Trade bank button is clicked up
                     if(trade_prompt.showing):
@@ -392,15 +336,11 @@ class Game:
                             # Switch to next player
                             current_player = players[(players.index(current_player) + 1) % len(players)]
                             current_player.rolled = False
-                            # time.sleep(1)
                             Board.redraw_board(window, robber_pos, roll, current_player, GAME_START)
 
                 elif event.type == pygame.MOUSEMOTION:
                     # Dragging road event
                     RoadEventHandler.drag(window, pygame.mouse.get_pos(), current_player.current_road)
-
-                # Hover settlement event TODO
-                # SettlementEventHandler.hover_settlement(window, roll)
 
             Dice.dices(window, roll)
 
