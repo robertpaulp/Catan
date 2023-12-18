@@ -4,6 +4,9 @@ from win32api import GetSystemMetrics
 SCREEN_WIDTH = 1476
 SCREEN_HEIGHT = 784
 
+# Choose the score for winning!
+WIN_SCORE = 7
+
 # Color Constants
 WHITE = (255, 255, 255)
 TRANSPARENT_WHITE = (255, 255, 255, 70)
@@ -13,6 +16,8 @@ BEIGE = (245, 245, 220)
 TRANSPARENT = (0, 0, 0, 0)
 SANDY = (228, 213, 183)
 BRASS = (225, 193, 110)
+YELLOW = (255, 202, 24)
+GRAY = (221, 221, 221)
 BRASS2 = (211, 148, 68)
 BRONZE = (205, 127, 50)
 TRANSPARENT = (0, 0, 0, 0)
@@ -80,10 +85,13 @@ ERROR_ALREADY_ROLLED_SPRITE = "../Assets/Sprites/error_already_rolled.png"
 # Pop up sprites
 POPUP_STARTING_ROUND_SPRITE = "../Assets/Sprites/popup_starting_round.png"
 POPUP_ROUND_NUMBER_SPRITE = "../Assets/Sprites/popup_round_number.png"
+POPUP_WIN_SPRITE = "../Assets/Sprites/win.png"
+
 # Background
 SIGN_SPRITE = "../Assets/Sprites/sign_sprite.png"
 BACKGROUND_SPRITE = "../Assets/Sprites/background_paper.jpg"
-TRADE_TABLE_SPRITE = "../Assets/Sprites/trade_table.png"
+SCROLL_SPRITE = "../Assets/Sprites/scroll1.png"
+BANK_ICON_SPRITE = "../Assets/Sprites/bank_icon.png"
 TRADE_BUTTON_BRICKS_SPRITE = "../Assets/Sprites/trade_button_bricks.png"
 TRADE_BUTTON_LUMBER_SPRITE = "../Assets/Sprites/trade_button_lumber.png"
 TRADE_BUTTON_ORE_SPRITE = "../Assets/Sprites/trade_button_ore.png"
@@ -173,7 +181,7 @@ TRADE_PROMPT_Y_AXIS = 150
 
 TRADE_BUTTON_WIDTH = 220
 TRADE_BUTTON_HEIGHT = 60
-TRADE_BUTTON_X_AXIS = 50
+TRADE_BUTTON_X_AXIS = 120
 TRADE_BUTTON_Y_AXIS = 260
 
 # Menu Constants

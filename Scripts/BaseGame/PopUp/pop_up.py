@@ -28,7 +28,6 @@ class PopUp:
 
     @staticmethod
     def round_number_popup(window, ROUND_NUMBER):
-        #time.sleep(1)
         popup_image = pygame.image.load(POPUP_ROUND_NUMBER_SPRITE)
         popup_image = pygame.transform.scale(popup_image, (383.4, 234))
         window.blit(popup_image, (500, 250))
@@ -50,3 +49,15 @@ class PopUp:
         image = pygame.image.load(PAPIRUS_ROAD_SPRITE)
         image = pygame.transform.scale_by(image, 1)
         window.blit(image, (SCREEN_WIDTH - 573, SCREEN_HEIGHT - 190))
+
+    @staticmethod
+    def win(window, winner):
+        popup_image = pygame.image.load(POPUP_WIN_SPRITE)
+        popup_image = pygame.transform.scale_by(popup_image, 1)
+        window.blit(popup_image, (520, 150))
+        font = pygame.freetype.SysFont('Segoe UI Black', 40)
+        name_surface = font.render(winner.name + " won!", YELLOW)
+        window.blit(name_surface[0], (570, 400))
+        pygame.display.update()
+
+        Event().wait(5)

@@ -133,23 +133,19 @@ class Trade:
     medium_font = pygame.font.SysFont('Segoe UI Black', 18)
 
     def show_trade(self, window, player):
-        # Draw prompt rectangle
-        pygame.draw.rect(window, BRASS, Trade.trade_rect)
-        pygame.draw.rect(window, BROWN, (TRADE_PROMPT_X_AXIS - 4, TRADE_PROMPT_Y_AXIS - 4, TRADE_PROMPT_WIDTH + 4, TRADE_PROMPT_HEIGHT + 4), 4)
-
-        """
-        image = pygame.image.load(TRADE_TABLE_SPRITE)
-        image = pygame.transform.scale(image, (TRADE_PROMPT_WIDTH  - 10, TRADE_PROMPT_HEIGHT - 30))
-        window.blit(image, (TRADE_PROMPT_X_AXIS, TRADE_PROMPT_Y_AXIS))
-        """
+        # Draw prompt scroll
+        image = pygame.image.load(SCROLL_SPRITE)
+        image = pygame.transform.scale_by(image, 1)
+        window.blit(image, (TRADE_PROMPT_X_AXIS - 120, TRADE_PROMPT_Y_AXIS - 50))
         
-        # Write text
-        text = Trade.font.render("TRADE THE BANK", True, BROWN)
-        text_rect = pygame.Rect(TRADE_PROMPT_X_AXIS + 30, TRADE_PROMPT_Y_AXIS + 10, TRADE_PROMPT_WIDTH, TRADE_PROMPT_HEIGHT)
-        window.blit(text, text_rect)
+        # Draw bank icon
+        image = pygame.image.load(BANK_ICON_SPRITE)
+        image = pygame.transform.scale_by(image, 0.85)
+        window.blit(image, (TRADE_PROMPT_X_AXIS + 135, TRADE_PROMPT_Y_AXIS + 65))
 
-        text = Trade.font2.render(player.name + " possible trades : ", True, BROWN)
-        text_rect = pygame.Rect(TRADE_PROMPT_X_AXIS + 10, TRADE_PROMPT_Y_AXIS + 70, TRADE_PROMPT_WIDTH, TRADE_PROMPT_HEIGHT)
+        # Write text
+        text = Trade.medium_font.render("TRADE", True, GRAY)
+        text_rect = pygame.Rect(TRADE_PROMPT_X_AXIS + 128, TRADE_PROMPT_Y_AXIS + 110, TRADE_PROMPT_WIDTH, TRADE_PROMPT_HEIGHT)
         window.blit(text, text_rect)
 
         player.trade_counter = 0
@@ -169,9 +165,9 @@ class Trade:
                     image = pygame.image.load(TRADE_BUTTON_WOOL_SPRITE)
 
                 image = pygame.transform.scale_by(image, 1)
-                window.blit(image, (TRADE_BUTTON_X_AXIS + 35, TRADE_BUTTON_Y_AXIS + player.trade_counter * (TRADE_BUTTON_HEIGHT + 25)))
+                window.blit(image, (TRADE_BUTTON_X_AXIS, TRADE_BUTTON_Y_AXIS + 30 + player.trade_counter * (TRADE_BUTTON_HEIGHT)))
 
-                new_button = Button(card, TRADE_BUTTON_X_AXIS + 35, TRADE_BUTTON_Y_AXIS + player.trade_counter * (TRADE_BUTTON_HEIGHT + 25), image, 1)
+                new_button = Button(card, TRADE_BUTTON_X_AXIS, TRADE_BUTTON_Y_AXIS + 30 + player.trade_counter * (TRADE_BUTTON_HEIGHT), image, 1)
                 new_button.card = card
                 player.trade_button.append(new_button)
 
@@ -241,7 +237,6 @@ class TradePrompt:
 
     def show_trade_prompt(self, window, player, trade_button):
         # Draw prompt rectangle
-        # pygame.draw.rect(window, BRASS, TradePrompt.trade_prompt_rect)
 
         image = pygame.image.load(WOOD_TABLE_DARK_SPRITE)
         image = pygame.transform.scale_by(image, 1.2)
