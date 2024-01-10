@@ -20,6 +20,8 @@ class Options:
         window.blit(background, (0, 0))
 
         # --- Buttons ---
+        music_btn_pos = (c.MUSIC_BTN_X_AXIS, c.MUSIC_BTN_Y_AXIS)
+        music_btn = menu.Menu.button(window, c.MUSIC_BTN_X_AXIS, c.MUSIC_BTN_Y_AXIS, c.MUSIC_TEXT, c.BLACK, c.TRANSPARENT_WHITE, c.MUSIC_SIZE, c.FONT_PATH)
 
         # Back Button
         back_btn_pos = (c.BACK_BTN_X_AXIS, c.BACK_BTN_Y_AXIS)
@@ -36,6 +38,13 @@ class Options:
                     if back_btn.get_rect(topleft=back_btn_pos).collidepoint(mouse_pos):
                         menu.Menu.main()
                         exit()
+                    elif music_btn.get_rect(topleft=music_btn_pos).collidepoint(mouse_pos):
+                        if c.MUSIC:
+                            c.MUSIC = False
+                            pygame.mixer.music.pause()
+                        else:
+                            c.MUSIC = True
+                            pygame.mixer.music.unpause()
 
             pygame.display.update()
 

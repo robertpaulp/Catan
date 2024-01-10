@@ -48,8 +48,9 @@ class Menu:
         window.blit(background, (0, 0))
 
         # --- Background Music ---
-        pygame.mixer.music.load(c.MUSIC_PATH)
-        pygame.mixer.music.play(-1)
+        if c.MUSIC:
+            pygame.mixer.music.load(c.MUSIC_PATH)
+            pygame.mixer.music.play(-1)
 
         # --- Title ---
         Menu.text(window, c.TITLE_TEXT, c.BLACK, 100, c.FONT_PATH, c.TITLE_X_AXIS, c.TITLE_Y_AXIS)
