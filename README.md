@@ -8,7 +8,7 @@ Welcome to the Pygame implementation of the classic board game Catan! This proje
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Description](#description)
-  - [Work done so far](#work-done-so-far)
+  - [Credits](#credits)
 
 ## Installation
 
@@ -69,34 +69,8 @@ This project aims to bring the joy of Catan to your computer screen using the Py
 - Creating the Rounds
     - At the beginning, every player gets to place two settlements and two roads for free.
 
-## Work done so far
+## Credits
 
--> Robert
-- [x] Created the template for the project
-- [x] Added some TODOs
-- [x] Created the dice class
-- [x] Created the hexagon class
-- [x] Created the menu class
-- [x] Added the constants for each class I worked on
-- [x] Created the robber class
-- [x] Restructured the project
-
--> Anca
-- [x] Implemented the "draw_players" method that creates the players'
-total cards and win points display.
-- [x] Implemented the Buttons class.
-- [x] Implemented the Trade class.
-- [x] Implemented the TradePrompt class.
-- [x] Implemented the CardsPrompt class.
-- [x] Implemented the Error class.
-- [x] Implemented the Popup class.
-- [x] Updated the User Interface design.
-- [x] Implemented the "Rounds" feature
-
--> 🐝 Trifu
-- [x] Implemented Settlement class
-- [x] Implemented Road class
-- [x] Implemented Card system
-- [x] Implemented Event Handlers
-- [x] Sketched initial Error behaviours 
-- [x] Refactored code; added base class constructors
+- The game was developed by [Alexandru Trifu-Urzică](https://github.com/alexandrutrifu), [Anca Radu](https://github.com/ancaraduu) and me.
+- The project was developed as part of the Python course at the University of Bucharest.
+- The images used in the game were taken from [here](https://github.com/BryantCabrera/Settlers-of-Catan/tree/master)
